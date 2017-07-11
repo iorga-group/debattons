@@ -1,7 +1,9 @@
 {
   "name": "debattons",
-  "version": "0.0.0",
-  "license": "MIT",
+  "description": "Methodical debate platform based on user empowerment - UI part",
+  "version": "0.0.1",
+  "license": "AGPL-3.0",
+  "author": "Iorga-Group",
   "scripts": {
     "ng": "ng",
     "start": "ng serve",

@@ -1,21 +1,23 @@
 # See http://help.github.com/ignore-files/ for more about ignoring files.
 
 # compiled output
-/dist
-/tmp
-/out-tsc
+/ui/dist
+/ui/tmp
+/ui/out-tsc
 
 # dependencies
-/node_modules
+/ui/node_modules
 
 # IDEs and editors
-/.idea
+.idea
 .project
 .classpath
 .c9/
 *.launch
 .settings/
 *.sublime-workspace
+*~
+*.iml
 
 # IDE - VSCode
 .vscode/*
@@ -25,18 +27,24 @@
 !.vscode/extensions.json
 
 # misc
-/.sass-cache
-/connect.lock
-/coverage
-/libpeerconnection.log
+/ui/.sass-cache
+/ui/connect.lock
+/ui/coverage
+/ui/libpeerconnection.log
 npm-debug.log
 testem.log
-/typings
+/ui/typings
 
 # e2e
-/e2e/*.js
-/e2e/*.map
+/ui/e2e/*.js
+/ui/e2e/*.map
 
 # System Files
 .DS_Store
 Thumbs.db
+
+# Docker datas
+/docker-data
+
+# Java compilation files
+/api-server/target
