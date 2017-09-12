@@ -1,16 +1,23 @@
 package com.iorga.debattons.apiserver.api;
 
+import com.fasterxml.jackson.databind.ObjectMapper;
+import com.iorga.debattons.apiserver.Main;
+import org.apache.commons.lang3.tuple.ImmutablePair;
+import org.glassfish.grizzly.http.server.HttpServer;
+import org.junit.After;
+import org.junit.Before;
+import org.junit.Test;
+
 import javax.ws.rs.client.Client;
 import javax.ws.rs.client.ClientBuilder;
 import javax.ws.rs.client.WebTarget;
 
-import com.iorga.debattons.apiserver.Main;
-import org.glassfish.grizzly.http.server.HttpServer;
+import java.io.IOException;
+import java.util.Map;
+import java.util.regex.Pattern;
 
-import org.junit.After;
-import org.junit.Before;
-import org.junit.Test;
 import static org.junit.Assert.assertEquals;
+import static org.assertj.core.api.Assertions.*;
 
 public class ReactionResourceTest {
 
@@ -45,5 +52,15 @@ public class ReactionResourceTest {
   public void testTest() {
     String responseMsg = target.path("/reaction/test").request().get(String.class);
     assertEquals("test", responseMsg);
+  }
+
+  @Test
+  public void createTest() throws IOException {
+    String responseMsg = target.path("/reaction/").request().post(null, String.class);
+    Map<String, Object> jsonResponseMap = new ObjectMapper().readValue(responseMsg, Map.class);
+    assertThat(jsonResponseMap).contains(ImmutablePair.of("label", "Test"));
+    Map<String, Object> properties = (Map<String, Object>) jsonResponseMap.get("properties");
+    assertThat(properties).containsKey("testProperty");
+    //assertThat(responseMsg).matches(Pattern.compile("\\{\"id\":\\{\"clusterId\":\\d+,\"clusterPosition\":\\d+\\},\"label\":\"Test\",\"properties\":\\{\"testProperty\":\\{\\{\"id\":\\{\"clusterId\":\\d+,\"clusterPosition\":\\d+\\},\"value\":\"value\"\\}\\]\\}\\}"));
   }
 }
