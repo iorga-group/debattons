@@ -1,0 +1,15 @@
+<form>
+  <div class="form-group">
+    <label for="title">Title</label>
+    <input type="text" class="form-control" name="title" id="title" aria-describedby="title" placeholder="Enter Title"
+           [(ngModel)]="reaction.title">
+  </div>
+  <div class="form-group">
+    <label>Content</label>
+    <div>
+      <md-editor name="content" [(ngModel)]="reaction.content"></md-editor>
+    </div>
+  </div>
+  (Id : {{reaction.id}})
+  <button type="submit" (click)="createNewReaction()" class="btn btn-primary">Create reaction</button>
+</form>

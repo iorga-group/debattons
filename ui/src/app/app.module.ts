@@ -5,14 +5,21 @@ import {HttpModule} from '@angular/http';
 
 import {AppComponent} from './app.component';
 import {ReactionService} from "./reaction.service";
+import {FormsModule} from "@angular/forms";
+
+import {LMarkdownEditorModule} from 'ngx-markdown-editor';
+import {ReactionEditorComponent} from "./reaction-editor.component";
 
 @NgModule({
   declarations: [
-    AppComponent
+    AppComponent,
+    ReactionEditorComponent
   ],
   imports: [
     BrowserModule,
-    HttpModule
+    HttpModule,
+    FormsModule,
+    LMarkdownEditorModule
   ],
   providers: [
     ReactionService
