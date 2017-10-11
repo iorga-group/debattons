@@ -1,18 +1,20 @@
 package com.iorga.debattons.apiserver.jersey;
 
+import com.iorga.debattons.apiserver.Main;
+import com.iorga.debattons.apiserver.service.VersionService;
+import org.glassfish.jersey.logging.LoggingFeature;
 import org.glassfish.jersey.server.ResourceConfig;
 
 import javax.ws.rs.ApplicationPath;
 
-/**
- * @author iORGA Group
- */
 @ApplicationPath("/")
 public class APIServerResourceConfig extends ResourceConfig {
 
-    public APIServerResourceConfig() {
+    public APIServerResourceConfig() throws Exception {
       register(CORSFilter.class);
-//        register(LoggingFilter.class);
+      register(LoggingFeature.class);
+      packages(Main.class.getPackage().getName());
+      new VersionService().bootstrap();
     }
 
 }

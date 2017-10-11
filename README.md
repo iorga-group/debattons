@@ -1,8 +1,8 @@
-# Débattons
+# DÃ©battons
 
 > Methodical debate platform based on user empowerment
 
-"Débattons" is a French word that means "Let's debate".
+"DÃ©battons" is a French word that means "Let's debate".
 
 The aim of this debate platform is to trust users to level up the discussions quality, so that from collective knowledge would emerge best responses to every question put in debate. It is a sort of Wikipedia for debates.
 
@@ -20,7 +20,7 @@ Here are some resources:
 
 ## Installation of development environment
 
-Débattons uses the following tools that you should install first:
+DÃ©battons uses the following tools that you should install first:
  * Java SE Development Kit 8 ([JDK8](http://www.oracle.com/technetwork/java/javase/downloads/jdk8-downloads-2133151.html))
  * [Node.js](https://nodejs.org/en/) v6.11.3 LTS
  * [Angular CLI](https://cli.angular.io/) (that you can simply install with `npm install -g @angular/cli`)
@@ -32,7 +32,13 @@ Here are the steps to launch the environment:
 # First launch the OrientDB server using Docker
 # On Windows, if you are using Docker Toolbox, execute this using the Docker Console. If you are not in your own user's path, don't forget to declare the current path as a shared folder in VirtualBox
 ./docker/cmd.sh build-and-run --only-orientdb
-# Now launch the Webservices part
+```
+The first time, you will have to configure the DB:
+ * Connect to [http://localhost:2480/studio/index.html](http://localhost:2480/studio/index.html) (if you are on Windows < 10 and installed Docker Toolbox, replace `localhost` with `192.168.99.100`) and click on "New DB" and create the Database named `debattons` with the user `root` and the password that you will find in the file `docker-data/conf/debattons.env` in the project file tree.
+ * Then create a new User on that database named `api-server` with the password `password`, the `admin` role and the status `Active`
+
+Now launch the Webservices part
+```bash
 cd api-server
 mvn compile exec:java
 ```
@@ -42,4 +48,4 @@ cd ui
 ng serve
 ```
 
-You can finally access to the platform at http://loclahost:4200
+You can finally access to the platform at [http://localhost:4200](http://localhost:4200)

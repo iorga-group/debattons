@@ -1,5 +1,10 @@
 package com.iorga.debattons.apiserver.entity;
 
+import com.iorga.debattons.apiserver.util.GraphUtils;
+import org.apache.tinkerpop.gremlin.structure.Vertex;
+
+import java.io.IOException;
+
 public class Reaction {
   private String id;
   private String title;
@@ -27,5 +32,13 @@ public class Reaction {
 
   public void setContent(String content) {
     this.content = content;
+  }
+
+  public static Reaction fromVertex(Vertex vertex) throws IOException {
+    Reaction reaction = new Reaction();
+    reaction.setId(GraphUtils.getStringVertexId(vertex, vertex.graph()));
+    reaction.setTitle(vertex.value("title"));
+    reaction.setContent(vertex.value("content"));
+    return reaction;
   }
 }

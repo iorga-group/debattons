@@ -67,6 +67,11 @@
       <version>3.3.0</version>
     </dependency>
     <dependency>
+      <groupId>org.apache.tinkerpop</groupId>
+      <artifactId>tinkergraph-gremlin</artifactId>
+      <version>3.3.0</version>
+    </dependency>
+    <dependency>
       <groupId>com.orientechnologies</groupId>
       <artifactId>orientdb-gremlin</artifactId>
       <version>3.0.0m2</version>

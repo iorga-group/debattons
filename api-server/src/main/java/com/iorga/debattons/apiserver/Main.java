@@ -1,5 +1,6 @@
 package com.iorga.debattons.apiserver;
 
+import com.iorga.debattons.apiserver.jersey.APIServerResourceConfig;
 import org.glassfish.grizzly.http.server.HttpServer;
 import org.glassfish.jersey.grizzly2.httpserver.GrizzlyHttpServerFactory;
 import org.glassfish.jersey.logging.LoggingFeature;
@@ -20,15 +21,10 @@ public class Main {
    * Starts Grizzly HTTP server exposing JAX-RS resources defined in this application.
    * @return Grizzly HTTP server.
    */
-  public static HttpServer startServer() {
-    // create a resource config that scans for JAX-RS resources and providers
-    // in com.example package
-    final ResourceConfig config = new ResourceConfig().packages(Main.class.getPackage().getName());
-    config.register(LoggingFeature.class);
-
+  public static HttpServer startServer() throws Exception {
     // create and start a new instance of grizzly http server
     // exposing the Jersey application at BASE_URI
-    return GrizzlyHttpServerFactory.createHttpServer(URI.create(BASE_URI), config);
+    return GrizzlyHttpServerFactory.createHttpServer(URI.create(BASE_URI), new APIServerResourceConfig());
   }
 
   /**
@@ -36,7 +32,7 @@ public class Main {
    * @param args
    * @throws IOException
    */
-  public static void main(String[] args) throws IOException {
+  public static void main(String[] args) throws Exception {
     final HttpServer server = startServer();
     System.out.println(String.format("Jersey app started with WADL available at "
       + "%sapplication.wadl\nHit enter to stop it...", BASE_URI));
