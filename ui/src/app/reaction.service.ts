@@ -12,7 +12,7 @@ export class ReactionService {
   ) {}
 
   createNewReaction(reaction: Reaction): Promise<Reaction> {
-    return this.http.post(environment.apiBaseContext + '/reaction/', reaction)
+    return this.http.post(environment.apiBaseContext + '/reactions/', reaction)
       .toPromise()
       .then(response => response.json() as Reaction)
       .catch(this.handleError);
@@ -24,14 +24,14 @@ export class ReactionService {
   }
 
   findRoot(): Promise<Reaction[]> {
-    return this.http.get(environment.apiBaseContext + '/reaction/roots')
+    return this.http.get(environment.apiBaseContext + '/reactions/roots')
       .toPromise()
       .then(response => response.json() as Reaction[])
       .catch(this.handleError);
   }
 
   findWithId(id: string): Promise<Reaction> {
-    return this.http.get(environment.apiBaseContext + '/reaction/' + encodeURIComponent(id))
+    return this.http.get(environment.apiBaseContext + '/reactions/' + encodeURIComponent(id))
       .toPromise()
       .then(response => response.json() as Reaction)
       .catch(this.handleError);

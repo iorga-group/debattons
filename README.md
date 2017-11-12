@@ -22,6 +22,7 @@ Here are some resources:
 
 Débattons uses the following tools that you should install first:
  * Java SE Development Kit 8 ([JDK8](http://www.oracle.com/technetwork/java/javase/downloads/jdk8-downloads-2133151.html))
+ * [Maven](https://maven.apache.org/) 3+
  * [Node.js](https://nodejs.org/en/) v6.11.3 LTS
  * [Angular CLI](https://cli.angular.io/) (that you can simply install with `npm install -g @angular/cli`)
  * [Docker](https://docs.docker.com/engine/installation/)
@@ -40,11 +41,12 @@ The first time, you will have to configure the DB:
 Now launch the Webservices part
 ```bash
 cd api-server
-mvn compile exec:java
+mvn spring-boot:run
 ```
 Now in another shell you can start the Angular UI:
 ```bash
 cd ui
+npm install
 ng serve
 ```
 

@@ -1,4 +1,4 @@
-package com.iorga.debattons.apiserver.service;
+package com.iorga.debattons.apiserver.version;
 
 import com.iorga.debattons.apiserver.util.GraphUtils;
 import org.apache.tinkerpop.gremlin.process.traversal.dsl.graph.GraphTraversal;
@@ -7,13 +7,25 @@ import org.apache.tinkerpop.gremlin.structure.T;
 import org.apache.tinkerpop.gremlin.structure.Vertex;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Component;
+import org.springframework.stereotype.Service;
 
+import javax.annotation.PostConstruct;
+
+@Service
 public class VersionService {
   private final static Logger LOG = LoggerFactory.getLogger(VersionService.class);
 
+
+  @Autowired
+  private GraphUtils graphUtils;
+
+
+  @PostConstruct
   public void bootstrap() throws Exception {
-    GraphUtils.doInGraphTransaction(graph -> {
-      GraphTraversal<Vertex, Vertex> rootTraversal = GraphUtils.getRootTraversal(graph);
+    graphUtils.doInGraphTransaction(graph -> {
+      GraphTraversal<Vertex, Vertex> rootTraversal = graphUtils.getRootTraversal(graph);
       Vertex rootVertex;
       if (rootTraversal.hasNext()) {
         rootVertex = rootTraversal.next();

@@ -1,4 +1,4 @@
-package com.iorga.debattons.apiserver.entity;
+package com.iorga.debattons.apiserver.reaction;
 
 import com.iorga.debattons.apiserver.util.GraphUtils;
 import org.apache.tinkerpop.gremlin.structure.Vertex;
@@ -34,9 +34,9 @@ public class Reaction {
     this.content = content;
   }
 
-  public static Reaction fromVertex(Vertex vertex) throws IOException {
+  public static Reaction fromVertex(Vertex vertex, GraphUtils graphUtils) throws IOException {
     Reaction reaction = new Reaction();
-    reaction.setId(GraphUtils.getStringVertexId(vertex, vertex.graph()));
+    reaction.setId(graphUtils.getStringVertexId(vertex, vertex.graph()));
     reaction.setTitle(vertex.value("title"));
     reaction.setContent(vertex.value("content"));
     return reaction;

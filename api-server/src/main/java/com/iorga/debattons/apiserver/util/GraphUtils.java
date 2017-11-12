@@ -1,33 +1,27 @@
 package com.iorga.debattons.apiserver.util;
 
+import com.iorga.debattons.apiserver.version.VersionService;
 import org.apache.tinkerpop.gremlin.orientdb.OrientGraph;
 import org.apache.tinkerpop.gremlin.process.traversal.dsl.graph.GraphTraversal;
 import org.apache.tinkerpop.gremlin.structure.Graph;
 import org.apache.tinkerpop.gremlin.structure.Vertex;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.context.annotation.Lazy;
+import org.springframework.context.annotation.Primary;
+import org.springframework.stereotype.Component;
 
 import java.io.IOException;
 
+@Component
 public class GraphUtils {
-  private static final ThreadLocal<Graph> inTransactionGraphThreadLocal = new ThreadLocal<>();
+  private final ThreadLocal<Graph> inTransactionGraphThreadLocal = new ThreadLocal<>();
 
-  private static GraphManager graphManager = new GraphManager() {
-    @Override
-    public Graph open() {
-      return OrientGraph.open("remote:localhost/debattons", "api-server", "password");
-    }
+  private Object rootVertexId = null;
 
-    @Override
-    public String vertexIdToString(Object vertexId) {
-      return vertexId.toString();
-    }
-
-    @Override
-    public Object vertexIdFromString(String vertexId) {
-      return vertexId;
-    }
-  };
-
-  private static Object rootVertexId = null;
+  @Autowired @Lazy
+  private VersionService versionService;
+  @Autowired
+  private GraphManager graphManager;
 
   public interface InGraphTransactionHandler<T> {
     T doInGraphTransaction(Graph graph) throws Exception;
@@ -43,11 +37,26 @@ public class GraphUtils {
     Object vertexIdFromString(String vertexId);
   }
 
-  public static void setGraphManager(GraphManager graphManager) {
-    GraphUtils.graphManager = graphManager;
+  @Component
+  public class GraphManagerImpl implements GraphManager {
+    @Override
+    public Graph open() {
+      return OrientGraph.open("remote:localhost/debattons", "api-server", "password");
+    }
+
+    @Override
+    public String vertexIdToString(Object vertexId) {
+      return vertexId.toString();
+    }
+
+    @Override
+    public Object vertexIdFromString(String vertexId) {
+      return vertexId;
+    }
   }
 
-  public static <T> T doInGraphTransaction(InGraphTransactionHandler<T> inGraphTransactionHandler) throws Exception {
+
+  public <T> T doInGraphTransaction(InGraphTransactionHandler<T> inGraphTransactionHandler) throws Exception {
     Graph graph = inTransactionGraphThreadLocal.get();
     if (graph != null) {
       // Already in a Transaction
@@ -56,7 +65,7 @@ public class GraphUtils {
       try {
         graph = graphManager.open();
         boolean supportsTransactions = graph.features().graph().supportsTransactions();
-//      Graph graph = new OrientGraphFactory("remote:localhost/debattons", "api-server", "password")
+//      Graph graph = new OrientGraphFactory("remote:localhost/debattons", "reaction-server", "password")
 //        .getNoTx().open();
         if (supportsTransactions) {
           graph.tx().open();//.onReadWrite(Transaction.READ_WRITE_BEHAVIOR.AUTO);
@@ -83,18 +92,18 @@ public class GraphUtils {
     }
   }
 
-  public static void doInGraphTransaction(InGraphVoidTransactionHandler inGraphVoidTransactionHandler) throws Exception {
+  public void doInGraphTransaction(InGraphVoidTransactionHandler inGraphVoidTransactionHandler) throws Exception {
     doInGraphTransaction(graph -> {
       inGraphVoidTransactionHandler.doInGraphTransaction(graph);
       return null;
     });
   }
 
-  public static Vertex getRoot(Graph graph) {
+  public Vertex getRoot(Graph graph) {
     return getRootTraversal(graph).next();
   }
 
-  public static GraphTraversal<Vertex, Vertex> getRootTraversal(Graph graph) {
+  public GraphTraversal<Vertex, Vertex> getRootTraversal(Graph graph) {
     if (rootVertexId != null) {
       return graph.traversal().V(rootVertexId);
     } else {
@@ -108,14 +117,14 @@ public class GraphUtils {
     }
   }
 
-  public static String getStringVertexId(Vertex vertex, Graph graph) throws IOException {
+  public String getStringVertexId(Vertex vertex, Graph graph) throws IOException {
 //    ByteArrayOutputStream outputStream = new ByteArrayOutputStream();
 //    graph.io(IoCore.graphson()).writer().create().writeObject(outputStream, vertex.id());
 //    return outputStream.toString();
     return graphManager.vertexIdToString(vertex.id());
   }
 
-  public static Object getObjectVertexId(String vertexId, Graph graph) {
+  public Object getObjectVertexId(String vertexId, Graph graph) {
     return graphManager.vertexIdFromString(vertexId);
   }
 
