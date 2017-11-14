@@ -10,6 +10,7 @@ const routes: Routes = [
   {path: 'root-reactions', component: RootReactionsComponent},
   {path: 'reaction/:id', component: ReactionDetailComponent},
   {path: 'new-reaction', component: NewReactionComponent},
+  {path: 'new-reaction/:reactToReactionId', component: NewReactionComponent},
 ];
 
 @NgModule({

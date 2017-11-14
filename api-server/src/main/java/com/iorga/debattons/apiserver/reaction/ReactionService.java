@@ -2,14 +2,16 @@ package com.iorga.debattons.apiserver.reaction;
 
 import com.iorga.debattons.apiserver.util.GraphUtils;
 import org.apache.tinkerpop.gremlin.process.traversal.Order;
+import org.apache.tinkerpop.gremlin.process.traversal.dsl.graph.GraphTraversal;
+import org.apache.tinkerpop.gremlin.structure.Direction;
+import org.apache.tinkerpop.gremlin.structure.Graph;
 import org.apache.tinkerpop.gremlin.structure.T;
 import org.apache.tinkerpop.gremlin.structure.Vertex;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import java.io.IOException;
-import java.util.Date;
-import java.util.List;
+import java.util.*;
 
 @Service
 public class ReactionService {
@@ -31,6 +33,24 @@ public class ReactionService {
     });
   }
 
+  public Reaction createByReactionReactingToReactionId(Reaction reaction, final String reactToReactionId) throws Exception {
+    if (reactToReactionId == null) {
+      return create(reaction);
+    } else {
+      return graphUtils.doInGraphTransaction(graph -> {
+        Vertex reactionVertex = graph.addVertex(
+          T.label, "Reaction",
+          "title", reaction.getTitle(),
+          "content", reaction.getContent(),
+          "creationDate", new Date());
+        graph.traversal().V(graphUtils.getObjectVertexId(reactToReactionId, graph)).has(T.label, "Reaction").next()
+          .addEdge("reactedTo", reactionVertex);
+        reaction.setId(graphUtils.getStringVertexId(reactionVertex, graph));
+        return reaction;
+      });
+    }
+  }
+
   public List<Reaction> findRoots() throws Exception {
     return graphUtils.doInGraphTransaction(graph -> {
       return graphUtils.getRootTraversal(graph)
@@ -48,7 +68,38 @@ public class ReactionService {
 
   public Reaction findById(final String id) throws Exception {
     return graphUtils.doInGraphTransaction(graph -> {
-      return Reaction.fromVertex(graph.traversal().V(graphUtils.getObjectVertexId(id, graph)).next(), graphUtils);
+      return Reaction.fromVertex(
+        createReactionTraversalById(id, graph).next(), graphUtils);
     });
+  }
+
+  public Reaction findByIdLoadingReactedToDepth(final String id, final int reactedToDepth) throws Exception {
+    return graphUtils.doInGraphTransaction(graph -> {
+      Vertex reactionVertex = createReactionTraversalById(id, graph).next();
+      Reaction reaction = Reaction.fromVertex(reactionVertex, graphUtils);
+      loadReactedToByOriginalReactionAndVertexAndDepth(reaction, reactionVertex, reactedToDepth, graph);
+      return reaction;
+    });
+  }
+
+  private void loadReactedToByOriginalReactionAndVertexAndDepth(final Reaction originalReaction, Vertex originalVertex, final int depth, Graph graph) throws Exception {
+    if (depth > 0) {
+      Set<Reaction> reactedTo = new LinkedHashSet<>();
+      originalReaction.setReactedTo(reactedTo);
+
+      for (Iterator<Vertex> reactedToVertices = originalVertex.vertices(Direction.OUT, "reactedTo"); reactedToVertices.hasNext(); ) {
+        Vertex reactedToVertex = reactedToVertices.next();
+        Reaction reactedToReaction = Reaction.fromVertex(reactedToVertex, graphUtils);
+        reactedTo.add(reactedToReaction);
+        if (depth > 1) {
+          loadReactedToByOriginalReactionAndVertexAndDepth(reactedToReaction, reactedToVertex, depth - 1, graph);
+        }
+      }
+    }
+  }
+
+  private GraphTraversal<Vertex, Vertex> createReactionTraversalById(String id, Graph graph) {
+    return graph.traversal().V(graphUtils.getObjectVertexId(id, graph))
+      .has(T.label, "Reaction");
   }
 }

@@ -3,12 +3,18 @@ package com.iorga.debattons.apiserver.reaction;
 import com.iorga.debattons.apiserver.util.GraphUtils;
 import org.apache.tinkerpop.gremlin.structure.Vertex;
 
+import javax.validation.constraints.NotNull;
 import java.io.IOException;
+import java.util.Set;
 
 public class Reaction {
   private String id;
   private String title;
+
+  @NotNull
   private String content;
+
+  private Set<Reaction> reactedTo;
 
   public String getId() {
     return id;
@@ -32,6 +38,14 @@ public class Reaction {
 
   public void setContent(String content) {
     this.content = content;
+  }
+
+  public Set<Reaction> getReactedTo() {
+    return reactedTo;
+  }
+
+  public void setReactedTo(Set<Reaction> reacted) {
+    this.reactedTo = reacted;
   }
 
   public static Reaction fromVertex(Vertex vertex, GraphUtils graphUtils) throws IOException {

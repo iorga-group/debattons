@@ -1,8 +1,7 @@
 import {Component, OnInit} from "@angular/core";
 import {Reaction} from "./reaction";
 import {ReactionService} from "./reaction.service";
-import {ActivatedRoute, ParamMap} from "@angular/router";
-import {Location} from "@angular/common";
+import {ActivatedRoute, ParamMap, Router} from "@angular/router";
 
 import 'rxjs/add/operator/switchMap';
 
@@ -13,15 +12,18 @@ import 'rxjs/add/operator/switchMap';
 export class ReactionDetailComponent implements OnInit {
   reaction: Reaction;
 
-  constructor(
-    private reactionService: ReactionService,
-    private route: ActivatedRoute,
-    private location: Location
-  ) {}
+  constructor(private reactionService: ReactionService,
+              private route: ActivatedRoute,
+              private router: Router) {
+  }
 
   ngOnInit(): void {
     this.route.paramMap
-      .switchMap((params: ParamMap) => this.reactionService.findWithId(params.get('id')))
+      .switchMap((params: ParamMap) => this.reactionService.findByIdLoadingDepth(params.get('id'), 1))
       .subscribe(reaction => this.reaction = reaction);
+  }
+
+  reactToThis() {
+    this.router.navigate(['/new-reaction/', this.reaction.id]);
   }
 }

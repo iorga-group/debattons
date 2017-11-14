@@ -5,13 +5,12 @@ import com.iorga.debattons.apiserver.util.GraphUtils;
 import com.iorga.debattons.apiserver.version.VersionService;
 import org.apache.tinkerpop.gremlin.structure.Graph;
 import org.apache.tinkerpop.gremlin.tinkergraph.structure.TinkerGraph;
+import org.junit.After;
 import org.junit.Before;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.beans.factory.annotation.Configurable;
 import org.springframework.boot.test.context.SpringBootTest;
-import org.springframework.boot.test.context.TestConfiguration;
 import org.springframework.boot.test.web.client.TestRestTemplate;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
@@ -22,6 +21,8 @@ import org.springframework.http.HttpMethod;
 import org.springframework.test.context.junit4.SpringRunner;
 
 import java.io.IOException;
+import java.io.UnsupportedEncodingException;
+import java.net.URLEncoder;
 import java.util.List;
 
 import static org.assertj.core.api.Assertions.assertThat;
@@ -42,7 +43,8 @@ public class ReactionControllerTest {
   @Configuration
   @Import(ApiServerApplication.class)
   static class Config {
-    @Bean @Primary
+    @Bean
+    @Primary
     public GraphUtils.GraphManager createGraphManager() {
       return new GraphUtils.GraphManager() {
         @Override
@@ -70,6 +72,11 @@ public class ReactionControllerTest {
     versionService.bootstrap();
   }
 
+  @After
+  public void tearDown() {
+    graph.close();
+  }
+
 
   @Test
   public void createTest() throws IOException {
@@ -84,11 +91,32 @@ public class ReactionControllerTest {
     return restTemplate.postForObject("/reactions", reaction, Reaction.class);
   }
 
+  private Reaction createReaction(Reaction reaction, String reactingToReactionId) throws UnsupportedEncodingException {
+    return restTemplate.postForObject("/reactions?reactToReactionId=" + URLEncoder.encode(reactingToReactionId, "UTF-8"), reaction, Reaction.class);
+  }
+
   private Reaction newTestReaction() {
+    return newTestReaction("");
+  }
+
+  private Reaction newTestReaction(String label) {
     Reaction reaction = new Reaction();
-    reaction.setTitle("Test Title");
-    reaction.setContent("Test content lorem ipsum");
+    reaction.setTitle("Test Title" + label);
+    reaction.setContent("Test content lorem ipsum" + label);
     return reaction;
+  }
+
+  @Test
+  public void createReactingToTest() throws IOException {
+    Reaction reaction = newTestReaction();
+    Reaction reactionOut = createReaction(reaction);
+
+    Reaction reaction2 = newTestReaction(" 2");
+    Reaction reactionOut2 = createReaction(reaction2, reactionOut.getId());
+
+    assertThat(reactionOut2.getTitle()).isEqualTo(reaction2.getTitle());
+    assertThat(reactionOut2.getContent()).isEqualTo(reaction2.getContent());
+    assertThat(reactionOut2.getId()).isNotEmpty();
   }
 
   @Test
@@ -104,10 +132,24 @@ public class ReactionControllerTest {
   }
 
   @Test
-  public void findWithIdTest() {
+  public void findByIdTest() {
     Reaction reaction = newTestReaction();
     Reaction createdReaction = createReaction(reaction);
     Reaction foundReaction = restTemplate.getForObject("/reactions/" + createdReaction.getId(), Reaction.class);
     assertThat(foundReaction.getTitle()).isEqualTo(reaction.getTitle());
+  }
+
+  @Test
+  public void findByIdLoadingReactedToDepthTest() throws UnsupportedEncodingException {
+    Reaction reaction = newTestReaction();
+    Reaction reactionOut = createReaction(reaction);
+    Reaction reaction2 = newTestReaction(" 2");
+    Reaction reactionOut2 = createReaction(reaction, reactionOut.getId());
+    Reaction reaction3 = newTestReaction(" 3");
+    Reaction reactionOut3 = createReaction(reaction, reactionOut.getId());
+
+    Reaction foundReaction = restTemplate.getForObject("/reactions/" + reactionOut.getId() + "?reactedToDepth=1", Reaction.class);
+    assertThat(foundReaction.getTitle()).isEqualTo(reaction.getTitle());
+    assertThat(foundReaction.getReactedTo()).hasSize(2);
   }
 }

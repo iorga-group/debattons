@@ -7,12 +7,15 @@ import 'rxjs/add/operator/toPromise';
 
 @Injectable()
 export class ReactionService {
-  constructor(
-    private http: Http,
-  ) {}
+  constructor(private http: Http,) {
+  }
 
-  createNewReaction(reaction: Reaction): Promise<Reaction> {
-    return this.http.post(environment.apiBaseContext + '/reactions/', reaction)
+  createNewReaction(reaction: Reaction, reactToReactionId: string): Promise<Reaction> {
+    let url = environment.apiBaseContext + '/reactions/';
+    if (reactToReactionId) {
+      url += '?reactToReactionId=' + encodeURIComponent(reactToReactionId);
+    }
+    return this.http.post(url, reaction)
       .toPromise()
       .then(response => response.json() as Reaction)
       .catch(this.handleError);
@@ -30,8 +33,8 @@ export class ReactionService {
       .catch(this.handleError);
   }
 
-  findWithId(id: string): Promise<Reaction> {
-    return this.http.get(environment.apiBaseContext + '/reactions/' + encodeURIComponent(id))
+  findByIdLoadingDepth(id: string, depth: number): Promise<Reaction> {
+    return this.http.get(environment.apiBaseContext + '/reactions/' + encodeURIComponent(id) + '?reactedToDepth=' + depth)
       .toPromise()
       .then(response => response.json() as Reaction)
       .catch(this.handleError);

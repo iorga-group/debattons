@@ -10,11 +10,14 @@ export class ReactionEditorComponent {
   @Input()
   reaction: Reaction;
 
+  @Input()
+  reactToReactionId: string;
+
   constructor(private reactionService: ReactionService) {
   }
 
   createNewReaction() {
-    this.reactionService.createNewReaction(this.reaction)
+    this.reactionService.createNewReaction(this.reaction, this.reactToReactionId)
       .then(reaction => this.reaction = reaction);
   }
 }

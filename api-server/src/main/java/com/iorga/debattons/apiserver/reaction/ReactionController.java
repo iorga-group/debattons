@@ -16,8 +16,12 @@ public class ReactionController {
   }
 
   @PostMapping
-  public Reaction post(@RequestBody Reaction reaction) throws Exception {
-    return reactionService.create(reaction);
+  public Reaction post(@RequestBody Reaction reaction, @RequestParam(value = "reactToReactionId", required = false) String reactToReactionId) throws Exception {
+    if (reactToReactionId != null) {
+      return reactionService.createByReactionReactingToReactionId(reaction, reactToReactionId);
+    } else {
+      return reactionService.create(reaction);
+    }
   }
 
   @GetMapping("/roots")
@@ -26,7 +30,7 @@ public class ReactionController {
   }
 
   @GetMapping("/{id}")
-  public Reaction getById(@PathVariable("id") String id) throws Exception {
-    return reactionService.findById(id);
+  public Reaction getByIdLoadingReactedToDepth(@PathVariable("id") String id, @RequestParam(value = "reactedToDepth", required = false, defaultValue = "0") int reactedDepth) throws Exception {
+    return reactionService.findByIdLoadingReactedToDepth(id, reactedDepth);
   }
 }
