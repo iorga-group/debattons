@@ -46,6 +46,7 @@ Débattons uses the following tools that you should install first:
  * [Maven](https://maven.apache.org/) 3+
  * [Node.js](https://nodejs.org/en/) v6.11.3 LTS
  * [Angular CLI](https://cli.angular.io/) (that you can simply install with `npm install -g @angular/cli`)
+ * [Yarn](https://yarnpkg.com) (that you can simply install with `npm install -g yarn`)
  * [Docker](https://docs.docker.com/engine/installation/)
  * [Docker Compose](https://docs.docker.com/compose/install/)
 
@@ -67,7 +68,7 @@ mvn spring-boot:run
 Now in another shell you can start the Angular UI:
 ```bash
 cd ui
-npm install
+yarn install
 ng serve
 ```
 

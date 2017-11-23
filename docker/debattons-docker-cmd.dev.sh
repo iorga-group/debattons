@@ -47,4 +47,4 @@ fi
 
 export DEBATTONS_DATABASE_URL=orientdb/debattons
 cd /opt/debattons/api-server && mvn spring-boot:run &
-cd /opt/debattons/ui && npm install && ng serve --host 0.0.0.0 # authorize remote access thanks to https://github.com/angular/angular-cli/issues/1793#issuecomment-241343672
+cd /opt/debattons/ui && yarn install && ng serve --host 0.0.0.0 # authorize remote access thanks to https://github.com/angular/angular-cli/issues/1793#issuecomment-241343672
