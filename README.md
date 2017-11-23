@@ -18,7 +18,19 @@ Here are some resources:
  * Current [**development and organization status**](https://trello.com/b/MfS0wzzJ/wikip%C3%A9dia-du-d%C3%A9bat) (currently only in French language)
  * A more general [**presentation of the project and its ideas**](https://docs.google.com/presentation/d/1UIsnLdP2XgO_Ii6g98lWW4FsMuDccD-TigsT5NSFKOU/edit#slide=id.g224b5ac09f_1_0) (currently only in French language)
 
-## Installation of development environment
+## Install & run Débattons on Ubuntu 16.04
+```bash
+curl -L "https://raw.githubusercontent.com/iorga-group/debattons/master/setup/run-env-on-ubuntu-16.04.sh" > /tmp/setup-debattons-run-env-on-ubuntu-16.04.sh && bash /tmp/setup-debattons-run-env-on-ubuntu-16.04.sh
+/opt/debattons/docker/cmd.sh build-and-run
+```
+Now access Débattons at [http://localhost:4200](http://localhost:4200)
+
+## Installation of development environment on Ubuntu 16.04
+```bash
+curl -L "https://raw.githubusercontent.com/iorga-group/debattons/master/setup/dev-env-on-ubuntu-16.04.sh" > /tmp/setup-debattons-dev-env-on-ubuntu-16.04.sh && bash /tmp/setup-debattons-dev-env-on-ubuntu-16.04.sh
+```
+
+## Manual installation of development environment
 
 Débattons uses the following tools that you should install first:
  * Java SE Development Kit 8 ([JDK8](http://www.oracle.com/technetwork/java/javase/downloads/jdk8-downloads-2133151.html))

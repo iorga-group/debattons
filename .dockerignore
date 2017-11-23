@@ -1,0 +1,4 @@
+.idea
+api-server
+docker-data*
+ui

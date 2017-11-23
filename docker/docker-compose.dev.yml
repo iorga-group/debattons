@@ -1,0 +1,35 @@
+version: '2.1'
+services:
+  orientdb:
+    container_name: debattons_orientdb
+    image: orientdb:3.0.0m2
+    environment:
+      - ORIENTDB_ROOT_PASSWORD=${ORIENTDB_ROOT_PASSWORD}
+    volumes:
+#      - ${DOCKER_DATA}/orientdb/config:/orientdb/config
+      - ${DOCKER_DATA}/orientdb/databases:/orientdb/databases
+      - ${DOCKER_DATA}/orientdb/backup:/orientdb/backup
+    ports:
+      - "${ORIENTDB_PORT:-2424}:2424"
+      - "${ORIENTDB_STUDIO_PORT:-2480}:2480"
+    restart: ${ORIENTDB_RESTART:-no}
+  debattons:
+    container_name: debattons_dev
+    build:
+      context: ../
+      dockerfile: docker/Dockerfile.dev
+      args:
+        - USER_UID=${USER_UID}
+        - USER_GID=${USER_GID}
+    image: debattons:dev
+    volumes:
+      - ${ROOT_PROJECT_DIR}:/opt/debattons
+      - ${HOME}/.m2:/home/user/.m2
+      - ${HOME}/.npm:/home/user/.npm
+    ports:
+      - "4200:4200"
+      - "8080:8080"
+    environment:
+      - ORIENTDB_ROOT_PASSWORD=${ORIENTDB_ROOT_PASSWORD}
+    links:
+      - orientdb:orientdb

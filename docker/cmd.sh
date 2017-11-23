@@ -5,9 +5,10 @@ set -x
 
 PROJECT_NAME=debattons
 
-BASE_DIR="$DIR_PREFIX$(readlink -f `dirname $0`)"
-export DOCKER_DATA=$(readlink -f "$BASE_DIR/../docker-data")
-DOCKER_COMPOSE=(docker-compose -f "$BASE_DIR/docker-compose.yml" -p $PROJECT_NAME)
+export BASE_DIR="$DIR_PREFIX$(readlink -f `dirname $0`)"
+export ROOT_PROJECT_DIR=$(readlink -f "$BASE_DIR/..")
+export DOCKER_DATA=$(readlink -f "$ROOT_PROJECT_DIR/docker-data")
+DOCKER_COMPOSE=(docker-compose -f "$BASE_DIR/docker-compose.dev.yml" -p $PROJECT_NAME)
 
 COMMAND=$1
 shift
@@ -18,7 +19,7 @@ generate_password() {
 }
 
 if [ "$COMMAND" == "build-and-run" ] ; then
-	SERVICES_TO_START="orientdb"
+	SERVICES_TO_START="orientdb debattons"
 
 	while [ "$#" != "0" ] ; do
 		if [ "$1" == "--only-orientdb" ] ; then
@@ -30,9 +31,12 @@ if [ "$COMMAND" == "build-and-run" ] ; then
 	if [ ! -f "$DOCKER_DATA/conf/$PROJECT_NAME.env" ] ; then
 		mkdir -p "$DOCKER_DATA/conf"
 		ENV_FILE="$DOCKER_DATA/conf/$PROJECT_NAME.env"
-		echo "export ORIENTDB_ROOT_PASSWORD=$(generate_password 12)" >> "$ENV_FILE"
+		echo "export ORIENTDB_ROOT_PASSWORD=$(generate_password 24)" >> "$ENV_FILE"
 	fi
 	source "$DOCKER_DATA/conf/$PROJECT_NAME.env"
+
+	export USER_UID=`id -u`
+	export USER_GID=`id -g`
 
   # Using "${DOCKER_COMPOSE[@]}" in order to handle correctly paths with spaces in it thanks to https://stackoverflow.com/a/1555811/535203
 	"${DOCKER_COMPOSE[@]}" build

@@ -43,8 +43,11 @@ testem.log
 .DS_Store
 Thumbs.db
 
-# Docker datas
-/docker-data
+# Docker data
+/docker-data*
 
 # Java compilation files
 /api-server/target
+
+# OrientDB history
+.orientdb_history

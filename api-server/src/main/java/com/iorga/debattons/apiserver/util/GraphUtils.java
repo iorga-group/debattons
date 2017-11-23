@@ -6,6 +6,7 @@ import org.apache.tinkerpop.gremlin.process.traversal.dsl.graph.GraphTraversal;
 import org.apache.tinkerpop.gremlin.structure.Graph;
 import org.apache.tinkerpop.gremlin.structure.Vertex;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.boot.context.properties.ConfigurationProperties;
 import org.springframework.context.annotation.Lazy;
 import org.springframework.context.annotation.Primary;
 import org.springframework.stereotype.Component;
@@ -18,7 +19,8 @@ public class GraphUtils {
 
   private Object rootVertexId = null;
 
-  @Autowired @Lazy
+  @Autowired
+  @Lazy
   private VersionService versionService;
   @Autowired
   private GraphManager graphManager;
@@ -33,15 +35,22 @@ public class GraphUtils {
 
   public interface GraphManager {
     Graph open();
+
     String vertexIdToString(Object vertexId);
+
     Object vertexIdFromString(String vertexId);
   }
 
   @Component
+  @ConfigurationProperties(prefix = "debattons.database")
   public class GraphManagerImpl implements GraphManager {
+    private String url;
+    private String user;
+    private String password;
+
     @Override
     public Graph open() {
-      return OrientGraph.open("remote:localhost/debattons", "api-server", "password");
+      return OrientGraph.open("remote:" + getUrl(), getUser(), getPassword());
     }
 
     @Override
@@ -52,6 +61,30 @@ public class GraphUtils {
     @Override
     public Object vertexIdFromString(String vertexId) {
       return vertexId;
+    }
+
+    public String getUrl() {
+      return url;
+    }
+
+    public void setUrl(String url) {
+      this.url = url;
+    }
+
+    public String getUser() {
+      return user;
+    }
+
+    public void setUser(String user) {
+      this.user = user;
+    }
+
+    public String getPassword() {
+      return password;
+    }
+
+    public void setPassword(String password) {
+      this.password = password;
     }
   }
 

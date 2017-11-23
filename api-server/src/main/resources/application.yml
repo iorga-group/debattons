@@ -1,0 +1,7 @@
+server.servlet.contextPath: /api
+
+debattons:
+  database:
+    url: localhost/debattons
+    user: api-server
+    password: password
