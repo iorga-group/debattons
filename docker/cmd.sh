@@ -37,6 +37,7 @@ if [ "$COMMAND" == "build-and-run" ] ; then
 
 	export USER_UID=`id -u`
 	export USER_GID=`id -g`
+    mkdir -p ${HOME}/{.m2,.npm} # in order to have the user rights on those folders in case it is not yet created
 
   # Using "${DOCKER_COMPOSE[@]}" in order to handle correctly paths with spaces in it thanks to https://stackoverflow.com/a/1555811/535203
 	"${DOCKER_COMPOSE[@]}" build

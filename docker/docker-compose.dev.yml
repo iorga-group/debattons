@@ -19,8 +19,12 @@ services:
       context: ../
       dockerfile: docker/Dockerfile.dev
       args:
-        - USER_UID=${USER_UID}
-        - USER_GID=${USER_GID}
+        - USER_UID
+        - USER_GID
+        - http_proxy
+        - https_proxy
+        - HTTP_PROXY
+        - HTTPS_PROXY
     image: debattons:dev
     volumes:
       - ${ROOT_PROJECT_DIR}:/opt/debattons
@@ -31,5 +35,9 @@ services:
       - "8080:8080"
     environment:
       - ORIENTDB_ROOT_PASSWORD=${ORIENTDB_ROOT_PASSWORD}
+      - http_proxy
+      - https_proxy
+      - HTTP_PROXY
+      - HTTPS_PROXY
     links:
       - orientdb:orientdb

@@ -19,11 +19,20 @@ Here are some resources:
  * A more general [**presentation of the project and its ideas**](https://docs.google.com/presentation/d/1UIsnLdP2XgO_Ii6g98lWW4FsMuDccD-TigsT5NSFKOU/edit#slide=id.g224b5ac09f_1_0) (currently only in French language)
 
 ## Install & run Débattons on Ubuntu 16.04
+The following command will `full-upgrade` your system, then install Docker and Docker Compose, and finally will clone this project to your `/opt/debattons`.
 ```bash
 curl -L "https://raw.githubusercontent.com/iorga-group/debattons/master/setup/run-env-on-ubuntu-16.04.sh" > /tmp/setup-debattons-run-env-on-ubuntu-16.04.sh && bash /tmp/setup-debattons-run-env-on-ubuntu-16.04.sh
+```
+Now restart your session (in order for the group changes to take effects, your user has been added to `docker` group in order to be able to execute Docker) or execute the following command:
+```bash
+su -lp $USER
+```
+Enter the following command that will create all the development environment into a Docker image and then will run this image as well as the required database.
+```bash
 /opt/debattons/docker/cmd.sh build-and-run
 ```
-Now access Débattons at [http://localhost:4200](http://localhost:4200)
+
+You are now able to access Débattons at [http://localhost:4200](http://localhost:4200)
 
 ## Installation of development environment on Ubuntu 16.04
 ```bash

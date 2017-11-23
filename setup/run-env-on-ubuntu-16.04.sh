@@ -24,8 +24,29 @@ sudo -E apt-get update
 ## To check the available versions : apt-cache madison docker-ce
 sudo -E apt-get install -y docker-ce=17.09.0~ce-0~ubuntu
 sudo usermod -aG docker $USER # adding current user to "docker" group in order to execute docker without sudo thanks to https://askubuntu.com/a/739861/29219
+## Configuring the proxy if any following the documentation https://docs.docker.com/engine/admin/systemd/#httphttps-proxy
+if [ -n "$HTTP_PROXY" ] || [ -n "$http_proxy" ]; then
+    sudo mkdir -p /etc/systemd/system/docker.service.d
+    sudo tee /etc/systemd/system/docker.service.d/http-proxy.conf<<EOF
+[Service]
+Environment="HTTP_PROXY=${HTTP_PROXY:-$http_proxy}"
+EOF
+    PROXY_CONFIGURED=true
+fi
+if [ -n "$HTTPS_PROXY" ] || [ -n "$https_proxy" ]; then
+    sudo mkdir -p /etc/systemd/system/docker.service.d
+    sudo tee /etc/systemd/system/docker.service.d/https-proxy.conf<<EOF
+[Service]
+Environment="HTTPS_PROXY=${HTTPS_PROXY:-$https_proxy}"
+EOF
+    PROXY_CONFIGURED=true
+fi
+if [ -n "$PROXY_CONFIGURED" ]; then
+    sudo systemctl daemon-reload
+    sudo systemctl restart docker
+fi
 ## Checking that docker works
-docker run --rm hello-world | grep "Hello from Docker!"
+sg docker "docker run --rm hello-world" | grep "Hello from Docker!" # we use sg in order to avoid the execution of a new session to take into account the group modification thanks to https://askubuntu.com/a/469391/29219
 
 # Install Docker-Compose
 sudo -E curl -L https://github.com/docker/compose/releases/download/1.16.1/docker-compose-`uname -s`-`uname -m` -o /usr/local/bin/docker-compose
