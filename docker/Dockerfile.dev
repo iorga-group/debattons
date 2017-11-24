@@ -14,6 +14,7 @@ RUN addgroup --gid $USER_GID user && \
 
 ADD setup/dev-env-on-ubuntu-16.04.sh /usr/local/bin/setup.sh
 USER user
+ADD setup/proxy-on-ubuntu.sh /opt/debattons/setup/proxy-on-ubuntu.sh
 RUN setup.sh --no-run-env
 
 # Install OrientDB tools (inspired by the Docker script https://github.com/orientechnologies/orientdb-docker/blob/222b64299884eeb4b324e2822873f69e8a7c006e/3.0/x86_64/alpine/Dockerfile)
@@ -34,6 +35,6 @@ USER user
 
 WORKDIR /opt/debattons
 
-ADD docker/debattons-docker-cmd.dev.sh /usr/local/bin/cmd.sh
+ADD scripts/build-and-run.dev.sh /usr/local/bin/build-and-run.dev.sh
 
-CMD cmd.sh
+CMD build-and-run.dev.sh --orientdb-host orientdb

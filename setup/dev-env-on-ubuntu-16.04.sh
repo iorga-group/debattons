@@ -25,10 +25,13 @@ sudo -E apt-get install -y curl
 curl -sL https://deb.nodesource.com/setup_6.x | sudo -E bash -
 sudo -E apt-get install -y nodejs build-essential
 
-# Install angular-cli
-sudo -E npm install -g @angular/cli@1.5.3
-
 # Install Yarn, following the documentation https://yarnpkg.com/en/docs/install#linux-tab
 curl -sS https://dl.yarnpkg.com/debian/pubkey.gpg | sudo apt-key add -
 echo "deb https://dl.yarnpkg.com/debian/ stable main" | sudo tee /etc/apt/sources.list.d/yarn.list
 sudo -E apt-get update && sudo -E apt-get install yarn
+
+# Configure proxy in case it is set
+/opt/debattons/setup/proxy-on-ubuntu.sh
+
+# Install angular-cli
+sudo -E yarn global add @angular/cli@1.5.3
