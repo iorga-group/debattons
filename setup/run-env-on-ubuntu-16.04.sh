@@ -3,8 +3,7 @@
 set -x
 set -e
 
-# First upgrade the system
-sudo -E apt-get update && sudo -E apt-get full-upgrade -y
+sudo -E apt-get update
 
 # Install Docker, following the official documentation https://docs.docker.com/engine/installation/linux/docker-ce/ubuntu/#install-using-the-repository
 sudo -E apt-get install -y \
@@ -55,7 +54,10 @@ sudo chmod +x /usr/local/bin/docker-compose
 docker-compose --version | grep "docker-compose version 1.16.1, build 6d1ac21"
 
 # Checkout git repository of Debattons
-sudo -E apt-get install -y git
-cd /tmp
-git clone https://github.com/iorga-group/debattons
-sudo mv debattons /opt/
+BASE_DIR="$(readlink -f `dirname $0`)"
+if [ -f "$BASE_DIR/debattons-git-copy.sh" ]; then
+    source "$BASE_DIR/debattons-git-copy.sh"
+else
+    curl -L "https://raw.githubusercontent.com/iorga-group/debattons/master/setup/debattons-git-copy.sh" > /tmp/setup-debattons-git-copy.sh && bash /tmp/setup-debattons-git-copy.sh
+    rm /tmp/setup-debattons-git-copy.sh
+fi

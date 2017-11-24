@@ -15,7 +15,7 @@ RUN addgroup --gid $USER_GID user && \
 ADD setup/dev-env-on-ubuntu-16.04.sh /usr/local/bin/setup.sh
 USER user
 ADD setup/proxy-on-ubuntu.sh /opt/debattons/setup/proxy-on-ubuntu.sh
-RUN setup.sh --no-run-env
+RUN setup.sh --no-debattons-git-copy
 
 # Install OrientDB tools (inspired by the Docker script https://github.com/orientechnologies/orientdb-docker/blob/222b64299884eeb4b324e2822873f69e8a7c006e/3.0/x86_64/alpine/Dockerfile)
 ## Using 2.2.30 instead of 3.0.0m2 because of a bug when creating a user from the console https://stackoverflow.com/q/47446065/535203 and https://github.com/orientechnologies/orientdb/issues/7898

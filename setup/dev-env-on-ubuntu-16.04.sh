@@ -3,14 +3,16 @@
 set -x
 set -e
 
+sudo -E apt-get update
+
 BASE_DIR="$(readlink -f `dirname $0`)"
 
-if [ "$1" != "--no-run-env" ]; then
-    if [ -f "$BASE_DIR/run-env-on-ubuntu-16.04.sh" ]; then
-        source "$BASE_DIR/run-env-on-ubuntu-16.04.sh"
+if [ "$1" != "--no-debattons-git-copy" ]; then
+    if [ -f "$BASE_DIR/debattons-git-copy.sh" ]; then
+        source "$BASE_DIR/debattons-git-copy.sh"
     else
-        sudo -E apt-get install -y curl
-        curl -L "https://raw.githubusercontent.com/iorga-group/debattons/master/setup/run-env-on-ubuntu-16.04.sh" > /tmp/setup-debattons-run-env-on-ubuntu-16.04.sh && bash /tmp/setup-debattons-run-env-on-ubuntu-16.04.sh
+        curl -L "https://raw.githubusercontent.com/iorga-group/debattons/master/setup/debattons-git-copy.sh" > /tmp/setup-debattons-git-copy.sh && bash /tmp/setup-debattons-git-copy.sh
+        rm /tmp/setup-debattons-git-copy.sh
     fi
 fi
 
