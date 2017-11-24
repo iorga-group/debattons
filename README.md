@@ -45,7 +45,7 @@ Débattons will be installed in `/opt/debattons` and OrientDB in `/opt/orientdb`
 
 The following script will start OrientDB, create the required DB & user if needed, and start Débattons:
 ```bash
-/opt/debattons/scripts/build-and-run.dev.sh
+/opt/debattons/scripts/build-and-run.dev.sh --start-orientdb-server
 ```
 You are now able to access Débattons at [http://localhost:4200](http://localhost:4200)
 

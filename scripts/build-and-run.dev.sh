@@ -21,6 +21,8 @@ done
 # Configure/reconfigure proxy in case it is set
 /opt/debattons/setup/proxy-on-ubuntu.sh
 
+export ORIENTDB_ROOT_PASSWORD=${ORIENTDB_ROOT_PASSWORD:-default_ORIENTDB_ROOT_PASSWORD_to_be_changed}
+
 if [ "$START_ORIENTDB_SERVER" = "true" ];then
     /opt/orientdb/bin/server.sh &
 fi
@@ -30,7 +32,7 @@ while ! nc -vz "$ORIENTDB_HOST" 2424; do
     sleep 1
 done
 
-/opt/orientdb/bin/console.sh "CREATE DATABASE remote:$ORIENTDB_HOST/debattons root $ORIENTDB_ROOT_PASSWORD PLOCAL; CREATE USER api-server IDENTIFIED BY password ROLE admin;" || echo "Already created"
+/opt/orientdb/bin/console.sh "CREATE DATABASE remote:$ORIENTDB_HOST/debattons root $ORIENTDB_ROOT_PASSWORD PLOCAL; CREATE USER \`api-server\` IDENTIFIED BY password ROLE admin;" || echo "Already created"
 
 export DEBATTONS_DATABASE_URL=$ORIENTDB_HOST/debattons
 cd /opt/debattons/api-server && mvn spring-boot:run &
