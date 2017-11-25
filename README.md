@@ -83,8 +83,8 @@ You can finally access to the platform at [http://localhost:4200](http://localho
 
 ## Vagrant install
 The following procedure will automatically create, setup and configure the development environment in a dedicated virtual machine:
-1. Install [https://www.vagrantup.com/](Vagrant 2.0+).
-2. Install [https://www.virtualbox.org/](VirtualBox 5.0+).
+1. Install [Vagrant 2.0+](https://www.vagrantup.com/).
+2. Install [VirtualBox 5.0+](https://www.virtualbox.org/).
 3. Clone the repository: `git clone git@github.com:sballe73/debattons.git`.
 4. Enter the repository directory: `cd debattons`.
 5. Create and provision the virtual machine: vagrant up;
