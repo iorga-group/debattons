@@ -80,3 +80,16 @@ yarn install
 ```
 
 You can finally access to the platform at [http://localhost:4200](http://localhost:4200)
+
+##Vagrant install
+The following procedure will automatically create, setup and configure the development environment in a dedicated virtual machine:
+
+    Install [https://www.vagrantup.com/](Vagrant 2.0+).
+    Install [https://www.virtualbox.org/(VirtualBox 5.0+).
+    Clone the repository: `git clone git@github.com:sballe73/debattons.git`.
+    Enter the repository directory: `cd debattons`.
+
+    Create and provision the virtual machine: vagrant up;
+        during this step, a new dedicated virtual machine will be created, setup and all the dependencies will be installed;
+        Windows users must run this command as an administrator
+
