@@ -51,3 +51,7 @@ Thumbs.db
 
 # OrientDB history
 .orientdb_history
+
+#vagrant files
+.vagrant
+ubuntu-xenial-16.04-cloudimg-console.log
