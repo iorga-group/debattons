@@ -87,6 +87,6 @@ The following procedure will automatically create, setup and configure the devel
 2. Install [VirtualBox 5.0+](https://www.virtualbox.org/).
 3. Clone the repository: `git clone git@github.com:sballe73/debattons.git`.
 4. Enter the repository directory: `cd debattons`.
-5. Create and provision the virtual machine: vagrant up;
+5. Create and provision the virtual machine: `vagrant up`.
  * during this step, a new dedicated virtual machine will be created, setup and all the dependencies will be installed;
  * Windows users *must* run this command as an administrator because of [this issue](https://www.virtualbox.org/ticket/10085)
