@@ -38,3 +38,8 @@ mvn dependency:get -Ddest=./ -DremoteRepositories=sonatype-nexus-snapshots::::ht
 && rm orientdb-community-$ORIENTDB_VERSION.tar.gz
 
 mv /tmp/orientdb /opt/
+chown ubuntu.ubuntu /opt/orientdb -R
+
+ln -sf /vagrant /opt/debattons
+su - ubuntu -c "/bin/bash /opt/debattons/scripts/build-and-run.dev.sh --start-orientdb-server"
+
