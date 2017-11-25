@@ -17,11 +17,6 @@ USER user
 ADD setup/proxy-on-ubuntu.sh /opt/debattons/setup/proxy-on-ubuntu.sh
 RUN setup.sh --no-debattons-git-copy
 
-# Install cmd.sh dependencies
-RUN apt-get install -y netcat
-
-USER user
-
 WORKDIR /opt/debattons
 
 ADD scripts/build-and-run.dev.sh /usr/local/bin/build-and-run.dev.sh

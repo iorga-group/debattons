@@ -38,7 +38,6 @@ sudo -E apt-get update && sudo -E apt-get install yarn
 # Install angular-cli
 sudo -E yarn global add @angular/cli@1.5.3
 
-
 # Install OrientDB tools (inspired by the Docker script https://github.com/orientechnologies/orientdb-docker/blob/222b64299884eeb4b324e2822873f69e8a7c006e/3.0/x86_64/alpine/Dockerfile)
 ## Using latest 3.0.0-SNAPSHOT as a bug in the console was fixed from 3.0.0m2 version, and we need this fix https://stackoverflow.com/a/47469583/535203 / https://github.com/orientechnologies/orientdb/issues/7898
 ORIENTDB_VERSION=3.0.0-SNAPSHOT
@@ -49,3 +48,6 @@ mvn dependency:get -Ddest=./ -DremoteRepositories=sonatype-nexus-snapshots::::ht
 && rm orientdb-community-$ORIENTDB_VERSION.tar.gz
 
 sudo mv /tmp/orientdb /opt/
+
+# Install build-and-run.dev.sh dependencies
+sudo -E apt-get install -y netcat
