@@ -21,6 +21,8 @@ Vagrant.configure("2") do |config|
 		# https://github.com/npm/npm/issues/7308#issuecomment-84214837
 		vbox.customize ["setextradata", :id, "VBoxInternal2/SharedFoldersEnableSymlinksCreate/vagrant", "1"]
 		end
+	config.vm.network :forwarded_port, guest: 4200, host: 4200
+	config.vm.network :forwarded_port, guest: 2480, host: 2480
 
 
   # Disable automatic box update checking. If you disable this, then

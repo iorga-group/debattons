@@ -90,3 +90,10 @@ The following procedure will automatically create, setup and configure the devel
 5. Create and provision the virtual machine: `vagrant up`.
  * during this step, a new dedicated virtual machine will be created, setup and all the dependencies will be installed;
  * Windows users *must* run this command as an administrator because of [this issue](https://www.virtualbox.org/ticket/10085)
+
+At your first run, the server will conpile and start automatically, at next run you will have to start the server manually.
+
+``` bash
+vagrant ssh
+/opt/debattons/scripts/build-and-run.dev.sh --start-orientdb-server
+```
