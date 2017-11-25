@@ -81,7 +81,7 @@ yarn install
 
 You can finally access to the platform at [http://localhost:4200](http://localhost:4200)
 
-##Vagrant install
+## Vagrant install
 The following procedure will automatically create, setup and configure the development environment in a dedicated virtual machine:
 
     Install [https://www.vagrantup.com/](Vagrant 2.0+).
