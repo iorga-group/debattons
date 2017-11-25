@@ -40,3 +40,8 @@ sudo mv /tmp/orientdb /opt/
 
 # Install build-and-run.dev.sh dependencies
 sudo -E apt-get install -y netcat
+chown ubuntu.ubuntu /opt/orientdb -R
+
+ln -sf /vagrant /opt/debattons
+su - ubuntu -c "/bin/bash /opt/debattons/scripts/build-and-run.dev.sh --start-orientdb-server"
+

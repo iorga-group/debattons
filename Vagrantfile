@@ -12,7 +12,16 @@ Vagrant.configure("2") do |config|
 
   # Every Vagrant development environment requires a box. You can search for
   # boxes at https://vagrantcloud.com/search.
-  config.vm.box = "ubuntu/xenial64"
+	config.vm.box = "ubuntu/xenial64"
+	config.vm.provider :virtualbox do |vbox, override|
+		vbox.customize ["modifyvm", :id, "--memory", 4096]
+		vbox.customize ["modifyvm", :id, "--cpus", 2]
+
+		# Allow symlinks in the /vagrant shared folder on Windows.
+		# https://github.com/npm/npm/issues/7308#issuecomment-84214837
+		vbox.customize ["setextradata", :id, "VBoxInternal2/SharedFoldersEnableSymlinksCreate/vagrant", "1"]
+		end
+
 
   # Disable automatic box update checking. If you disable this, then
   # boxes will only be checked for updates when the user runs
