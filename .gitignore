@@ -34,6 +34,8 @@
 npm-debug.log
 testem.log
 /ui/typings
+/ui/yarn.lock
+/ui/yarn-error.log
 
 # e2e
 /ui/e2e/*.js
@@ -51,3 +53,8 @@ Thumbs.db
 
 # OrientDB history
 .orientdb_history
+
+# Vagrant files
+/vagrant/.vagrant
+/vagrant/*.log
+/vagrant-data
