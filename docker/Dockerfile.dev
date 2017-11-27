@@ -19,6 +19,8 @@ RUN setup.sh --no-debattons-git-copy
 
 WORKDIR /opt/debattons
 
-ADD scripts/build-and-run.dev.sh /usr/local/bin/build-and-run.dev.sh
+ADD scripts/build-and-run.dev.sh /usr/local/bin/build-and-run.dev.sh 
 
-CMD build-and-run.dev.sh --orientdb-host orientdb
+#Comment the following CMD as current 3.0.0-SNAPSHOT console version is unable to talk to 3.0.0m2 server version, https://github.com/orientechnologies/orientdb/issues/7901
+#CMD build-and-run.dev.sh --orientdb-host orientdb
+CMD build-and-run.dev.sh --start-orientdb-server
