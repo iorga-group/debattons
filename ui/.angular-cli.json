@@ -19,7 +19,11 @@
       "testTsconfig": "tsconfig.spec.json",
       "prefix": "app",
       "styles": [
+        "../node_modules/quill/dist/quill.snow.css",
+        "../node_modules/quill/dist/quill.core.css",
         "../node_modules/font-awesome/css/font-awesome.min.css",
+        "../node_modules/primeng/resources/themes/omega/theme.css",
+        "../node_modules/primeng/resources/primeng.min.css",
         "../node_modules/highlight.js/styles/agate.css",
         "../node_modules/bootstrap/dist/css/bootstrap.min.css",
         "styles.css"
@@ -30,6 +34,7 @@
         "../node_modules/highlight.js/lib/highlight.js",
         "../node_modules/jquery/dist/jquery.slim.min.js",
         "../node_modules/popper.js/dist/umd/popper.min.js",
+        "../node_modules/quill/dist/quill.min.js",
         "../node_modules/bootstrap/dist/js/bootstrap.min.js"
       ],
       "environmentSource": "environments/environment.ts",
@@ -46,13 +51,16 @@
   },
   "lint": [
     {
-      "project": "src/tsconfig.app.json"
+      "project": "src/tsconfig.app.json",
+      "exclude": "**/node_modules/**"
     },
     {
-      "project": "src/tsconfig.spec.json"
+      "project": "src/tsconfig.spec.json",
+      "exclude": "**/node_modules/**"
     },
     {
-      "project": "e2e/tsconfig.e2e.json"
+      "project": "e2e/tsconfig.e2e.json",
+      "exclude": "**/node_modules/**"
     }
   ],
   "test": {

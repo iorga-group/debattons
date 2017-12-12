@@ -7,8 +7,8 @@
   <div class="form-group">
     <label>Content</label>
     <div>
-      <md-editor name="content" [(ngModel)]="reaction.content"></md-editor>
-    </div>
+      <p-editor name="content" [(ngModel)]="reaction.content" [style]="{'height':'320px'}"></p-editor>
+   </div>
   </div>
   (Id : {{reaction.id}})
   <button type="submit" (click)="createNewReaction()" class="btn btn-primary">Create reaction</button>
