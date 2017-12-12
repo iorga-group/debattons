@@ -1,82 +1,15 @@
 <div class="container-fluid h-100">
   <div class="row h-100 justify-content-center align-items-center">
-    <div class="col-md-8">
-
-      <div class="row h-25 align-items-center">
-        <div class="col">
-          <div class="card card-block text-center">
-            <a [routerLink]="['/reaction', reaction.reactedTo[0].id]" *ngIf="reaction.reactedTo[0]">
-              {{reaction.reactedTo[0].title}}
-            </a>
-          </div>
-        </div>
-        <div class="col">
-          <div class="card card-block text-center">
-            <a [routerLink]="['/reaction', reaction.reactedTo[1].id]" *ngIf="reaction.reactedTo[1]">
-              {{reaction.reactedTo[1].title}}
-            </a>
-          </div>
-        </div>
-        <div class="col">
-          <div class="card card-block text-center">
-            <a [routerLink]="['/reaction', reaction.reactedTo[2].id]" *ngIf="reaction.reactedTo[2]">
-              {{reaction.reactedTo[2].title}}
-            </a>
-          </div>
-        </div>
-      </div>
-
-      <div class="row h-25 align-items-center">
-        <div class="col">
-          <div class="card card-block text-center">
-            <a [routerLink]="['/reaction', reaction.reactedTo[3].id]" *ngIf="reaction.reactedTo[3]">
-              {{reaction.reactedTo[3].title}}
-            </a>
-          </div>
-        </div>
-        <div class="col">
-          <div class="card card-block text-center">{{reaction.title}}</div>
-        </div>
-        <div class="col">
-          <div class="card card-block text-center">
-            <a [routerLink]="['/reaction', reaction.reactedTo[4].id]" *ngIf="reaction.reactedTo[4]">
-              {{reaction.reactedTo[4].title}}
-            </a>
-          </div>
-        </div>
-      </div>
-
-      <div class="row h-25 align-items-center">
-        <div class="col">
-          <div class="card card-block text-center">
-            <a [routerLink]="['/reaction', reaction.reactedTo[5].id]" *ngIf="reaction.reactedTo[5]">
-              {{reaction.reactedTo[5].title}}
-            </a>
-          </div>
-        </div>
-        <div class="col">
-          <div class="card card-block text-center">
-            <a [routerLink]="['/reaction', reaction.reactedTo[6].id]" *ngIf="reaction.reactedTo[6]">
-              {{reaction.reactedTo[6].title}}
-            </a>
-          </div>
-        </div>
-        <div class="col">
-          <div class="card card-block text-center">
-            <a [routerLink]="['/reaction', reaction.reactedTo[7].id]" *ngIf="reaction.reactedTo[7]">
-              {{reaction.reactedTo[7].title}}
-            </a>
-          </div>
-        </div>
-      </div>
+    <div class="col-md-8 reaction-graph" [visNetwork]="visNetwork" [visNetworkData]="visNetworkData" [visNetworkOptions]="visNetworkOptions" (initialized)="networkInitialized()">
 
     </div>
 
     <div class="col-md-4">
-      <div class="card card-block text-center">{{reaction.title}}</div>
-      <div class="card card-block text-center">{{reaction.content}}</div>
+      <div class="card card-block text-center" *ngIf="reaction">{{reaction.title}}</div>
+      <div class="card card-block text-center" *ngIf="reaction">{{reaction.content}}</div>
       <button type="submit" (click)="reactToThis()" class="btn btn-primary">React to this</button>
     </div>
 
   </div>
+
 </div>

@@ -1,5 +1,5 @@
-import { BrowserModule } from '@angular/platform-browser';
-import { NgModule } from '@angular/core';
+import {BrowserModule} from '@angular/platform-browser';
+import {NgModule} from '@angular/core';
 
 import {HttpModule} from '@angular/http';
 
@@ -13,6 +13,7 @@ import {ReactionDetailComponent} from "./reaction-detail.component";
 import {ReactionListComponent} from "./reaction-list.component";
 import {RootReactionsComponent} from "./root-reactions.component";
 import {NewReactionComponent} from "./new-reaction.component";
+import {VisModule} from "ngx-vis";
 
 import {EditorModule} from 'primeng/primeng';
 import {BrowserAnimationsModule} from '@angular/platform-browser/animations';
@@ -33,7 +34,8 @@ import {BrowserAnimationsModule} from '@angular/platform-browser/animations';
     EditorModule,
     HttpModule,
     FormsModule,
-    AppRoutingModule
+    AppRoutingModule,
+    VisModule
   ],
   providers: [
     ReactionService

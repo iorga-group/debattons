@@ -4,4 +4,5 @@ export class Reaction {
   content: string;
 
   reactedTo: Reaction[];
+  reactedFrom: Reaction;
 }

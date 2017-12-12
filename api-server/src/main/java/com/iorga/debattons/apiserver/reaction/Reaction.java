@@ -16,6 +16,8 @@ public class Reaction {
 
   private Set<Reaction> reactedTo;
 
+  private Reaction reactedFrom;
+
   public String getId() {
     return id;
   }
@@ -46,6 +48,14 @@ public class Reaction {
 
   public void setReactedTo(Set<Reaction> reacted) {
     this.reactedTo = reacted;
+  }
+
+  public Reaction getReactedFrom() {
+    return reactedFrom;
+  }
+
+  public void setReactedFrom(Reaction reactedFrom) {
+    this.reactedFrom = reactedFrom;
   }
 
   public static Reaction fromVertex(Vertex vertex, GraphUtils graphUtils) throws IOException {

@@ -78,6 +78,10 @@ public class ReactionService {
       Vertex reactionVertex = createReactionTraversalById(id, graph).next();
       Reaction reaction = Reaction.fromVertex(reactionVertex, graphUtils);
       loadReactedToByOriginalReactionAndVertexAndDepth(reaction, reactionVertex, reactedToDepth, graph);
+      Iterator<Vertex> reactedFromIt = reactionVertex.vertices(Direction.IN, "reactedTo");
+      if (reactedFromIt.hasNext()) {
+        reaction.setReactedFrom(Reaction.fromVertex(reactedFromIt.next(), graphUtils));
+      }
       return reaction;
     });
   }

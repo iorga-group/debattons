@@ -26,6 +26,7 @@
         "../node_modules/primeng/resources/primeng.min.css",
         "../node_modules/highlight.js/styles/agate.css",
         "../node_modules/bootstrap/dist/css/bootstrap.min.css",
+        "../node_modules/vis/dist/vis-network.min.css",
         "styles.css"
       ],
       "scripts": [

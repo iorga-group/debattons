@@ -41,7 +41,7 @@ if [ "$COMMAND" == "build-and-run" ] ; then
     mkdir -p ${HOME}/{.m2,.npm} $DOCKER_DATA/orientdb/{databases,backups} # in order to have the user rights on those folders in case it is not yet created
 
     # Using "${DOCKER_COMPOSE[@]}" in order to handle correctly paths with spaces in it thanks to https://stackoverflow.com/a/1555811/535203
-    "${DOCKER_COMPOSE[@]}" build
+    "${DOCKER_COMPOSE[@]}" build $SERVICES_TO_START
     "${DOCKER_COMPOSE[@]}" down --volumes
     "${DOCKER_COMPOSE[@]}" up -d --force-recreate $SERVICES_TO_START
 elif [ "$COMMAND" == "stop-and-remove" ] ; then
