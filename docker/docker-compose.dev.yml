@@ -2,7 +2,10 @@ version: '2.1'
 services:
   orientdb:
     container_name: debattons_orientdb
-    image: orientdb:3.0.0m2
+    build:
+      context: ../
+      dockerfile: docker/Dockerfile.orientdb.dev
+    image: debattons_orientdb
     environment:
       - ORIENTDB_ROOT_PASSWORD=${ORIENTDB_ROOT_PASSWORD}
     volumes:

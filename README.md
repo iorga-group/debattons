@@ -89,6 +89,7 @@ $PATH_TO_ORIENTDB/bin/server.sh
 The first time, you will have to configure the DB:
  * Connect to [http://localhost:2480/studio/index.html](http://localhost:2480/studio/index.html) and click on "New DB" and create the Database named `debattons` with the user `root` and the password that you will find in the file `docker-data/conf/debattons.env` in the project file tree.
  * Then create a new User on that database named `api-server` with the password `password`, the `admin` role and the status `Active`
+ * Due to [an issue](https://github.com/orientechnologies/orientdb/issues/7984) in current version of OrientDB, go to "Browse" and execute the following request: `CREATE CLASS Root EXTENDS V`
 
 Now launch the Webservices part in another shell:
 ```bash
