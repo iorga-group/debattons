@@ -32,7 +32,8 @@ while ! nc -vz "$ORIENTDB_HOST" 2424; do
     sleep 1
 done
 
-/opt/orientdb/bin/console.sh "CREATE DATABASE remote:$ORIENTDB_HOST/debattons root $ORIENTDB_ROOT_PASSWORD PLOCAL; CREATE USER \`api-server\` IDENTIFIED BY password ROLE admin;" || echo "Already created"
+# Also need to create the "Root" class due to the following issue https://github.com/orientechnologies/orientdb/issues/7985 TODO remove the CONNECT & CREATE CLASS commands when it will be fixed
+/opt/orientdb/bin/console.sh "CREATE DATABASE remote:$ORIENTDB_HOST/debattons root $ORIENTDB_ROOT_PASSWORD PLOCAL; CREATE USER \`api-server\` IDENTIFIED BY password ROLE admin; CONNECT remote:$ORIENTDB_HOST/debattons api-server password; CREATE CLASS Root EXTENDS V" || echo "Already created"
 
 export DEBATTONS_DATABASE_URL=$ORIENTDB_HOST/debattons
 cd /opt/debattons/api-server && mvn spring-boot:run &
