@@ -37,11 +37,18 @@ export class ReactionDetailComponent implements OnInit, OnDestroy {
       .subscribe(reaction => {
         this.reaction = reaction;
 
-        let nodes = new VisNodes([{id: reaction.id, label: reaction.title, title: reaction.content, x: 0, y: 0, color: {border: '#193357'}}]);
+        let nodes = new VisNodes([{
+          id: reaction.id,
+          label: reaction.title,
+          title: reaction.content,
+          x: 0, y: 0,
+          color: {border: '#193357'},
+          shape: 'box'
+        }]);
         let edges = new VisEdges([]);
 
         for (let childReaction of reaction.reactedTo) {
-          nodes.add({id: childReaction.id, label: childReaction.title, title: childReaction.content});
+          nodes.add({id: childReaction.id, label: childReaction.title, title: childReaction.content, shape: 'box'});
           edges.add({from: reaction.id, to: childReaction.id});
         }
 
@@ -51,9 +58,9 @@ export class ReactionDetailComponent implements OnInit, OnDestroy {
             id: reactedFrom.id,
             label: reactedFrom.title,
             title: reactedFrom.content,
-            x: 0,
-            y: -50,
-            color: '#4793fc'
+            x: 0, y: -50,
+            color: '#4793fc',
+            shape: 'box'
           });
           edges.add({from: reactedFrom.id, to: reaction.id});
         }

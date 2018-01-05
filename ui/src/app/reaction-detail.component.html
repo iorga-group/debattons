@@ -1,12 +1,12 @@
 <div class="container-fluid h-100">
   <div class="row h-100 justify-content-center align-items-center">
-    <div class="col-md-8 reaction-graph" [visNetwork]="visNetwork" [visNetworkData]="visNetworkData" [visNetworkOptions]="visNetworkOptions" (initialized)="networkInitialized()">
+    <div class="col-md-8 col-sm-6 reaction-graph" [visNetwork]="visNetwork" [visNetworkData]="visNetworkData" [visNetworkOptions]="visNetworkOptions" (initialized)="networkInitialized()">
 
     </div>
 
-    <div class="col-md-4">
+    <div class="col-md-4 col-sm-6">
       <div class="card card-block text-center" *ngIf="reaction">{{reaction.title}}</div>
-      <div class="card card-block text-center" *ngIf="reaction">{{reaction.content}}</div>
+      <div class="card card-block text-center" *ngIf="reaction" [innerHTML]="reaction.content"></div>
       <button type="submit" (click)="reactToThis()" class="btn btn-primary">React to this</button>
     </div>
 
