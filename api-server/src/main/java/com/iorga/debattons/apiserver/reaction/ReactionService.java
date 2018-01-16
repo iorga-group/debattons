@@ -55,6 +55,7 @@ public class ReactionService {
     return graphUtils.doInGraphTransaction(graph -> {
       return graphUtils.getRootTraversal(graph)
         .out("created")
+        .hasLabel("Reaction")
         .order().by("creationDate", Order.decr)
         .map(vertexTraverser -> {
           try {

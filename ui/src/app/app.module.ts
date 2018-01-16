@@ -2,6 +2,7 @@ import {BrowserModule} from '@angular/platform-browser';
 import {NgModule} from '@angular/core';
 
 import {HttpModule} from '@angular/http';
+import {HttpClientModule} from '@angular/common/http';
 
 import {AppComponent} from './app.component';
 import {ReactionService} from "./reaction.service";
@@ -17,6 +18,10 @@ import {VisModule} from "ngx-vis";
 
 import {EditorModule} from 'primeng/primeng';
 import {BrowserAnimationsModule} from '@angular/platform-browser/animations';
+import {CreateAccountComponent} from "./create-account.component";
+import {UIMessagesComponent} from "./ui-messages.component";
+import {UIMessageService} from "./ui-message.service";
+import {UserService} from "./user.service";
 
 
 @NgModule({
@@ -26,19 +31,24 @@ import {BrowserAnimationsModule} from '@angular/platform-browser/animations';
     ReactionEditorComponent,
     ReactionListComponent,
     RootReactionsComponent,
-    NewReactionComponent
+    NewReactionComponent,
+    CreateAccountComponent,
+    UIMessagesComponent,
   ],
   imports: [
     BrowserModule,
     BrowserAnimationsModule,
     EditorModule,
+    HttpClientModule,
     HttpModule,
     FormsModule,
     AppRoutingModule,
-    VisModule
+    VisModule,
   ],
   providers: [
-    ReactionService
+    ReactionService,
+    UIMessageService,
+    UserService,
   ],
   bootstrap: [AppComponent]
 })
