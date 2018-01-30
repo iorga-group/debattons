@@ -22,12 +22,14 @@ while [ "$#" != "0" ] ; do
 done
 
 # Configure/reconfigure proxy in case it is set
-/opt/debattons/setup/proxy-on-ubuntu.sh
+if [ -f /opt/debattons/setup/proxy.sh ]; then
+    /opt/debattons/setup/proxy.sh
+fi
 
 export ORIENTDB_ROOT_PASSWORD=${ORIENTDB_ROOT_PASSWORD:-default_ORIENTDB_ROOT_PASSWORD_to_be_changed}
 ORIENTDB_PATH=${ORIENTDB_PATH:-/opt/orientdb}
 
-if [ "$START_ORIENTDB_SERVER" = "true" ];then
+if [ "$START_ORIENTDB_SERVER" = "true" ]; then
     $ORIENTDB_PATH/bin/server.sh &
 fi
 

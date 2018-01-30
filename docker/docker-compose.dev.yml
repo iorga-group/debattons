@@ -4,8 +4,9 @@ services:
     container_name: debattons_orientdb
     build:
       context: ../
-      dockerfile: docker/Dockerfile.orientdb.dev
+      dockerfile: docker/orientdb/Dockerfile
     image: debattons_orientdb
+    user: ${USER_UID}:${USER_GID}
     environment:
       - ORIENTDB_ROOT_PASSWORD=${ORIENTDB_ROOT_PASSWORD}
     volumes:
@@ -13,39 +14,50 @@ services:
       - ${DOCKER_DATA}/orientdb/databases:/orientdb/databases
       - ${DOCKER_DATA}/orientdb/backup:/orientdb/backup
     ports:
-      - "${ORIENTDB_PORT:-2424}:2424"
-      - "${ORIENTDB_STUDIO_PORT:-2480}:2480"
-    restart: ${ORIENTDB_RESTART:-no}
-  debattons:
-    container_name: debattons_dev
-    build:
-      context: ../
-      dockerfile: docker/Dockerfile.dev
-      args:
-        - USER_UID
-        - USER_GID
-        - http_proxy
-        - https_proxy
-        - HTTP_PROXY
-        - HTTPS_PROXY
-    image: debattons:dev
-    volumes:
-      - ${ROOT_PROJECT_DIR}:/opt/debattons
-      - ${HOME}/.m2:/home/user/.m2
-      - ${HOME}/.npm:/home/user/.npm
-      - ${DOCKER_DATA}/orientdb/databases:/opt/orientdb/databases
-      - ${DOCKER_DATA}/orientdb/backup:/opt/orientdb/backup
-    ports:
-      - "4200:4200"
-      - "8080:8080"
       - "2424:2424"
       - "2480:2480"
+  api_server:
+    container_name: debattons_api_server
+    build:
+      context: ../
+      dockerfile: docker/api-server/Dockerfile
+    image: debattons_api_server
+    user: ${USER_UID}:${USER_GID}
     environment:
-      - ORIENTDB_ROOT_PASSWORD=${ORIENTDB_ROOT_PASSWORD}
+      - DEBATTONS_DATABASE_URL=orientdb/debattons
       - http_proxy
       - https_proxy
       - HTTP_PROXY
       - HTTPS_PROXY
-# Comment the following link as current 3.0.0-SNAPSHOT console version is unable to talk to 3.0.0m2 server version, https://github.com/orientechnologies/orientdb/issues/7901
-#    links:
-#      - orientdb:orientdb
+      - HOME=/tmp
+      - MAVEN_CONFIG=/tmp/.m2
+    volumes:
+      - ${HOME}/.m2:/tmp/.m2
+      - ../api-server:/workspace
+    working_dir: /workspace
+    ports:
+      - "5000:5000"
+      - "8080:8080"
+    links:
+      - orientdb:orientdb
+  ui:
+    container_name: debattons_ui
+#    image: node:6.12.3-alpine
+    image: node:6-alpine
+    user: ${USER_UID}:${USER_GID}
+    environment:
+      - http_proxy
+      - https_proxy
+      - HTTP_PROXY
+      - HTTPS_PROXY
+      - HOME=/tmp
+    volumes:
+      - ${HOME}/.cache/yarn:/tmp/.cache/yarn
+      - ../ui:/workspace
+    working_dir: /workspace
+    command: sh -cx "yarn install --no-bin-links && chmod +x ./node_modules/@angular/cli/bin/ng && ./node_modules/@angular/cli/bin/ng serve --host 0.0.0.0"
+    # no bin links else we got "EPROTO: protocol error, symlink '../../../../less/bin/lessc' -> '/vagrant/ui/node_modules/@angular/cli/node_modules/.bin/lessc'" with Vagrant on Windows thanks to https://github.com/npm/npm/issues/9901#issuecomment-146585579
+    # chmod to avoid "Permission denied" when executing the following line
+    # --host 0.0.0.0 authorize remote access thanks to https://github.com/angular/angular-cli/issues/1793#issuecomment-241343672
+    ports:
+      - "4200:4200"

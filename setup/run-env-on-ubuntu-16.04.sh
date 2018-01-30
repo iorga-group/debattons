@@ -21,7 +21,7 @@ sudo -E add-apt-repository \
    stable"
 sudo -E apt-get update
 ## To check the available versions : apt-cache madison docker-ce
-sudo -E apt-get install -y docker-ce=17.09.0~ce-0~ubuntu
+sudo -E apt-get install -y docker-ce=17.12.0~ce-0~ubuntu
 sudo usermod -aG docker $USER # adding current user to "docker" group in order to execute docker without sudo thanks to https://askubuntu.com/a/739861/29219
 ## Configuring the proxy if any following the documentation https://docs.docker.com/engine/admin/systemd/#httphttps-proxy
 if [ -n "$HTTP_PROXY" ] || [ -n "$http_proxy" ]; then
@@ -53,11 +53,13 @@ sudo chmod +x /usr/local/bin/docker-compose
 ## Checking docker-compose version
 docker-compose --version | grep "docker-compose version 1.16.1, build 6d1ac21"
 
-# Checkout git repository of Debattons
-BASE_DIR="$(readlink -f `dirname $0`)"
-if [ -f "$BASE_DIR/debattons-git-copy.sh" ]; then
-    source "$BASE_DIR/debattons-git-copy.sh"
-else
-    curl -L "https://raw.githubusercontent.com/iorga-group/debattons/master/setup/debattons-git-copy.sh" > /tmp/setup-debattons-git-copy.sh && bash /tmp/setup-debattons-git-copy.sh
-    rm /tmp/setup-debattons-git-copy.sh
+if [ "$1" != "--no-debattons-git-copy" ]; then
+    # Checkout git repository of Debattons
+    BASE_DIR="$(readlink -f `dirname $0`)"
+    if [ -f "$BASE_DIR/debattons-git-copy.sh" ]; then
+        source "$BASE_DIR/debattons-git-copy.sh"
+    else
+        curl -L "https://raw.githubusercontent.com/iorga-group/debattons/master/setup/debattons-git-copy.sh" > /tmp/setup-debattons-git-copy.sh && bash /tmp/setup-debattons-git-copy.sh
+        rm /tmp/setup-debattons-git-copy.sh
+    fi
 fi

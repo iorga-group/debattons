@@ -57,7 +57,7 @@ At your first run, Débattons will build and start automatically, at next run yo
 
 ``` bash
 vagrant ssh
-/opt/debattons/scripts/build-and-run.dev.sh --start-orientdb-server
+/opt/debattons/docker/cmd.sh build-and-run
 ```
 
 ### Install the development environment automatically on your Ubuntu 16.04 (without using Docker nor Vagrant)
@@ -111,18 +111,3 @@ Those 3 last steps (DB creation & launch the webservices & UI) can be done autom
 ## Access Débattons in your development environment
 
 You can finally access to the platform at [http://localhost:4200](http://localhost:4200)
-
-# Known issues
-
-The current script for the dev environement installation use the version `3.0.0-SNAPSHOT` of orientdb. It could append that the official repositories are broken, in this case you will have the following error:
-```
-[ERROR] Failed to execute goal org.apache.maven.plugins:maven-dependency-plugin:2.8:get (default-cli) on project standalone-pom: Couldn't download artifact: Missing:
-[ERROR] ----------
-[ERROR] 1) com.orientechnologies:orientdb-core:jar:3.0.0-SNAPSHOT
-[ERROR] 
-[ERROR] Try downloading the file manually from the project website.
-```
-One solution is to manually download the `.tar.gz` at this url:
-https://oss.sonatype.org/content/repositories/snapshots/com/orientechnologies/orientdb-community/3.0.0-SNAPSHOT/, unzip it and place the content in `/opt/orientdb`.
-
-

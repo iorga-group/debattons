@@ -33,10 +33,7 @@ echo "deb https://dl.yarnpkg.com/debian/ stable main" | sudo tee /etc/apt/source
 sudo -E apt-get update && sudo -E apt-get install yarn
 
 # Configure proxy in case it is set
-/opt/debattons/setup/proxy-on-ubuntu.sh
-
-# Install angular-cli
-sudo -E yarn global add @angular/cli@1.5.3
+/opt/debattons/setup/proxy.sh
 
 # Install wget
 sudo -E apt-get install -y wget

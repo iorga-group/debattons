@@ -59,3 +59,5 @@ Thumbs.db
 /vagrant/.vagrant
 /vagrant/*.log
 /vagrant-data
+
+/tmp

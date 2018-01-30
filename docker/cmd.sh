@@ -19,8 +19,7 @@ generate_password() {
 }
 
 if [ "$COMMAND" == "build-and-run" ] ; then
-    #SERVICES_TO_START="orientdb debattons" #Running only debattons as current 3.0.0-SNAPSHOT console version is unable to talk to 3.0.0m2 server version, https://github.com/orientechnologies/orientdb/issues/7901
-    SERVICES_TO_START="debattons"
+    SERVICES_TO_START="api_server ui orientdb"
 
     while [ "$#" != "0" ] ; do
         if [ "$1" == "--only-orientdb" ] ; then
@@ -38,7 +37,7 @@ if [ "$COMMAND" == "build-and-run" ] ; then
 
     export USER_UID=`id -u`
     export USER_GID=`id -g`
-    mkdir -p ${HOME}/{.m2,.npm} $DOCKER_DATA/orientdb/{databases,backups} # in order to have the user rights on those folders in case it is not yet created
+    mkdir -p ${HOME}/{.m2,.cache/yarn/v1} $DOCKER_DATA/orientdb/{databases,backup} # in order to have the user rights on those folders in case it is not yet created
 
     # Using "${DOCKER_COMPOSE[@]}" in order to handle correctly paths with spaces in it thanks to https://stackoverflow.com/a/1555811/535203
     "${DOCKER_COMPOSE[@]}" build $SERVICES_TO_START
