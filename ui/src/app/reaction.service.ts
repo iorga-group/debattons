@@ -37,6 +37,13 @@ export class ReactionService {
       );
   }
 
+  agreeWithById(reactToReactionId: string): Observable<void> {
+    return this.http.post(`${environment.apiBaseContext}/reactions/${encodeURIComponent(reactToReactionId)}?reactionType=agree`, null)
+      .pipe(
+        catchError(this.handleError('agreeWithById', null))
+      );
+  }
+
   /**
    * Handle Http operation that failed.
    * Let the app continue.

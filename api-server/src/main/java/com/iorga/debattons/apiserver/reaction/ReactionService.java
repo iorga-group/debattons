@@ -33,7 +33,7 @@ public class ReactionService {
     });
   }
 
-  public Reaction createByReactionReactingToReactionId(Reaction reaction, final String reactToReactionId) throws Exception {
+  public Reaction createByReactionReactingToReactionId(Reaction reaction, final String reactToReactionId, String reactionType) throws Exception {
     if (reactToReactionId == null) {
       return create(reaction);
     } else {
@@ -44,7 +44,7 @@ public class ReactionService {
           "content", reaction.getContent(),
           "creationDate", new Date());
         graph.traversal().V(graphUtils.getObjectVertexId(reactToReactionId, graph)).has(T.label, "Reaction").next()
-          .addEdge("reactedTo", reactionVertex);
+          .addEdge("reactedTo", reactionVertex, "reactionType", reactionType != null ? reactionType : "comment");
         reaction.setId(graphUtils.getStringVertexId(reactionVertex, graph));
         return reaction;
       });
@@ -106,5 +106,13 @@ public class ReactionService {
   private GraphTraversal<Vertex, Vertex> createReactionTraversalById(String id, Graph graph) {
     return graph.traversal().V(graphUtils.getObjectVertexId(id, graph))
       .has(T.label, "Reaction");
+  }
+
+  public void agreeWithById(String reactToReactionId) throws Exception {
+    graphUtils.doInGraphTransaction(graph -> {
+      Vertex user = graph.traversal().V().hasLabel("User").next(); // FIXME get current user instead !!
+      Vertex reaction = createReactionTraversalById(reactToReactionId, graph).next();
+      user.addEdge("agreeWith", reaction);
+    });
   }
 }

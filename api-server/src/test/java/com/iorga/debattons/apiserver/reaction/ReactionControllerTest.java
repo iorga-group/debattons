@@ -1,6 +1,7 @@
 package com.iorga.debattons.apiserver.reaction;
 
 import com.iorga.debattons.apiserver.ApiServerApplication;
+import com.iorga.debattons.apiserver.user.User;
 import com.iorga.debattons.apiserver.util.GraphUtils;
 import com.iorga.debattons.apiserver.version.VersionService;
 import org.apache.tinkerpop.gremlin.structure.Graph;
@@ -18,10 +19,13 @@ import org.springframework.context.annotation.Import;
 import org.springframework.context.annotation.Primary;
 import org.springframework.core.ParameterizedTypeReference;
 import org.springframework.http.HttpMethod;
+import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
 import org.springframework.test.context.junit4.SpringRunner;
 
 import java.io.IOException;
 import java.io.UnsupportedEncodingException;
+import java.net.URI;
 import java.net.URLEncoder;
 import java.util.List;
 
@@ -151,5 +155,21 @@ public class ReactionControllerTest {
     Reaction foundReaction = restTemplate.getForObject("/reactions/" + reactionOut.getId() + "?reactedToDepth=1", Reaction.class);
     assertThat(foundReaction.getTitle()).isEqualTo(reaction.getTitle());
     assertThat(foundReaction.getReactedTo()).hasSize(2);
+  }
+
+  @Test
+  public void agreeWithByIdTest() {
+    // First we must create a user FIXME this user must be used from the "current session"
+    User user = new User();
+    user.setLogin("test");
+    user.setEmail("test@test.tld");
+    user.setPassword("test");
+    restTemplate.postForObject("/users", user, User.class);
+
+    Reaction reaction = newTestReaction();
+    Reaction reactionOut = createReaction(reaction);
+
+    ResponseEntity<Void> voidResponseEntity = restTemplate.postForEntity("/reactions/" + reactionOut.getId() + "?reactionType=agree", null, Void.class);
+    assertThat(voidResponseEntity.getStatusCode()).isEqualTo(HttpStatus.OK);
   }
 }

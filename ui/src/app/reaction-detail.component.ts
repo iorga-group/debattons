@@ -102,4 +102,10 @@ export class ReactionDetailComponent implements OnInit, OnDestroy {
   reactToThis() {
     this.router.navigate(['/new-reaction/', this.reaction.id]);
   }
+
+  agreeWithThis() {
+    this.reactionService.agreeWithById(this.reaction.id).subscribe(alwaysUndefined => {
+      // TODO do something in the UI indicating that the server correctly responded
+    });
+  }
 }

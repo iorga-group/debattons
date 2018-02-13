@@ -16,9 +16,13 @@ public class ReactionController {
   }
 
   @PostMapping
-  public Reaction post(@RequestBody Reaction reaction, @RequestParam(value = "reactToReactionId", required = false) String reactToReactionId) throws Exception {
+  public Reaction post(
+    @RequestBody Reaction reaction,
+    @RequestParam(value = "reactToReactionId", required = false) String reactToReactionId,
+    @RequestParam(value = "reactionType", required = false) String reactionType
+  ) throws Exception {
     if (reactToReactionId != null) {
-      return reactionService.createByReactionReactingToReactionId(reaction, reactToReactionId);
+      return reactionService.createByReactionReactingToReactionId(reaction, reactToReactionId, reactionType);
     } else {
       return reactionService.create(reaction);
     }
@@ -32,5 +36,17 @@ public class ReactionController {
   @GetMapping("/{id}")
   public Reaction getByIdLoadingReactedToDepth(@PathVariable("id") String id, @RequestParam(value = "reactedToDepth", required = false, defaultValue = "0") int reactedDepth) throws Exception {
     return reactionService.findByIdLoadingReactedToDepth(id, reactedDepth);
+  }
+
+  @PostMapping("/{id}")
+  public void getByIdLoadingReactedToDepth(
+    @PathVariable("id") String id,
+    @RequestParam("reactionType") String reactionType
+  ) throws Exception {
+    if ("agree".equals(reactionType)) {
+      reactionService.agreeWithById(id);
+    } else {
+      throw new IllegalArgumentException("Could not create a link of type '"+reactionType+"', only 'agree' is allowed.");
+    }
   }
 }

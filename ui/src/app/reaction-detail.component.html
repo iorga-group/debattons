@@ -7,7 +7,8 @@
     <div class="col-md-4 col-sm-6">
       <div class="card card-block text-center" *ngIf="reaction">{{reaction.title}}</div>
       <div class="card card-block text-center" *ngIf="reaction" [innerHTML]="reaction.content"></div>
-      <button type="submit" (click)="reactToThis()" class="btn btn-primary">React to this</button>
+      <button (click)="reactToThis()" class="btn btn-primary">React to this</button>
+      <button (click)="agreeWithThis()" class="btn btn-primary">Agree with this</button>
     </div>
 
   </div>
