@@ -36,7 +36,7 @@ services:
       - ../api-server:/workspace
     working_dir: /workspace
     ports:
-      - "5000:5000"
+      - "5005:5005"
       - "8080:8080"
     links:
       - orientdb:orientdb
