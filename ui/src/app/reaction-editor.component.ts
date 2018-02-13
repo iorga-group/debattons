@@ -18,6 +18,6 @@ export class ReactionEditorComponent {
 
   createNewReaction() {
     this.reactionService.createNewReaction(this.reaction, this.reactToReactionId)
-      .then(reaction => this.reaction = reaction);
+      .subscribe(reaction => this.reaction = reaction);
   }
 }
