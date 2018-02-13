@@ -24,7 +24,7 @@ export class ReactionService {
   }
 
   findRoot(): Observable<Reaction[]> {
-    return this.http.get(environment.apiBaseContext + '/reactions/roots')
+    return this.http.get<Reaction[]>(environment.apiBaseContext + '/reactions/roots')
       .pipe(
         catchError(this.handleError('findRoot', []))
       );
