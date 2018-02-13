@@ -1,8 +1,12 @@
 package com.iorga.debattons.apiserver.user;
 
+import org.springframework.data.gremlin.annotation.*;
+
 import javax.validation.constraints.NotNull;
 
+@Vertex
 public class User {
+  @Id
   private String id;
   @NotNull
   private String login;

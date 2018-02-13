@@ -1,21 +1,28 @@
 package com.iorga.debattons.apiserver.reaction;
 
 import com.iorga.debattons.apiserver.util.GraphUtils;
-import org.apache.tinkerpop.gremlin.structure.Vertex;
+//import org.apache.tinkerpop.gremlin.structure.Vertex;
 
 import javax.validation.constraints.NotNull;
 import java.io.IOException;
 import java.util.Set;
 
+import org.springframework.data.gremlin.annotation.*;
+import com.tinkerpop.blueprints.Direction;
+
+@Vertex
 public class Reaction {
+  @Id
   private String id;
   private String title;
 
   @NotNull
   private String content;
 
+  @Link(value="reactedTo",direction = Direction.OUT)
   private Set<Reaction> reactedTo;
 
+  @Link(value="reactedTo",direction = Direction.IN)
   private Reaction reactedFrom;
 
   public String getId() {
@@ -58,7 +65,7 @@ public class Reaction {
     this.reactedFrom = reactedFrom;
   }
 
-  public static Reaction fromVertex(Vertex vertex, GraphUtils graphUtils) throws IOException {
+  public static Reaction fromVertex(org.apache.tinkerpop.gremlin.structure.Vertex vertex, GraphUtils graphUtils) throws IOException {
     Reaction reaction = new Reaction();
     reaction.setId(graphUtils.getStringVertexId(vertex, vertex.graph()));
     reaction.setTitle(vertex.value("title"));

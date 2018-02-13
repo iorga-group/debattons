@@ -37,7 +37,7 @@ testem.log
 /ui/typings
 /ui/yarn.lock
 /ui/yarn-error.log
-/api-server/hs_err_pid*.log
+/api-server/*.log
 
 # e2e
 /ui/e2e/*.js
