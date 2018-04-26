@@ -17,6 +17,8 @@ public class UserController {
 
   @PostMapping
   public User post(@RequestBody User user) throws Exception {
-    return userService.create(user);
+    user = userService.create(user);
+    user.setPassword(null);
+    return user;
   }
 }
