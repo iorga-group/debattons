@@ -1,4 +1,4 @@
-FROM orientdb:3.0.0RC1
+FROM orientdb:3.0.2
 
 RUN apk add --no-cache bash
 

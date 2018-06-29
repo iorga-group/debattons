@@ -38,10 +38,10 @@ sudo -E apt-get update && sudo -E apt-get install yarn
 # Install wget
 sudo -E apt-get install -y wget
 
-# Install OrientDB tools (inspired by the Docker script https://github.com/orientechnologies/orientdb-docker/blob/e6855db21e0c4eb47db36f60a7b8a4d05ef5ffb4/3.0/x86_64/alpine/Dockerfile)
-ORIENTDB_VERSION=3.0.0RC1
-ORIENTDB_DOWNLOAD_MD5=f231735d7ac8c18e8e5f6aab5e6ae459
-ORIENTDB_DOWNLOAD_SHA1=8a1d8d5468d55bdb9430f525481ba356e9ca6209
+# Install OrientDB tools (inspired by the Docker script https://github.com/orientechnologies/orientdb-docker/blob/master/3.0/x86_64/alpine/Dockerfile)
+ORIENTDB_VERSION=3.0.2
+ORIENTDB_DOWNLOAD_MD5=145e4836a3066783f0d2545af17b9e56
+ORIENTDB_DOWNLOAD_SHA1=9aae978d9943af6e82fb4707519239e60054f652
 
 ORIENTDB_DOWNLOAD_URL=${ORIENTDB_DOWNLOAD_SERVER:-http://central.maven.org/maven2/com/orientechnologies}/orientdb-community-gremlin/$ORIENTDB_VERSION/orientdb-community-gremlin-$ORIENTDB_VERSION.tar.gz
 
