@@ -1,5 +1,6 @@
 package com.iorga.debattons.apiserver.reaction;
 
+import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.Collection;
@@ -16,6 +17,7 @@ public class ReactionController {
   }
 
   @PostMapping
+  @PreAuthorize("isAuthenticated()")
   public Reaction post(
     @RequestBody Reaction reaction,
     @RequestParam(value = "reactToReactionId", required = false) String reactToReactionId,

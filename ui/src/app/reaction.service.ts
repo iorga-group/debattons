@@ -1,11 +1,11 @@
-import {Injectable} from '@angular/core';
-import {Reaction} from "./reaction";
-import {HttpClient} from "@angular/common/http";
-import {environment} from "../environments/environment";
+import { Injectable } from '@angular/core';
+import { Reaction } from './reaction';
+import { HttpClient } from '@angular/common/http';
+import { environment } from '../environments/environment';
 
-import {Observable} from "rxjs/Observable";
-import {of} from "rxjs/observable/of";
-import {catchError} from "rxjs/operators";
+import { Observable } from 'rxjs/Observable';
+import { of } from 'rxjs/observable/of';
+import { catchError } from 'rxjs/operators';
 
 @Injectable()
 export class ReactionService {
@@ -17,7 +17,11 @@ export class ReactionService {
     if (reactToReactionId) {
       url += '?reactToReactionId=' + encodeURIComponent(reactToReactionId);
     }
-    return this.http.post(url, reaction)
+    return this.http.post(url, reaction, {
+        headers: {
+          Authorization: `Basic ${btoa('user:password')}` //FIXME replace this with correct login & secure way to do it
+        }
+      })
       .pipe(
         catchError(this.handleError('createNewReaction', null))
       );
@@ -50,7 +54,7 @@ export class ReactionService {
    * @param operation - name of the operation that failed
    * @param result - optional value to return as the observable result
    */
-  private handleError<T> (operation = 'operation', result?: T) {
+  private handleError<T>(operation = 'operation', result?: T) {
     return (error: any): Observable<T> => {
 
       // TODO: send the error to remote logging infrastructure

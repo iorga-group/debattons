@@ -1,6 +1,10 @@
 package com.iorga.debattons.apiserver.user;
 
+import com.iorga.debattons.apiserver.util.GraphUtils;
+import org.apache.tinkerpop.gremlin.structure.Vertex;
+
 import javax.validation.constraints.NotNull;
+import java.io.IOException;
 
 public class User {
   private String id;
@@ -8,7 +12,19 @@ public class User {
   private String login;
   @NotNull
   private String password;
+  private byte[] passwordHash;
+  private byte[] salt;
   private String email;
+
+  public static User fromVertex(Vertex vertex, GraphUtils graphUtils) throws IOException {
+    User user = new User();
+    user.setId(graphUtils.getStringVertexId(vertex, vertex.graph()));
+    user.setLogin(vertex.value("login"));
+    user.setPasswordHash(vertex.value("passwordHash"));
+    user.setSalt(vertex.value("salt"));
+    user.setEmail(vertex.value("email"));
+    return user;
+  }
 
 
   public String getId() {
@@ -41,5 +57,21 @@ public class User {
 
   public void setEmail(String email) {
     this.email = email;
+  }
+
+  public byte[] getPasswordHash() {
+    return passwordHash;
+  }
+
+  public void setPasswordHash(byte[] passwordHash) {
+    this.passwordHash = passwordHash;
+  }
+
+  public byte[] getSalt() {
+    return salt;
+  }
+
+  public void setSalt(byte[] salt) {
+    this.salt = salt;
   }
 }

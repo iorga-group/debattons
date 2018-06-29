@@ -1,12 +1,32 @@
 package com.iorga.debattons.apiserver;
 
+import com.iorga.debattons.apiserver.security.DebattonsAuthenticationProvider;
+import org.aopalliance.intercept.MethodInvocation;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.SpringApplication;
+import org.springframework.boot.actuate.audit.AuditEvent;
+import org.springframework.boot.actuate.audit.listener.AuditApplicationEvent;
+import org.springframework.boot.actuate.security.AbstractAuthorizationAuditListener;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
+import org.springframework.context.event.EventListener;
+import org.springframework.security.access.event.AbstractAuthorizationEvent;
+import org.springframework.security.access.event.AuthorizationFailureEvent;
+import org.springframework.security.config.annotation.authentication.builders.AuthenticationManagerBuilder;
+import org.springframework.security.config.annotation.method.configuration.EnableGlobalMethodSecurity;
+import org.springframework.security.config.annotation.method.configuration.GlobalMethodSecurityConfiguration;
+import org.springframework.security.config.annotation.web.builders.HttpSecurity;
+import org.springframework.security.config.annotation.web.configuration.EnableWebSecurity;
+import org.springframework.security.config.annotation.web.configuration.WebSecurityConfigurerAdapter;
+import org.springframework.security.web.FilterInvocation;
+import org.springframework.security.web.authentication.WebAuthenticationDetails;
+import org.springframework.stereotype.Component;
 import org.springframework.web.servlet.config.annotation.CorsRegistry;
 import org.springframework.web.servlet.config.annotation.WebMvcConfigurer;
-import org.springframework.web.servlet.config.annotation.WebMvcConfigurerAdapter;
+
+import java.util.HashMap;
+import java.util.Map;
 
 @SpringBootApplication
 public class ApiServerApplication {
@@ -18,10 +38,10 @@ public class ApiServerApplication {
   // Enabling CORS thanks to https://spring.io/guides/gs/rest-service-cors/
     @Bean
     public WebMvcConfigurer corsConfigurer() {
-      return new WebMvcConfigurerAdapter() {
+      return new WebMvcConfigurer() {
         @Override
         public void addCorsMappings(CorsRegistry registry) {
-          registry.addMapping("/**").allowedOrigins("http://localhost:4200");
+          registry.addMapping("/**").allowedOrigins("http://localhost:4200"); // TODO remove this in production
         }
       };
     }
@@ -83,6 +103,40 @@ public class ApiServerApplication {
 //      return Mono.empty();
 //    }
 //  }
+
+  @Configuration
+  @EnableWebSecurity
+  public static class ApiServerWebSecurityConfigurerAdapter extends WebSecurityConfigurerAdapter {
+//    @Autowired
+//    private DebattonsAuthenticationProvider debattonsAuthenticationProvider;
+
+    // Inspired by https://stackoverflow.com/a/35607507/535203
+    @Override
+    protected void configure(HttpSecurity http) throws Exception {
+//      http.authorizeRequests().antMatchers("/**").permitAll();
+//      super.configure(http);
+      http.httpBasic()
+        .and().csrf().disable(); // TODO disable this in production
+    }
+
+//    // Inspired by http://www.baeldung.com/spring-security-authentication-provider
+//    @Override
+//    protected void configure(AuthenticationManagerBuilder auth) throws Exception {
+//      auth.authenticationProvider(debattonsAuthenticationProvider);
+//    }
+  }
+
+  @Configuration
+  @EnableGlobalMethodSecurity(jsr250Enabled = true, prePostEnabled = true)
+  public static class ApiServerGlobalMethodSecurityConfiguration extends GlobalMethodSecurityConfiguration {
+    @Autowired
+    private DebattonsAuthenticationProvider debattonsAuthenticationProvider;
+
+    @Override
+    protected void configure(AuthenticationManagerBuilder auth) throws Exception {
+      auth.authenticationProvider(debattonsAuthenticationProvider);
+    }
+  }
 
   public static void main(String[] args) {
     SpringApplication.run(ApiServerApplication.class, args);

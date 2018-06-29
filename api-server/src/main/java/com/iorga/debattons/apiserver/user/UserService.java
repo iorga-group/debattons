@@ -9,10 +9,12 @@ import org.springframework.stereotype.Service;
 
 import javax.crypto.SecretKeyFactory;
 import javax.crypto.spec.PBEKeySpec;
+import java.io.IOException;
 import java.security.NoSuchAlgorithmException;
 import java.security.SecureRandom;
 import java.security.spec.InvalidKeySpecException;
 import java.util.Date;
+import java.util.Optional;
 
 @Service
 public class UserService {
@@ -48,6 +50,22 @@ public class UserService {
     }
   }
 
+  public Optional<User> findUserByLogin(String login) throws Exception {
+    return graphUtils.doInGraphTransaction(graph -> {
+      return graphUtils.getRootTraversal(graph)
+        .out("created")
+        .hasLabel("User")
+        .has("login", login)
+        .map(vertexTraverser -> {
+          try {
+            return User.fromVertex(vertexTraverser.get(), graphUtils);
+          } catch (IOException e) {
+            throw new RuntimeException("Problem while creating the User from Vertex", e);
+          }
+        }).tryNext();
+    });
+  }
+
   protected static byte[] createSaltThenComputePasswordHash(byte[] salt, String password) throws InvalidKeySpecException, NoSuchAlgorithmException {
     byte[] passwordHash;
     // computing password hash thanks to:
@@ -60,7 +78,7 @@ public class UserService {
     return passwordHash;
   }
 
-  protected static byte[] computePasswordHash(String password, byte[] salt) throws InvalidKeySpecException, NoSuchAlgorithmException {
+  public static byte[] computePasswordHash(String password, byte[] salt) throws InvalidKeySpecException, NoSuchAlgorithmException {
     byte[] passwordHash;
     PBEKeySpec keySpec = new PBEKeySpec(password.toCharArray(), salt, PASSWORD_ITERATIONS, PASSWORD_LENGTH * 8);
     passwordHash = SecretKeyFactory.getInstance("PBKDF2WithHmacSHA256").generateSecret(keySpec).getEncoded();
