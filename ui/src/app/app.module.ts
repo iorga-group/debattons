@@ -1,8 +1,7 @@
 import {BrowserModule} from '@angular/platform-browser';
 import {NgModule} from '@angular/core';
 
-import {HttpModule} from '@angular/http';
-import {HttpClientModule} from '@angular/common/http';
+import { HTTP_INTERCEPTORS, HttpClientModule } from '@angular/common/http';
 
 import {AppComponent} from './app.component';
 import {ReactionService} from "./reaction.service";
@@ -18,10 +17,12 @@ import {VisModule} from "ngx-vis";
 
 import {EditorModule} from 'primeng/primeng';
 import {BrowserAnimationsModule} from '@angular/platform-browser/animations';
-import {CreateAccountComponent} from "./create-account.component";
+import {CreateAccountComponent} from "./user/create-account.component";
 import {UIMessagesComponent} from "./ui-messages.component";
 import {UIMessageService} from "./ui-message.service";
-import {UserService} from "./user.service";
+import {UserService} from "./user/user.service";
+import { LoginComponent } from './user/login.component';
+import { UnauthorizedInterceptor } from './user/unauthorized.interceptor';
 
 
 @NgModule({
@@ -34,13 +35,13 @@ import {UserService} from "./user.service";
     NewReactionComponent,
     CreateAccountComponent,
     UIMessagesComponent,
+    LoginComponent,
   ],
   imports: [
     BrowserModule,
     BrowserAnimationsModule,
     EditorModule,
     HttpClientModule,
-    HttpModule,
     FormsModule,
     AppRoutingModule,
     VisModule,
@@ -49,6 +50,11 @@ import {UserService} from "./user.service";
     ReactionService,
     UIMessageService,
     UserService,
+    {
+      provide: HTTP_INTERCEPTORS,
+      useClass: UnauthorizedInterceptor,
+      multi: true
+    }
   ],
   bootstrap: [AppComponent]
 })

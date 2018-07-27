@@ -1,6 +1,8 @@
 package com.iorga.debattons.apiserver.reaction;
 
 import org.springframework.security.access.prepost.PreAuthorize;
+import org.springframework.security.core.Authentication;
+import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.Collection;
@@ -23,10 +25,11 @@ public class ReactionController {
     @RequestParam(value = "reactToReactionId", required = false) String reactToReactionId,
     @RequestParam(value = "reactionType", required = false) String reactionType
   ) throws Exception {
+    String login = SecurityContextHolder.getContext().getAuthentication().getName();
     if (reactToReactionId != null) {
-      return reactionService.createByReactionReactingToReactionId(reaction, reactToReactionId, reactionType);
+      return reactionService.createByReactionReactingToReactionId(reaction, reactToReactionId, reactionType, login);
     } else {
-      return reactionService.create(reaction);
+      return reactionService.create(reaction, login);
     }
   }
 
@@ -41,12 +44,14 @@ public class ReactionController {
   }
 
   @PostMapping("/{id}")
+  @PreAuthorize("isAuthenticated()")
   public void getByIdLoadingReactedToDepth(
     @PathVariable("id") String id,
     @RequestParam("reactionType") String reactionType
   ) throws Exception {
+    String login = SecurityContextHolder.getContext().getAuthentication().getName();
     if ("agree".equals(reactionType)) {
-      reactionService.agreeWithById(id);
+      reactionService.agreeWithById(id, login);
     } else {
       throw new IllegalArgumentException("Could not create a link of type '"+reactionType+"', only 'agree' is allowed.");
     }

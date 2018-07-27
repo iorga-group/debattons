@@ -4,7 +4,7 @@ import {RouterModule, Routes} from '@angular/router';
 import {RootReactionsComponent} from "./root-reactions.component";
 import {ReactionDetailComponent} from "./reaction-detail.component";
 import {NewReactionComponent} from "./new-reaction.component";
-import {CreateAccountComponent} from "./create-account.component";
+import {CreateAccountComponent} from "./user/create-account.component";
 
 const routes: Routes = [
   {path: '', redirectTo: '/root-reactions', pathMatch: 'full'},

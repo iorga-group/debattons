@@ -2,6 +2,8 @@ package com.iorga.debattons.apiserver.user;
 
 import com.iorga.debattons.apiserver.util.GraphUtils;
 import org.apache.commons.lang3.StringUtils;
+import org.apache.tinkerpop.gremlin.process.traversal.dsl.graph.GraphTraversal;
+import org.apache.tinkerpop.gremlin.structure.Graph;
 import org.apache.tinkerpop.gremlin.structure.T;
 import org.apache.tinkerpop.gremlin.structure.Vertex;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -36,7 +38,7 @@ public class UserService {
       return graphUtils.doInGraphTransaction(graph -> {
         Vertex reactionVertex = graph.addVertex(
           T.label, "User",
-          "login", user.getLogin(),
+          "login", user.getLogin(), // FIXME assert that this login is unique
           "email", user.getEmail(),
           "passwordHash", passwordHash,
           "salt", salt,
@@ -52,10 +54,7 @@ public class UserService {
 
   public Optional<User> findUserByLogin(String login) throws Exception {
     return graphUtils.doInGraphTransaction(graph -> {
-      return graphUtils.getRootTraversal(graph)
-        .out("created")
-        .hasLabel("User")
-        .has("login", login)
+      return findUserTraversalByLogin(login, graph)
         .map(vertexTraverser -> {
           try {
             return User.fromVertex(vertexTraverser.get(), graphUtils);
@@ -64,6 +63,13 @@ public class UserService {
           }
         }).tryNext();
     });
+  }
+
+  public GraphTraversal<Vertex, Vertex> findUserTraversalByLogin(String login, Graph graph) {
+    return graphUtils.getRootTraversal(graph)
+      .out("created")
+      .hasLabel("User")
+      .has("login", login);
   }
 
   protected static byte[] createSaltThenComputePasswordHash(byte[] salt, String password) throws InvalidKeySpecException, NoSuchAlgorithmException {

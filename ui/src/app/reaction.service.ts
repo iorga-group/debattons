@@ -6,22 +6,22 @@ import { environment } from '../environments/environment';
 import { Observable } from 'rxjs/Observable';
 import { of } from 'rxjs/observable/of';
 import { catchError } from 'rxjs/operators';
+import { UserService } from './user/user.service';
 
 @Injectable()
 export class ReactionService {
-  constructor(private http: HttpClient,) {
-  }
+
+  constructor(
+    private http: HttpClient,
+    private userService: UserService,
+  ) { }
 
   createNewReaction(reaction: Reaction, reactToReactionId?: string): Observable<Reaction> {
     let url = environment.apiBaseContext + '/reactions/';
     if (reactToReactionId) {
       url += '?reactToReactionId=' + encodeURIComponent(reactToReactionId);
     }
-    return this.http.post(url, reaction, {
-        headers: {
-          Authorization: `Basic ${btoa('user:password')}` //FIXME replace this with correct login & secure way to do it
-        }
-      })
+    return this.http.post(url, reaction)
       .pipe(
         catchError(this.handleError('createNewReaction', null))
       );

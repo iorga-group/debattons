@@ -1,5 +1,6 @@
 package com.iorga.debattons.apiserver.reaction;
 
+import com.iorga.debattons.apiserver.user.UserService;
 import com.iorga.debattons.apiserver.util.GraphUtils;
 import org.apache.tinkerpop.gremlin.process.traversal.Order;
 import org.apache.tinkerpop.gremlin.process.traversal.dsl.graph.GraphTraversal;
@@ -19,33 +20,44 @@ public class ReactionService {
   @Autowired
   private GraphUtils graphUtils;
 
+  @Autowired
+  private UserService userService;
 
-  public Reaction create(Reaction reaction) throws Exception {
+
+  public Reaction create(Reaction reaction, String login) throws Exception {
     return graphUtils.doInGraphTransaction(graph -> {
-      Vertex reactionVertex = graph.addVertex(
-        T.label, "Reaction",
-        "title", reaction.getTitle(),
-        "content", reaction.getContent(),
-        "creationDate", new Date());
+      Vertex reactionVertex = createReactionVertex(reaction, login, graph);
+
       graphUtils.getRoot(graph).addEdge("created", reactionVertex);
-      reaction.setId(graphUtils.getStringVertexId(reactionVertex, graph));
       return reaction;
     });
   }
 
-  public Reaction createByReactionReactingToReactionId(Reaction reaction, final String reactToReactionId, String reactionType) throws Exception {
+  private Vertex createReactionVertex(Reaction reaction, String login, Graph graph) throws IOException {
+    Vertex userVertex = userService.findUserTraversalByLogin(login, graph).next();
+
+    Vertex reactionVertex = graph.addVertex(
+      T.label, "Reaction",
+      "title", reaction.getTitle(),
+      "content", reaction.getContent(),
+      "creationDate", new Date());
+    reactionVertex.addEdge("createdBy", userVertex);
+
+    reaction.setId(graphUtils.getStringVertexId(reactionVertex, graph));
+
+    return reactionVertex;
+  }
+
+  public Reaction createByReactionReactingToReactionId(Reaction reaction, final String reactToReactionId, String reactionType, String login) throws Exception {
     if (reactToReactionId == null) {
-      return create(reaction);
+      return create(reaction, login);
     } else {
       return graphUtils.doInGraphTransaction(graph -> {
-        Vertex reactionVertex = graph.addVertex(
-          T.label, "Reaction",
-          "title", reaction.getTitle(),
-          "content", reaction.getContent(),
-          "creationDate", new Date());
+        Vertex reactionVertex = createReactionVertex(reaction, login, graph);
+
         graph.traversal().V(graphUtils.getObjectVertexId(reactToReactionId, graph)).has(T.label, "Reaction").next()
           .addEdge("reactedTo", reactionVertex, "reactionType", reactionType != null ? reactionType : "comment");
-        reaction.setId(graphUtils.getStringVertexId(reactionVertex, graph));
+
         return reaction;
       });
     }
@@ -108,9 +120,9 @@ public class ReactionService {
       .has(T.label, "Reaction");
   }
 
-  public void agreeWithById(String reactToReactionId) throws Exception {
+  public void agreeWithById(String reactToReactionId, String login) throws Exception {
     graphUtils.doInGraphTransaction(graph -> {
-      Vertex user = graph.traversal().V().hasLabel("User").next(); // FIXME get current user instead !!
+      Vertex user = userService.findUserTraversalByLogin(login, graph).next();
       Vertex reaction = createReactionTraversalById(reactToReactionId, graph).next();
       user.addEdge("agreeWith", reaction);
     });
