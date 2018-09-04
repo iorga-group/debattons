@@ -48,7 +48,7 @@ fi
 sg docker "docker run --rm hello-world" | grep "Hello from Docker!" # we use sg in order to avoid the execution of a new session to take into account the group modification thanks to https://askubuntu.com/a/469391/29219
 
 # Install Docker-Compose
-sudo -E curl -L https://github.com/docker/compose/releases/download/1.16.1/docker-compose-`uname -s`-`uname -m` -o /usr/local/bin/docker-compose
+sudo -E curl -fsSL https://github.com/docker/compose/releases/download/1.16.1/docker-compose-`uname -s`-`uname -m` -o /usr/local/bin/docker-compose
 sudo chmod +x /usr/local/bin/docker-compose
 ## Checking docker-compose version
 docker-compose --version | grep "docker-compose version 1.16.1, build 6d1ac21"
@@ -59,7 +59,7 @@ if [ "$1" != "--no-debattons-git-copy" ]; then
     if [ -f "$BASE_DIR/debattons-git-copy.sh" ]; then
         source "$BASE_DIR/debattons-git-copy.sh"
     else
-        curl -L "https://raw.githubusercontent.com/iorga-group/debattons/master/setup/debattons-git-copy.sh" > /tmp/setup-debattons-git-copy.sh && bash /tmp/setup-debattons-git-copy.sh
+        curl -fsSL "https://raw.githubusercontent.com/iorga-group/debattons/master/setup/debattons-git-copy.sh" > /tmp/setup-debattons-git-copy.sh && bash /tmp/setup-debattons-git-copy.sh
         rm /tmp/setup-debattons-git-copy.sh
     fi
 fi
