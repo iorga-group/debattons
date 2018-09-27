@@ -1,17 +1,19 @@
-<div class="container-fluid">
-  <div class="row">
-    <form class="col-md">
-      <div class="form-group">
-        <label for="login">Login</label>
-        <input type="email" class="form-control" id="login" name="login" placeholder="Enter login" [(ngModel)]="user.login">
-      </div>
-      <div class="form-group">
-        <label for="password">Password</label>
-        <input type="password" class="form-control" id="password" name="password" placeholder="Password" [(ngModel)]="user.password">
-      </div>
-      <button type="submit" class="btn btn-primary" (click)="login()">Login</button>
-    </form>
+<mat-card class="app-login-card">
+  <div class="app-login-header">
+    <mat-icon class="app-login-logo">assignment_ind</mat-icon>
+    <div>Débattons</div>
   </div>
-
-</div>
-
+  <form #loginForm="ngForm" (ngSubmit)="login()" novalidate>
+    <mat-form-field class="app-full-width">
+      <input matInput autocomplete="username" type="email" id="login" name="login" placeholder="Login" required
+      #loginControl="ngModel" [(ngModel)]="user.login">
+      <mat-error *ngIf="loginControl.hasError('required') ">Login Require</mat-error>
+    </mat-form-field>
+    <mat-form-field class="app-full-width">
+      <input matInput autocomplete="current-password" type="password" id="password" name="password" required
+        placeholder="Password" #passwordControl="ngModel"  [(ngModel)]="user.password">
+        <mat-error *ngIf="passwordControl.hasError('required') ">Password Require</mat-error>
+    </mat-form-field>
+    <button class="app-full-width" mat-raised-button color="primary" type="submit" [disabled]="loginForm.invalid">SIGN IN</button>
+  </form>
+</mat-card>
