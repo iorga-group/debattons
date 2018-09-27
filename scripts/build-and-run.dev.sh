@@ -47,7 +47,7 @@ if [ -z "$ONLY_START_ORIENTDB_SERVER" ]; then
   cd /opt/debattons/ui && \
       yarn install --no-bin-links && # no bin links else we got "EPROTO: protocol error, symlink '../../../../less/bin/lessc' -> '/vagrant/ui/node_modules/@angular/cli/node_modules/.bin/lessc'" with Vagrant on Windows thanks to https://github.com/npm/npm/issues/9901#issuecomment-146585579 \
       chmod +x ./node_modules/@angular/cli/bin/ng && # to avoid "Permission denied" when executing the following line \
-      ./node_modules/@angular/cli/bin/ng serve --host 0.0.0.0 # authorize remote access thanks to https://github.com/angular/angular-cli/issues/1793#issuecomment-241343672
+      yarn ng serve --host 0.0.0.0 # authorize remote access thanks to https://github.com/angular/angular-cli/issues/1793#issuecomment-241343672
 else
   tail -f $ORIENTDB_PATH/log/*
 fi

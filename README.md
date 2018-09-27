@@ -99,8 +99,8 @@ mvn spring-boot:run
 Now in another shell you can start the Angular UI:
 ```bash
 cd ui
-yarn install
-./node_modules/@angular/cli/bin/ng serve
+yarn
+yarn ng serve
 ```
 
 Those 3 last steps (DB creation & launch the webservices & UI) can be done automatically with:
