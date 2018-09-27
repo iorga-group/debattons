@@ -157,7 +157,7 @@ public class ReactionControllerTest extends AbstractControllerTest {
     Reaction reaction = newTestReaction();
     Reaction reactionOut = createReactionUsingService(reaction, user);
 
-    ResponseEntity<Void> voidResponseEntity = restTemplate.postForEntity("/reactions/" + reactionOut.getId() + "?reactionType=agree", null, Void.class);
+    ResponseEntity<Void> voidResponseEntity = restTemplate.withBasicAuth(user.getLogin(), user.getPassword()).postForEntity("/reactions/" + reactionOut.getId() + "?reactionType=agree", null, Void.class);
     assertThat(voidResponseEntity.getStatusCode()).isEqualTo(HttpStatus.OK);
   }
 }
