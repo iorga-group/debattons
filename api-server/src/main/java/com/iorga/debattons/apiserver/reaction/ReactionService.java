@@ -55,8 +55,9 @@ public class ReactionService {
       return graphUtils.doInGraphTransaction(graph -> {
         Vertex reactionVertex = createReactionVertex(reaction, login, graph);
 
-        graph.traversal().V(graphUtils.getObjectVertexId(reactToReactionId, graph)).has(T.label, "Reaction").next()
-          .addEdge("reactedTo", reactionVertex, "reactionType", reactionType != null ? reactionType : "comment");
+        Vertex reactedToReactionVertex = graph.traversal().V(graphUtils.getObjectVertexId(reactToReactionId, graph)).has(T.label, "Reaction").next();
+        reactionVertex
+          .addEdge("reactedTo", reactedToReactionVertex, "reactionType", reactionType != null ? reactionType : "comment");
 
         return reaction;
       });
@@ -91,7 +92,7 @@ public class ReactionService {
       Vertex reactionVertex = createReactionTraversalById(id, graph).next();
       Reaction reaction = Reaction.fromVertex(reactionVertex, graphUtils);
       loadReactedToByOriginalReactionAndVertexAndDepth(reaction, reactionVertex, reactedToDepth, graph);
-      Iterator<Vertex> reactedFromIt = reactionVertex.vertices(Direction.IN, "reactedTo");
+      Iterator<Vertex> reactedFromIt = reactionVertex.vertices(Direction.OUT, "reactedTo");
       if (reactedFromIt.hasNext()) {
         reaction.setReactedFrom(Reaction.fromVertex(reactedFromIt.next(), graphUtils));
       }
@@ -104,7 +105,7 @@ public class ReactionService {
       Set<Reaction> reactedTo = new LinkedHashSet<>();
       originalReaction.setReactedTo(reactedTo);
 
-      for (Iterator<Vertex> reactedToVertices = originalVertex.vertices(Direction.OUT, "reactedTo"); reactedToVertices.hasNext(); ) {
+      for (Iterator<Vertex> reactedToVertices = originalVertex.vertices(Direction.IN, "reactedTo"); reactedToVertices.hasNext(); ) {
         Vertex reactedToVertex = reactedToVertices.next();
         Reaction reactedToReaction = Reaction.fromVertex(reactedToVertex, graphUtils);
         reactedTo.add(reactedToReaction);
