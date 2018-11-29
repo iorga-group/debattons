@@ -36,7 +36,6 @@
 npm-debug.log
 testem.log
 /ui/typings
-/ui/yarn.lock
 /ui/yarn-error.log
 /api-server/hs_err_pid*.log
 
