@@ -1,0 +1,25 @@
+{
+    "debattonsApp": {
+        "reaction": {
+            "home": {
+                "title": "Reactions",
+                "createLabel": "Créer un nouveau Reaction",
+                "createOrEditLabel": "Créer ou éditer un Reaction"
+            },
+            "created": "Un nouveau Reaction a été créé avec l'identifiant {{ param }}",
+            "updated": "Le Reaction avec l'identifiant {{ param }} a été mis à jour",
+            "deleted": "Le Reaction avec l'identifiant {{ param }} a été supprimé",
+            "delete": {
+                "question": "Etes-vous certain de vouloir supprimer le Reaction {{ id }} ?"
+            },
+            "detail": {
+                "title": "Reaction"
+            },
+            "title": "Title",
+            "content": "Content",
+            "childrenReactions": "Children Reactions",
+            "creator": "Creator",
+            "parentReaction": "Parent Reaction"
+        }
+    }
+}
