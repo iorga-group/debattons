@@ -20,6 +20,7 @@ import { DebattonsEntityModule } from './entities/entity.module';
 import * as moment from 'moment';
 // jhipster-needle-angular-add-module-import JHipster will add new module here
 import { JhiMainComponent, NavbarComponent, FooterComponent, PageRibbonComponent, ActiveMenuDirective, ErrorComponent } from './layouts';
+import { DebattonsModule } from 'app/debattons/debattons.module';
 
 @NgModule({
     imports: [
@@ -38,7 +39,8 @@ import { JhiMainComponent, NavbarComponent, FooterComponent, PageRibbonComponent
         DebattonsAccountModule,
         // jhipster-needle-angular-add-module JHipster will add new module here
         DebattonsEntityModule,
-        DebattonsAppRoutingModule
+        DebattonsAppRoutingModule,
+        DebattonsModule
     ],
     declarations: [JhiMainComponent, NavbarComponent, ErrorComponent, PageRibbonComponent, ActiveMenuDirective, FooterComponent],
     providers: [

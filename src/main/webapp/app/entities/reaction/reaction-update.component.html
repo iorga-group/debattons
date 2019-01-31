@@ -36,6 +36,7 @@
                     </div>
                 </div>
 
+                <!--
                 <div class="form-group">
                     <label class="form-control-label" jhiTranslate="debattonsApp.reaction.creator" for="field_creator">Creator</label>
                     <select class="form-control" id="field_creator" name="creator" [(ngModel)]="reaction.creator" >
@@ -50,6 +51,7 @@
                         <option [ngValue]="reactionOption.id === reaction.parentReaction?.id ? reaction.parentReaction : reactionOption" *ngFor="let reactionOption of reactions; trackBy: trackReactionById">{{reactionOption.title}}</option>
                     </select>
                 </div>
+                -->
             </div>
             <div>
                 <button type="button" id="cancel-save" class="btn btn-secondary"  (click)="previousState()">

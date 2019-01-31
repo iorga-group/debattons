@@ -13,11 +13,12 @@ import {
     reactionRoute,
     reactionPopupRoute
 } from './';
+import { VisModule } from 'ngx-vis';
 
 const ENTITY_STATES = [...reactionRoute, ...reactionPopupRoute];
 
 @NgModule({
-    imports: [DebattonsSharedModule, RouterModule.forChild(ENTITY_STATES)],
+    imports: [DebattonsSharedModule, RouterModule.forChild(ENTITY_STATES), VisModule],
     declarations: [
         ReactionComponent,
         ReactionDetailComponent,

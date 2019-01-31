@@ -5,6 +5,7 @@ import { Observable } from 'rxjs';
 import { SERVER_API_URL } from 'app/app.constants';
 import { createRequestOption } from 'app/shared';
 import { IReaction } from 'app/shared/model/reaction.model';
+import { map } from 'rxjs/operators';
 
 type EntityResponseType = HttpResponse<IReaction>;
 type EntityArrayResponseType = HttpResponse<IReaction[]>;
@@ -34,5 +35,17 @@ export class ReactionService {
 
     delete(id: number): Observable<HttpResponse<any>> {
         return this.http.delete<any>(`${this.resourceUrl}/${id}`, { observe: 'response' });
+    }
+
+    loadChildren(reaction: IReaction, req?: any): Observable<IReaction> {
+        const options = createRequestOption(req);
+        return this.http
+            .get<IReaction[]>(`${this.resourceUrl}/by-parent-reaction-id/${reaction.id}`, { params: options, observe: 'response' })
+            .pipe(
+                map(response => {
+                    reaction.childrenReactions = response.body;
+                    return reaction;
+                })
+            );
     }
 }

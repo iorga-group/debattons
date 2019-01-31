@@ -1,6 +1,8 @@
 package com.iorga.debattons.repository;
 
 import com.iorga.debattons.domain.Reaction;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
 import org.springframework.data.jpa.repository.*;
 import org.springframework.stereotype.Repository;
 
@@ -16,4 +18,5 @@ public interface ReactionRepository extends JpaRepository<Reaction, Long> {
     @Query("select reaction from Reaction reaction where reaction.creator.login = ?#{principal.username}")
     List<Reaction> findByCreatorIsCurrentUser();
 
+    Page<Reaction> findByParentReactionId(Long parentReactionId, Pageable pageable);
 }

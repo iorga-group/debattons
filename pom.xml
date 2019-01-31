@@ -6,7 +6,8 @@
     <artifactId>debattons</artifactId>
     <version>0.0.1-SNAPSHOT</version>
     <packaging>war</packaging>
-    <name>Debattons</name>
+    <name>Débattons</name>
+    <description>Methodical debate platform based on user empowerment - API server part</description>
 
     <repositories>
         <!-- jhipster-needle-maven-repository -->

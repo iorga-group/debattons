@@ -78,6 +78,19 @@ export const reactionRoute: Routes = [
             pageTitle: 'debattonsApp.reaction.home.title'
         },
         canActivate: [UserRouteAccessService]
+    },
+    {
+        path: ':id/react',
+        component: ReactionUpdateComponent,
+        resolve: {
+            reaction: ReactionResolve
+        },
+        data: {
+            authorities: ['ROLE_USER'],
+            pageTitle: 'debattonsApp.reaction.home.title',
+            reactionType: 'react'
+        },
+        canActivate: [UserRouteAccessService]
     }
 ];
 

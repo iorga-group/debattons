@@ -4,6 +4,8 @@ import com.iorga.debattons.DebattonsApp;
 
 import com.iorga.debattons.domain.Reaction;
 import com.iorga.debattons.repository.ReactionRepository;
+import com.iorga.debattons.service.ReactionService;
+import com.iorga.debattons.service.UserService;
 import com.iorga.debattons.web.rest.errors.ExceptionTranslator;
 
 import org.junit.Before;
@@ -68,10 +70,16 @@ public class ReactionResourceIntTest {
 
     private Reaction reaction;
 
+    @Autowired
+    private ReactionService reactionService;
+
+    @Autowired
+    private UserService userService;
+
     @Before
     public void setup() {
         MockitoAnnotations.initMocks(this);
-        final ReactionResource reactionResource = new ReactionResource(reactionRepository);
+        final ReactionResource reactionResource = new ReactionResource(reactionRepository, reactionService, userService);
         this.restReactionMockMvc = MockMvcBuilders.standaloneSetup(reactionResource)
             .setCustomArgumentResolvers(pageableArgumentResolver)
             .setControllerAdvice(exceptionTranslator)
@@ -186,7 +194,7 @@ public class ReactionResourceIntTest {
             .andExpect(jsonPath("$.[*].title").value(hasItem(DEFAULT_TITLE.toString())))
             .andExpect(jsonPath("$.[*].content").value(hasItem(DEFAULT_CONTENT.toString())));
     }
-    
+
     @Test
     @Transactional
     public void getReaction() throws Exception {

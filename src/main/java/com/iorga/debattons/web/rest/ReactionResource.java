@@ -1,6 +1,9 @@
 package com.iorga.debattons.web.rest;
 import com.iorga.debattons.domain.Reaction;
+import com.iorga.debattons.domain.User;
 import com.iorga.debattons.repository.ReactionRepository;
+import com.iorga.debattons.service.ReactionService;
+import com.iorga.debattons.service.UserService;
 import com.iorga.debattons.web.rest.errors.BadRequestAlertException;
 import com.iorga.debattons.web.rest.util.HeaderUtil;
 import com.iorga.debattons.web.rest.util.PaginationUtil;
@@ -10,7 +13,6 @@ import org.slf4j.LoggerFactory;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.http.HttpHeaders;
-import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
@@ -33,9 +35,13 @@ public class ReactionResource {
     private static final String ENTITY_NAME = "reaction";
 
     private final ReactionRepository reactionRepository;
+    private final ReactionService reactionService;
+    private final UserService userService;
 
-    public ReactionResource(ReactionRepository reactionRepository) {
+    public ReactionResource(ReactionRepository reactionRepository, ReactionService reactionService, UserService userService) {
         this.reactionRepository = reactionRepository;
+        this.reactionService = reactionService;
+        this.userService = userService;
     }
 
     /**
@@ -51,7 +57,7 @@ public class ReactionResource {
         if (reaction.getId() != null) {
             throw new BadRequestAlertException("A new reaction cannot already have an ID", ENTITY_NAME, "idexists");
         }
-        Reaction result = reactionRepository.save(reaction);
+        Reaction result = reactionService.saveByUser(reaction, userService.getCurrentUser().get()); // TODO throw 401 if the current user is not found or there is no current user
         return ResponseEntity.created(new URI("/api/reactions/" + result.getId()))
             .headers(HeaderUtil.createEntityCreationAlert(ENTITY_NAME, result.getId().toString()))
             .body(result);
@@ -116,5 +122,19 @@ public class ReactionResource {
         log.debug("REST request to delete Reaction : {}", id);
         reactionRepository.deleteById(id);
         return ResponseEntity.ok().headers(HeaderUtil.createEntityDeletionAlert(ENTITY_NAME, id.toString())).build();
+    }
+
+    /**
+     * GET  /reactions/by-parent-reaction-id/:parentReactionId : get all the reactions which have the given "parentReactionId" as parent id
+     *
+     * @param pageable the pagination information
+     * @return the ResponseEntity with status 200 (OK) and the list of reactions in body
+     */
+    @GetMapping("/reactions/by-parent-reaction-id/{parentReactionId}")
+    public ResponseEntity<List<Reaction>> getAllReactions(Pageable pageable, @PathVariable Long parentReactionId) {
+        log.debug("REST request to get a page of Reactions for parentReactionId: {}", parentReactionId);
+        Page<Reaction> page = reactionRepository.findByParentReactionId(parentReactionId, pageable);
+        HttpHeaders headers = PaginationUtil.generatePaginationHttpHeaders(page, String.format("/reactions/by-parent-reaction-id/%s", parentReactionId));
+        return ResponseEntity.ok().headers(headers).body(page.getContent());
     }
 }
