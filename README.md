@@ -15,99 +15,182 @@ The more they participate and are recognized by others, the more they will be gr
 The project is led by [iORGA Group](http://www.iorga.com) in the way we hope to be the most open (don't hesitate to participate, or send us your remarks or suggestions).
 
 Here are some resources:
- * Current [**development and organization status**](https://trello.com/b/MfS0wzzJ/wikip%C3%A9dia-du-d%C3%A9bat) (currently only in French language)
- * A more general [**presentation of the project and its ideas**](https://docs.google.com/presentation/d/1UIsnLdP2XgO_Ii6g98lWW4FsMuDccD-TigsT5NSFKOU/edit#slide=id.g224b5ac09f_1_0) (currently only in French language)
 
-## Install & run development environment
-### Using Docker
-#### On Ubuntu 16.04 without Docker installed
-The following command will install Docker and Docker Compose, and finally will clone this project to `/opt/debattons`.
-```bash
-curl -L "https://raw.githubusercontent.com/iorga-group/debattons/master/setup/run-env-on-ubuntu-16.04.sh" > /tmp/setup-debattons-run-env-on-ubuntu-16.04.sh && bash /tmp/setup-debattons-run-env-on-ubuntu-16.04.sh
-```
-Now restart your session (in order for the group changes to take effects, your user has been added to `docker` group in order to be able to execute Docker) or execute the following command:
-```bash
-su -lp $USER
-```
-#### On Linux box with Docker already installed
-Clone the current project to `/opt/debattons` or let the following command do that for you:
-```bash
-curl -L "https://raw.githubusercontent.com/iorga-group/debattons/master/setup/debattons-git-copy.sh" > /tmp/debattons-git-copy.sh && bash /tmp/debattons-git-copy.sh
-```
-#### Build and run
-Now you are able to issue the following command that will create all the development environment into a Docker image and then will run this image as well as the required database.
-```bash
-/opt/debattons/docker/cmd.sh build-and-run
-```
+-   Current [**development and organization status**](https://trello.com/b/MfS0wzzJ/wikip%C3%A9dia-du-d%C3%A9bat) (currently only in French language)
+-   A more general [**presentation of the project and its ideas**](https://docs.google.com/presentation/d/1UIsnLdP2XgO_Ii6g98lWW4FsMuDccD-TigsT5NSFKOU/edit#slide=id.g224b5ac09f_1_0) (currently only in French language)
 
-You are now able to access Débattons at [http://localhost:4200](http://localhost:4200)
+This application was generated using JHipster 5.8.1, you can find documentation and help at [https://www.jhipster.tech/documentation-archive/v5.8.1](https://www.jhipster.tech/documentation-archive/v5.8.1).
 
-You will be able to access OrientDB Studio at [http://localhost:2480/studio/index.html](http://localhost:2480/studio/index.html) (if you are on Windows < 10 and installed Docker Toolbox, replace `localhost` with `192.168.99.100`)
+## Development
+
+Before you can build this project, you must install and configure the following dependencies on your machine:
+
+1.  [Node.js][]: We use Node to run a development web server and build the project.
+    Depending on your system, you can install Node either from source or as a pre-packaged bundle.
+2.  [Yarn][]: We use Yarn to manage Node dependencies.
+    Depending on your system, you can install Yarn either from source or as a pre-packaged bundle.
+
+After installing Node, you should be able to run the following command to install development tools.
+You will only need to run this command when dependencies change in [package.json](package.json).
+
+    yarn install
+
+We use yarn scripts and [Webpack][] as our build system.
+
+Run the following commands in two separate terminals to create a blissful development experience where your browser
+auto-refreshes when files change on your hard drive.
+
+    ./mvnw
+    yarn start
+
+Yarn is also used to manage CSS and JavaScript dependencies used in this application. You can upgrade dependencies by
+specifying a newer version in [package.json](package.json). You can also run `yarn update` and `yarn install` to manage dependencies.
+Add the `help` flag on any command to see how you can use it. For example, `yarn help update`.
+
+The `yarn run` command will list all of the scripts available to run for this project.
 
 ### Using Vagrant
+
 The following procedure will automatically create, setup and configure the development environment in a dedicated virtual machine:
+
 1. Install [Vagrant 2.0+](https://www.vagrantup.com/).
 1. Install [VirtualBox 5.0+](https://www.virtualbox.org/).
 1. Clone this project.
-1. Enter the Vagrant configuration directory: `cd debattons/vagrant`.
-1. Create and provision the virtual machine: `vagrant up`.
- * during this step, a new dedicated virtual machine will be created, setup and all the dependencies will be installed;
+1. Create and provision the virtual machine using [JHipster official "development box"](https://github.com/jhipster/jhipster-devbox):
 
-At your first run, Débattons will build and start automatically, at next run you will have to start the server manually.
-
-``` bash
-vagrant ssh
-/opt/debattons/docker/cmd.sh build-and-run
+```
+vagrant init jhipster/jhipster-devbox
+vagrant up --provider virtualbox
 ```
 
-### Install the development environment automatically on your Ubuntu 16.04 (without using Docker nor Vagrant)
-The following command will install all the dependencies of Débattons as well as itself on your system.
-```bash
-curl -L "https://raw.githubusercontent.com/iorga-group/debattons/master/setup/dev-env-on-ubuntu-16.04.sh" > /tmp/setup-debattons-dev-env-on-ubuntu-16.04.sh && bash /tmp/setup-debattons-dev-env-on-ubuntu-16.04.sh
+### Managing dependencies
+
+For example, to add [Leaflet][] library as a runtime dependency of your application, you would run following command:
+
+    yarn add --exact leaflet
+
+To benefit from TypeScript type definitions from [DefinitelyTyped][] repository in development, you would run following command:
+
+    yarn add --dev --exact @types/leaflet
+
+Then you would import the JS and CSS files specified in library's installation instructions so that [Webpack][] knows about them:
+Edit [src/main/webapp/app/vendor.ts](src/main/webapp/app/vendor.ts) file:
+
 ```
-Débattons will be installed in `/opt/debattons` and OrientDB in `/opt/orientdb`.
-
-The following script will start OrientDB, create the required DB & user if needed, and start Débattons:
-```bash
-/opt/debattons/scripts/build-and-run.dev.sh --start-orientdb-server
-```
-
-### Manual installation of development environment
-
-Débattons uses the following tools that you should install first:
- * Java SE Development Kit 8 ([JDK8](http://www.oracle.com/technetwork/java/javase/downloads/jdk8-downloads-2133151.html))
- * [Maven](https://maven.apache.org/) 3+
- * [Node.js](https://nodejs.org/en/) v6.11.3 LTS
- * [Yarn](https://yarnpkg.com) (that you can simply install with `npm install -g yarn`)
- * [OrientDB](https://orientdb.com/getting-started/)
-
-Here are the steps to launch the environment (replace `$PATH_TO_ORIENTDB` with the path to your OrientDB installation):
-```bash
-# First launch the OrientDB server
-$PATH_TO_ORIENTDB/bin/server.sh
-```
-The first time, you will have to configure the DB:
- * Connect to [http://localhost:2480/studio/index.html](http://localhost:2480/studio/index.html) and click on "New DB" and create the Database named `debattons` with the user `root` and the password that you will find in the file `docker-data/conf/debattons.env` in the project file tree.
- * Then create a new User on that database named `api-server` with the password `password`, the `admin` role and the status `Active`
- * Due to [an issue](https://github.com/orientechnologies/orientdb/issues/7984) in current version of OrientDB, go to "Browse" and execute the following request: `CREATE CLASS Root EXTENDS V`
-
-Now launch the Webservices part in another shell:
-```bash
-cd api-server
-mvn spring-boot:run
-```
-Now in another shell you can start the Angular UI:
-```bash
-cd ui
-yarn
-yarn ng serve
+import 'leaflet/dist/leaflet.js';
 ```
 
-Those 3 last steps (DB creation & launch the webservices & UI) can be done automatically with:
-```bash
-/opt/debattons/scripts/build-and-run.dev.sh
+Edit [src/main/webapp/content/css/vendor.css](src/main/webapp/content/css/vendor.css) file:
+
+```
+@import '~leaflet/dist/leaflet.css';
 ```
 
-## Access Débattons in your development environment
+Note: there are still few other things remaining to do for Leaflet that we won't detail here.
 
-You can finally access to the platform at [http://localhost:4200](http://localhost:4200)
+For further instructions on how to develop with JHipster, have a look at [Using JHipster in development][].
+
+### Using angular-cli
+
+You can also use [Angular CLI][] to generate some custom client code.
+
+For example, the following command:
+
+    ng generate component my-component
+
+will generate few files:
+
+    create src/main/webapp/app/my-component/my-component.component.html
+    create src/main/webapp/app/my-component/my-component.component.ts
+    update src/main/webapp/app/app.module.ts
+
+## Building for production
+
+To optimize the Debattons application for production, run:
+
+    ./mvnw -Pprod clean package
+
+This will concatenate and minify the client CSS and JavaScript files. It will also modify `index.html` so it references these new files.
+To ensure everything worked, run:
+
+    java -jar target/*.war
+
+Then navigate to [http://localhost:8080](http://localhost:8080) in your browser.
+
+Refer to [Using JHipster in production][] for more details.
+
+## Testing
+
+To launch your application's tests, run:
+
+    ./mvnw clean test
+
+### Client tests
+
+Unit tests are run by [Jest][] and written with [Jasmine][]. They're located in [src/test/javascript/](src/test/javascript/) and can be run with:
+
+    yarn test
+
+For more information, refer to the [Running tests page][].
+
+### Code quality
+
+Sonar is used to analyse code quality. You can start a local Sonar server (accessible on http://localhost:9001) with:
+
+```
+docker-compose -f src/main/docker/sonar.yml up -d
+```
+
+Then, run a Sonar analysis:
+
+```
+./mvnw -Pprod clean test sonar:sonar
+```
+
+For more information, refer to the [Code quality page][].
+
+## Using Docker to simplify development (optional)
+
+You can use Docker to improve your JHipster development experience. A number of docker-compose configuration are available in the [src/main/docker](src/main/docker) folder to launch required third party services.
+
+For example, to start a postgresql database in a docker container, run:
+
+    docker-compose -f src/main/docker/postgresql.yml up -d
+
+To stop it and remove the container, run:
+
+    docker-compose -f src/main/docker/postgresql.yml down
+
+You can also fully dockerize your application and all the services that it depends on.
+To achieve this, first build a docker image of your app by running:
+
+    ./mvnw package -Pprod verify jib:dockerBuild
+
+Then run:
+
+    docker-compose -f src/main/docker/app.yml up -d
+
+For more information refer to [Using Docker and Docker-Compose][], this page also contains information on the docker-compose sub-generator (`jhipster docker-compose`), which is able to generate docker configurations for one or several JHipster applications.
+
+## Continuous Integration (optional)
+
+To configure CI for your project, run the ci-cd sub-generator (`jhipster ci-cd`), this will let you generate configuration files for a number of Continuous Integration systems. Consult the [Setting up Continuous Integration][] page for more information.
+
+[jhipster homepage and latest documentation]: https://www.jhipster.tech
+[jhipster 5.8.1 archive]: https://www.jhipster.tech/documentation-archive/v5.8.1
+[using jhipster in development]: https://www.jhipster.tech/documentation-archive/v5.8.1/development/
+[using docker and docker-compose]: https://www.jhipster.tech/documentation-archive/v5.8.1/docker-compose
+[using jhipster in production]: https://www.jhipster.tech/documentation-archive/v5.8.1/production/
+[running tests page]: https://www.jhipster.tech/documentation-archive/v5.8.1/running-tests/
+[code quality page]: https://www.jhipster.tech/documentation-archive/v5.8.1/code-quality/
+[setting up continuous integration]: https://www.jhipster.tech/documentation-archive/v5.8.1/setting-up-ci/
+[node.js]: https://nodejs.org/
+[yarn]: https://yarnpkg.org/
+[webpack]: https://webpack.github.io/
+[angular cli]: https://cli.angular.io/
+[browsersync]: http://www.browsersync.io/
+[jest]: https://facebook.github.io/jest/
+[jasmine]: http://jasmine.github.io/2.0/introduction.html
+[protractor]: https://angular.github.io/protractor/
+[leaflet]: http://leafletjs.com/
+[definitelytyped]: http://definitelytyped.org/

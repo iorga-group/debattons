@@ -1,0 +1,25 @@
+{
+    "debattonsApp": {
+        "reaction": {
+            "home": {
+                "title": "Reactions",
+                "createLabel": "Create a new Reaction",
+                "createOrEditLabel": "Create or edit a Reaction"
+            },
+            "created": "A new Reaction is created with identifier {{ param }}",
+            "updated": "A Reaction is updated with identifier {{ param }}",
+            "deleted": "A Reaction is deleted with identifier {{ param }}",
+            "delete": {
+                "question": "Are you sure you want to delete Reaction {{ id }}?"
+            },
+            "detail": {
+                "title": "Reaction"
+            },
+            "title": "Title",
+            "content": "Content",
+            "childrenReactions": "Children Reactions",
+            "creator": "Creator",
+            "parentReaction": "Parent Reaction"
+        }
+    }
+}

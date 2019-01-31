@@ -1,0 +1,54 @@
+{
+    "name": "Reaction",
+    "fields": [
+        {
+            "fieldName": "title",
+            "fieldType": "String",
+            "fieldValidateRules": [
+                "maxlength",
+                "required"
+            ],
+            "fieldValidateRulesMaxlength": 280
+        },
+        {
+            "fieldName": "content",
+            "fieldType": "String",
+            "fieldValidateRules": [
+                "required"
+            ]
+        }
+    ],
+    "relationships": [
+        {
+            "relationshipType": "one-to-many",
+            "relationshipName": "childrenReactions",
+            "otherEntityName": "reaction",
+            "otherEntityRelationshipName": "parentReaction"
+        },
+        {
+            "relationshipType": "many-to-one",
+            "relationshipName": "creator",
+            "otherEntityName": "user",
+            "otherEntityField": "login",
+            "otherEntityRelationshipName": "reaction"
+        },
+        {
+            "relationshipType": "many-to-one",
+            "relationshipName": "parentReaction",
+            "otherEntityName": "reaction",
+            "otherEntityField": "title",
+            "otherEntityRelationshipName": "childrenReactions"
+        }
+    ],
+    "changelogDate": "20190131150430",
+    "entityTableName": "reaction",
+    "dto": "no",
+    "pagination": "pagination",
+    "service": "no",
+    "jpaMetamodelFiltering": false,
+    "fluentMethods": true,
+    "clientRootFolder": "",
+    "applications": [
+        "Debattons"
+    ]
+}

@@ -1,57 +1,12 @@
-# See http://help.github.com/ignore-files/ for more about ignoring files.
 
-# compiled output
-/ui/dist
-/ui/tmp
-/ui/out-tsc
-
-# dependencies
-/ui/node_modules
-/ui/package-lock.json
-
-# IDEs and editors
-.idea
-.project
-.classpath
-.c9/
-*.launch
-.settings/
-*.sublime-workspace
-*~
-*.iml
-.vscode
-
-# IDE - VSCode
-.vscode/*
-!.vscode/settings.json
-!.vscode/tasks.json
-!.vscode/launch.json
-!.vscode/extensions.json
-
-# misc
-/ui/.sass-cache
-/ui/connect.lock
-/ui/coverage
-/ui/libpeerconnection.log
-npm-debug.log
-testem.log
-/ui/typings
-/ui/yarn-error.log
-/api-server/hs_err_pid*.log
-
-# e2e
-/ui/e2e/*.js
-/ui/e2e/*.map
-
-# System Files
-.DS_Store
-Thumbs.db
-
+######################
+# Project Specific
+######################
+/src/main/webapp/content/css/main.css
+/target/www/**
+/src/test/javascript/coverage/
 # Docker data
 /docker-data*
-
-# Java compilation files
-/api-server/target
 
 # OrientDB history
 .orientdb_history
@@ -62,4 +17,147 @@ Thumbs.db
 /vagrant-data
 
 /tmp
+
+######################
+# Node
+######################
+/node/
+node_tmp/
+node_modules/
+npm-debug.log.*
+/.awcache/*
+/.cache-loader/*
+
+######################
+# SASS
+######################
+.sass-cache/
+
+######################
+# Eclipse
+######################
+*.pydevproject
+.project
+.metadata
+tmp/
+tmp/**/*
+*.tmp
+*.bak
+*.swp
+*~.nib
+local.properties
+.classpath
+.settings/
+.loadpath
+.factorypath
+/src/main/resources/rebel.xml
+
+# External tool builders
+.externalToolBuilders/**
+
+# Locally stored "Eclipse launch configurations"
+*.launch
+
+# CDT-specific
+.cproject
+
+# PDT-specific
+.buildpath
+
+######################
+# Intellij
+######################
+.idea/
+*.iml
+*.iws
+*.ipr
+*.ids
+*.orig
+classes/
+out/
+
+######################
+# Visual Studio Code
+######################
+.vscode/
+
+######################
+# NetBeans
+######################
 /nbproject
+
+######################
+# Maven
+######################
+/log/
+/target/
+
+######################
+# Gradle
+######################
+.gradle/
+/build/
+
+######################
+# Package Files
+######################
+*.jar
+*.war
+*.ear
+*.db
+
+######################
+# Windows
+######################
+# Windows image file caches
+Thumbs.db
+
+# Folder config file
+Desktop.ini
+
+######################
+# Mac OSX
+######################
+.DS_Store
+.svn
+
+# Thumbnails
+._*
+
+# Files that might appear on external disk
+.Spotlight-V100
+.Trashes
+
+######################
+# Directories
+######################
+/bin/
+/deploy/
+
+######################
+# Logs
+######################
+*.log*
+
+######################
+# Others
+######################
+*.class
+*.*~
+*~
+.merge_file*
+
+######################
+# Gradle Wrapper
+######################
+!gradle/wrapper/gradle-wrapper.jar
+
+######################
+# Maven Wrapper
+######################
+!.mvn/wrapper/maven-wrapper.jar
+
+######################
+# ESLint
+######################
+.eslintcache

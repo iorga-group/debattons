@@ -1,0 +1,41 @@
+<div class="row justify-content-center">
+    <div class="col-8">
+        <div *ngIf="reaction">
+            <h2><span jhiTranslate="debattonsApp.reaction.detail.title">Reaction</span> {{reaction.id}}</h2>
+            <hr>
+            <jhi-alert-error></jhi-alert-error>
+            <dl class="row-md jh-entity-details">
+                <dt><span jhiTranslate="debattonsApp.reaction.title">Title</span></dt>
+                <dd>
+                    <span>{{reaction.title}}</span>
+                </dd>
+                <dt><span jhiTranslate="debattonsApp.reaction.content">Content</span></dt>
+                <dd>
+                    <span>{{reaction.content}}</span>
+                </dd>
+                <dt><span jhiTranslate="debattonsApp.reaction.creator">Creator</span></dt>
+                <dd>
+                    {{reaction.creator?.login}}
+                </dd>
+                <dt><span jhiTranslate="debattonsApp.reaction.parentReaction">Parent Reaction</span></dt>
+                <dd>
+                    <div *ngIf="reaction.parentReaction">
+                        <a [routerLink]="['/reaction', reaction.parentReaction?.id, 'view']">{{reaction.parentReaction?.title}}</a>
+                    </div>
+                </dd>
+            </dl>
+
+            <button type="submit"
+                    (click)="previousState()"
+                    class="btn btn-info">
+                <fa-icon [icon]="'arrow-left'"></fa-icon>&nbsp;<span jhiTranslate="entity.action.back"> Back</span>
+            </button>
+
+            <button type="button"
+                    [routerLink]="['/reaction', reaction.id, 'edit']"
+                    class="btn btn-primary">
+                <fa-icon [icon]="'pencil-alt'"></fa-icon>&nbsp;<span jhiTranslate="entity.action.edit"> Edit</span>
+            </button>
+        </div>
+    </div>
+</div>
