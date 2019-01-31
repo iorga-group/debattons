@@ -1,0 +1,30 @@
+application {
+    config {
+        applicationType monolith
+        baseName Debattons
+        buildTool maven
+        clientPackageManager yarn
+        enableTranslation true
+        languages [fr, en]
+        nativeLanguage en
+        packageName com.iorga.debattons
+        prodDatabaseType postgresql
+        testFrameworks [cucumber, gatling]
+        useSass true
+    }
+    entities *
+}
+
+
+entity Reaction {
+    title String maxlength(280) required
+    content String required
+}
+relationship ManyToOne {
+    Reaction{creator(login)} to User
+}
+relationship OneToMany {
+	  Reaction{childrenReactions(title)} to Reaction{parentReaction(title)}
+}
+
+paginate * with pagination
