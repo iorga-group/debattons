@@ -8,7 +8,7 @@ import { ReactionService } from './reaction.service';
 import { IUser } from 'app/core';
 
 @Component({
-    selector: 'jhi-reaction-update',
+    selector: 'dbt-reaction-update',
     templateUrl: './reaction-update.component.html'
 })
 export class ReactionUpdateComponent implements OnInit {

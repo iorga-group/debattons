@@ -4,10 +4,10 @@ import { Router, ActivatedRouteSnapshot, NavigationEnd, NavigationError } from '
 import { JhiLanguageHelper } from 'app/core';
 
 @Component({
-    selector: 'jhi-main',
+    selector: 'dbt-main',
     templateUrl: './main.component.html'
 })
-export class JhiMainComponent implements OnInit {
+export class DbtMainComponent implements OnInit {
     constructor(private jhiLanguageHelper: JhiLanguageHelper, private router: Router) {}
 
     private getPageTitle(routeSnapshot: ActivatedRouteSnapshot) {

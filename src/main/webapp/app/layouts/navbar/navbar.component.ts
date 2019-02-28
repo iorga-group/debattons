@@ -9,7 +9,7 @@ import { JhiLanguageHelper, AccountService, LoginModalService, LoginService } fr
 import { ProfileService } from 'app/layouts/profiles/profile.service';
 
 @Component({
-    selector: 'jhi-navbar',
+    selector: 'dbt-navbar',
     templateUrl: './navbar.component.html',
     styleUrls: ['navbar.scss']
 })

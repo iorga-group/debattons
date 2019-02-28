@@ -16,6 +16,24 @@
             "fieldValidateRules": [
                 "required"
             ]
+        },
+        {
+            "fieldName": "type",
+            "fieldType": "ReactionType",
+            "fieldValues": "ROOT,AGREE,DISAGREE,COMMENT,GOOD_QUALITY,BAD_QUALITY",
+            "fieldValidateRules": [
+                "required"
+            ]
+        },
+        {
+            "fieldName": "typeLevel",
+            "fieldType": "Integer",
+            "fieldValidateRules": [
+                "min",
+                "max"
+            ],
+            "fieldValidateRulesMin": 1,
+            "fieldValidateRulesMax": 15
         }
     ],
     "relationships": [
@@ -40,7 +58,7 @@
             "otherEntityRelationshipName": "childrenReactions"
         }
     ],
-    "changelogDate": "20190131150430",
+    "changelogDate": "20190228105313",
     "entityTableName": "reaction",
     "dto": "no",
     "pagination": "pagination",

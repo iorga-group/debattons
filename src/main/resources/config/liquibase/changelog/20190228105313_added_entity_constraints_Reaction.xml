@@ -6,13 +6,13 @@
     <!--
         Added the constraints for entity Reaction.
     -->
-    <changeSet id="20190131150430-2" author="jhipster">
+    <changeSet id="20190228105313-2" author="jhipster">
         
         <addForeignKeyConstraint baseColumnNames="creator_id"
                                  baseTableName="reaction"
                                  constraintName="fk_reaction_creator_id"
                                  referencedColumnNames="id"
-                                 referencedTableName="jhi_user"/>
+                                 referencedTableName="dbt_user"/>
 
         <addForeignKeyConstraint baseColumnNames="parent_reaction_id"
                                  baseTableName="reaction"

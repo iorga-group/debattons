@@ -1,9 +1,9 @@
 <div class="row justify-content-center">
     <div class="col-8">
         <form name="editForm" role="form" novalidate (ngSubmit)="save()" #editForm="ngForm">
-            <h2 id="jhi-reaction-heading" jhiTranslate="debattonsApp.reaction.home.createOrEditLabel">Create or edit a Reaction</h2>
+            <h2 id="dbt-reaction-heading" jhiTranslate="debattonsApp.reaction.home.createOrEditLabel">Create or edit a Reaction</h2>
             <div>
-                <jhi-alert-error></jhi-alert-error>
+                <dbt-alert-error></dbt-alert-error>
                 <div class="form-group" [hidden]="!reaction.id">
                     <label for="id" jhiTranslate="global.field.id">ID</label>
                     <input type="text" class="form-control" id="id" name="id"
@@ -32,6 +32,42 @@
                         <small class="form-text text-danger"
                         [hidden]="!editForm.controls.content?.errors?.required" jhiTranslate="entity.validation.required">
                         This field is required.
+                        </small>
+                    </div>
+                </div>
+                <div class="form-group">
+                    <label class="form-control-label" jhiTranslate="debattonsApp.reaction.type" for="field_type">Type</label>
+                    <select class="form-control" name="type" [(ngModel)]="reaction.type" id="field_type"  required>
+                        <option value="ROOT">{{'debattonsApp.ReactionType.ROOT' | translate}}</option>
+                        <option value="AGREE">{{'debattonsApp.ReactionType.AGREE' | translate}}</option>
+                        <option value="DISAGREE">{{'debattonsApp.ReactionType.DISAGREE' | translate}}</option>
+                        <option value="COMMENT">{{'debattonsApp.ReactionType.COMMENT' | translate}}</option>
+                        <option value="GOOD_QUALITY">{{'debattonsApp.ReactionType.GOOD_QUALITY' | translate}}</option>
+                        <option value="BAD_QUALITY">{{'debattonsApp.ReactionType.BAD_QUALITY' | translate}}</option>
+                    </select>
+                    <div [hidden]="!(editForm.controls.type?.dirty && editForm.controls.type?.invalid)">
+                        <small class="form-text text-danger"
+                        [hidden]="!editForm.controls.type?.errors?.required" jhiTranslate="entity.validation.required">
+                        This field is required.
+                        </small>
+                    </div>
+                </div>
+                <div class="form-group">
+                    <label class="form-control-label" jhiTranslate="debattonsApp.reaction.typeLevel" for="field_typeLevel">Type Level</label>
+                    <input type="number" class="form-control" name="typeLevel" id="field_typeLevel"
+                        [(ngModel)]="reaction.typeLevel" min="1" jhiMin="1" max="15" jhiMax="15"/>
+                    <div [hidden]="!(editForm.controls.typeLevel?.dirty && editForm.controls.typeLevel?.invalid)">
+                        <small class="form-text text-danger"
+                            [hidden]="!editForm.controls.typeLevel?.errors?.min" jhiTranslate="entity.validation.min" [translateValues]="{ min: 1 }">
+                            This field should be at least 1.
+                        </small>
+                        <small class="form-text text-danger"
+                            [hidden]="!editForm.controls.typeLevel?.errors?.max" jhiTranslate="entity.validation.max" [translateValues]="{ max: 15 }">
+                            This field cannot be more than 15.
+                        </small>
+                        <small class="form-text text-danger"
+                            [hidden]="!editForm.controls.typeLevel?.errors?.number" jhiTranslate="entity.validation.number">
+                            This field should be a number.
                         </small>
                     </div>
                 </div>

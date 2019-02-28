@@ -14,6 +14,8 @@ import java.util.HashSet;
 import java.util.Set;
 import java.util.Objects;
 
+import com.iorga.debattons.domain.enumeration.ReactionType;
+
 /**
  * A Reaction.
  */
@@ -37,6 +39,16 @@ public class Reaction implements Serializable {
     @NotNull
     @Column(name = "content", nullable = false)
     private String content;
+
+    @NotNull
+    @Enumerated(EnumType.STRING)
+    @Column(name = "dbt_type", nullable = false)
+    private ReactionType type;
+
+    @Min(value = 1)
+    @Max(value = 15)
+    @Column(name = "type_level")
+    private Integer typeLevel;
 
     @OneToMany(mappedBy = "parentReaction")
     @Cache(usage = CacheConcurrencyStrategy.NONSTRICT_READ_WRITE)
@@ -82,6 +94,32 @@ public class Reaction implements Serializable {
 
     public void setContent(String content) {
         this.content = content;
+    }
+
+    public ReactionType getType() {
+        return type;
+    }
+
+    public Reaction type(ReactionType type) {
+        this.type = type;
+        return this;
+    }
+
+    public void setType(ReactionType type) {
+        this.type = type;
+    }
+
+    public Integer getTypeLevel() {
+        return typeLevel;
+    }
+
+    public Reaction typeLevel(Integer typeLevel) {
+        this.typeLevel = typeLevel;
+        return this;
+    }
+
+    public void setTypeLevel(Integer typeLevel) {
+        this.typeLevel = typeLevel;
     }
 
     public Set<Reaction> getChildrenReactions() {
@@ -162,6 +200,8 @@ public class Reaction implements Serializable {
             "id=" + getId() +
             ", title='" + getTitle() + "'" +
             ", content='" + getContent() + "'" +
+            ", type='" + getType() + "'" +
+            ", typeLevel=" + getTypeLevel() +
             "}";
     }
 }

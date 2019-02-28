@@ -4,7 +4,7 @@ import { Log } from './log.model';
 import { LogsService } from './logs.service';
 
 @Component({
-    selector: 'jhi-logs',
+    selector: 'dbt-logs',
     templateUrl: './logs.component.html'
 })
 export class LogsComponent implements OnInit {

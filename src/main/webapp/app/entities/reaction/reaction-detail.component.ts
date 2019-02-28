@@ -12,7 +12,7 @@ class DebattonsNetworkData implements VisNetworkData {
 }
 
 @Component({
-    selector: 'jhi-reaction-detail',
+    selector: 'dbt-reaction-detail',
     templateUrl: './reaction-detail.component.html',
     styleUrls: ['./reaction-detail.component.css']
 })
