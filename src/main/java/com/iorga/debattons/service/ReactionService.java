@@ -7,6 +7,8 @@ import org.springframework.security.access.AccessDeniedException;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
+import javax.validation.Valid;
+
 @Service
 @Transactional
 public class ReactionService {
@@ -20,7 +22,7 @@ public class ReactionService {
     }
 
 
-    public Reaction saveByUser(Reaction reaction, User user) {
+    public Reaction saveByUser(@Valid Reaction reaction, User user) {
         if (reaction.getId() == null) {
             // creation
             reaction.setCreator(user);

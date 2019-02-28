@@ -1,20 +1,21 @@
 package com.iorga.debattons.domain;
 
 
-import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
+import com.iorga.debattons.domain.enumeration.ReactionType;
+import com.iorga.debattons.domain.validation.CheckRootTypeReactionWithoutParent;
 import org.hibernate.annotations.Cache;
 import org.hibernate.annotations.CacheConcurrencyStrategy;
 
 import javax.persistence.*;
-import javax.validation.constraints.*;
-
+import javax.validation.constraints.Max;
+import javax.validation.constraints.Min;
+import javax.validation.constraints.NotNull;
+import javax.validation.constraints.Size;
 import java.io.Serializable;
 import java.util.HashSet;
-import java.util.Set;
 import java.util.Objects;
-
-import com.iorga.debattons.domain.enumeration.ReactionType;
+import java.util.Set;
 
 /**
  * A Reaction.
@@ -22,10 +23,11 @@ import com.iorga.debattons.domain.enumeration.ReactionType;
 @Entity
 @Table(name = "reaction")
 @Cache(usage = CacheConcurrencyStrategy.NONSTRICT_READ_WRITE)
+@CheckRootTypeReactionWithoutParent
 public class Reaction implements Serializable {
 
     private static final long serialVersionUID = 1L;
-    
+
     @Id
     @GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "sequenceGenerator")
     @SequenceGenerator(name = "sequenceGenerator")

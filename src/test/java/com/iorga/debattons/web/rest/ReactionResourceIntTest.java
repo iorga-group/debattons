@@ -17,6 +17,7 @@ import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.data.web.PageableHandlerMethodArgumentResolver;
 import org.springframework.http.MediaType;
 import org.springframework.http.converter.json.MappingJackson2HttpMessageConverter;
+import org.springframework.security.test.context.support.WithMockUser;
 import org.springframework.test.context.junit4.SpringRunner;
 import org.springframework.test.web.servlet.MockMvc;
 import org.springframework.test.web.servlet.setup.MockMvcBuilders;
@@ -24,6 +25,7 @@ import org.springframework.transaction.annotation.Transactional;
 import org.springframework.validation.Validator;
 
 import javax.persistence.EntityManager;
+import java.io.IOException;
 import java.util.List;
 
 
@@ -117,6 +119,7 @@ public class ReactionResourceIntTest {
 
     @Test
     @Transactional
+    @WithMockUser
     public void createReaction() throws Exception {
         int databaseSizeBeforeCreate = reactionRepository.findAll().size();
 
@@ -333,5 +336,30 @@ public class ReactionResourceIntTest {
         assertThat(reaction1).isNotEqualTo(reaction2);
         reaction1.setId(null);
         assertThat(reaction1).isNotEqualTo(reaction2);
+    }
+
+    @Test
+    @WithMockUser
+    public void createARootReactionReplyingToAnotherOneTest() throws Exception {
+        // Initialize the database
+        Reaction savedReaction = reactionRepository.saveAndFlush(reaction);
+
+        int databaseSizeBeforeCreate = reactionRepository.findAll().size();
+
+        Reaction replyReaction = new Reaction()
+            .title("reply")
+            .content("reply")
+            .type(ReactionType.ROOT)
+            .parentReaction(savedReaction);
+
+        // An entity with an existing ID cannot be created, so this API call must fail
+        restReactionMockMvc.perform(post("/api/reactions")
+            .contentType(TestUtil.APPLICATION_JSON_UTF8)
+            .content(TestUtil.convertObjectToJsonBytes(replyReaction)))
+            .andExpect(status().isBadRequest());
+
+        // Validate the Reaction in the database
+        List<Reaction> reactionList = reactionRepository.findAll();
+        assertThat(reactionList).hasSize(databaseSizeBeforeCreate);
     }
 }
