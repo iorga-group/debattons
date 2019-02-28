@@ -4,6 +4,7 @@ application {
         baseName Debattons
         buildTool maven
         clientPackageManager yarn
+        jhiPrefix dbt
         enableTranslation true
         languages [fr, en]
         nativeLanguage en
@@ -16,15 +17,21 @@ application {
 }
 
 
+enum ReactionType {
+    ROOT, AGREE, DISAGREE, COMMENT, GOOD_QUALITY, BAD_QUALITY
+}
+
 entity Reaction {
     title String maxlength(280) required
     content String required
+    type ReactionType required
+    typeLevel Integer min(1) max(15)
 }
 relationship ManyToOne {
     Reaction{creator(login)} to User
 }
 relationship OneToMany {
-	  Reaction{childrenReactions(title)} to Reaction{parentReaction(title)}
+    Reaction{childrenReactions(title)} to Reaction{parentReaction(title)}
 }
 
 paginate * with pagination
