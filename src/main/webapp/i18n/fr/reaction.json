@@ -17,6 +17,8 @@
             },
             "title": "Title",
             "content": "Content",
+            "type": "Type",
+            "typeLevel": "Type Level",
             "childrenReactions": "Children Reactions",
             "creator": "Creator",
             "parentReaction": "Parent Reaction"

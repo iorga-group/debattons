@@ -3,31 +3,31 @@ import { of } from 'rxjs';
 import { HttpHeaders, HttpResponse } from '@angular/common/http';
 
 import { DebattonsTestModule } from '../../../test.module';
-import { JhiConfigurationComponent } from 'app/admin/configuration/configuration.component';
-import { JhiConfigurationService } from 'app/admin/configuration/configuration.service';
+import { DbtConfigurationComponent } from 'app/admin/configuration/configuration.component';
+import { DbtConfigurationService } from 'app/admin/configuration/configuration.service';
 import { ITEMS_PER_PAGE } from 'app/shared';
 import { Log } from 'app/admin';
 
 describe('Component Tests', () => {
-    describe('JhiConfigurationComponent', () => {
-        let comp: JhiConfigurationComponent;
-        let fixture: ComponentFixture<JhiConfigurationComponent>;
-        let service: JhiConfigurationService;
+    describe('DbtConfigurationComponent', () => {
+        let comp: DbtConfigurationComponent;
+        let fixture: ComponentFixture<DbtConfigurationComponent>;
+        let service: DbtConfigurationService;
 
         beforeEach(async(() => {
             TestBed.configureTestingModule({
                 imports: [DebattonsTestModule],
-                declarations: [JhiConfigurationComponent],
-                providers: [JhiConfigurationService]
+                declarations: [DbtConfigurationComponent],
+                providers: [DbtConfigurationService]
             })
-                .overrideTemplate(JhiConfigurationComponent, '')
+                .overrideTemplate(DbtConfigurationComponent, '')
                 .compileComponents();
         }));
 
         beforeEach(() => {
-            fixture = TestBed.createComponent(JhiConfigurationComponent);
+            fixture = TestBed.createComponent(DbtConfigurationComponent);
             comp = fixture.componentInstance;
-            service = fixture.debugElement.injector.get(JhiConfigurationService);
+            service = fixture.debugElement.injector.get(DbtConfigurationService);
         });
 
         describe('OnInit', () => {

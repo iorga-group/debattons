@@ -3,7 +3,7 @@
         <div *ngIf="reaction">
             <h2><span jhiTranslate="debattonsApp.reaction.detail.title">Reaction</span> {{reaction.id}}</h2>
             <hr>
-            <jhi-alert-error></jhi-alert-error>
+            <dbt-alert-error></dbt-alert-error>
             <dl class="row-md jh-entity-details">
                 <dt><span jhiTranslate="debattonsApp.reaction.title">Title</span></dt>
                 <dd>
@@ -12,6 +12,14 @@
                 <dt><span jhiTranslate="debattonsApp.reaction.content">Content</span></dt>
                 <dd>
                     <span>{{reaction.content}}</span>
+                </dd>
+                <dt><span jhiTranslate="debattonsApp.reaction.type">Type</span></dt>
+                <dd>
+                    <span jhiTranslate="{{'debattonsApp.ReactionType.' + reaction.type}}">{{reaction.type}}</span>
+                </dd>
+                <dt><span jhiTranslate="debattonsApp.reaction.typeLevel">Type Level</span></dt>
+                <dd>
+                    <span>{{reaction.typeLevel}}</span>
                 </dd>
                 <dt><span jhiTranslate="debattonsApp.reaction.creator">Creator</span></dt>
                 <dd>

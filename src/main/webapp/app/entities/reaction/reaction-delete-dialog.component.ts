@@ -8,7 +8,7 @@ import { IReaction } from 'app/shared/model/reaction.model';
 import { ReactionService } from './reaction.service';
 
 @Component({
-    selector: 'jhi-reaction-delete-dialog',
+    selector: 'dbt-reaction-delete-dialog',
     templateUrl: './reaction-delete-dialog.component.html'
 })
 export class ReactionDeleteDialogComponent {
@@ -32,7 +32,7 @@ export class ReactionDeleteDialogComponent {
 }
 
 @Component({
-    selector: 'jhi-reaction-delete-popup',
+    selector: 'dbt-reaction-delete-popup',
     template: ''
 })
 export class ReactionDeletePopupComponent implements OnInit, OnDestroy {

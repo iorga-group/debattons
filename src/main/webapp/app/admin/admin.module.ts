@@ -13,11 +13,11 @@ import {
     UserMgmtUpdateComponent,
     UserMgmtDeleteDialogComponent,
     LogsComponent,
-    JhiMetricsMonitoringComponent,
-    JhiHealthModalComponent,
-    JhiHealthCheckComponent,
-    JhiConfigurationComponent,
-    JhiDocsComponent
+    DbtMetricsMonitoringComponent,
+    DbtHealthModalComponent,
+    DbtHealthCheckComponent,
+    DbtConfigurationComponent,
+    DbtDocsComponent
 } from './';
 
 @NgModule({
@@ -33,14 +33,14 @@ import {
         UserMgmtUpdateComponent,
         UserMgmtDeleteDialogComponent,
         LogsComponent,
-        JhiConfigurationComponent,
-        JhiHealthCheckComponent,
-        JhiHealthModalComponent,
-        JhiDocsComponent,
-        JhiMetricsMonitoringComponent
+        DbtConfigurationComponent,
+        DbtHealthCheckComponent,
+        DbtHealthModalComponent,
+        DbtDocsComponent,
+        DbtMetricsMonitoringComponent
     ],
     providers: [{ provide: JhiLanguageService, useClass: JhiLanguageService }],
-    entryComponents: [UserMgmtDeleteDialogComponent, JhiHealthModalComponent],
+    entryComponents: [UserMgmtDeleteDialogComponent, DbtHealthModalComponent],
     schemas: [CUSTOM_ELEMENTS_SCHEMA]
 })
 export class DebattonsAdminModule {

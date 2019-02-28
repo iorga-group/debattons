@@ -4,7 +4,7 @@ import { ActivatedRoute } from '@angular/router';
 import { IReaction } from 'app/shared/model/reaction.model';
 
 @Component({
-    selector: 'jhi-reaction-detail',
+    selector: 'dbt-reaction-detail',
     templateUrl: './reaction-detail.component.html'
 })
 export class ReactionDetailComponent implements OnInit {

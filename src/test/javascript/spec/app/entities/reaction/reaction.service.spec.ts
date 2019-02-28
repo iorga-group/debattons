@@ -5,7 +5,7 @@ import { HttpClient, HttpResponse } from '@angular/common/http';
 import { of } from 'rxjs';
 import { take, map } from 'rxjs/operators';
 import { ReactionService } from 'app/entities/reaction/reaction.service';
-import { IReaction, Reaction } from 'app/shared/model/reaction.model';
+import { IReaction, Reaction, ReactionType } from 'app/shared/model/reaction.model';
 
 describe('Service Tests', () => {
     describe('Reaction Service', () => {
@@ -21,7 +21,7 @@ describe('Service Tests', () => {
             service = injector.get(ReactionService);
             httpMock = injector.get(HttpTestingController);
 
-            elemDefault = new Reaction(0, 'AAAAAAA', 'AAAAAAA');
+            elemDefault = new Reaction(0, 'AAAAAAA', 'AAAAAAA', ReactionType.ROOT, 0);
         });
 
         describe('Service methods', async () => {
@@ -56,7 +56,9 @@ describe('Service Tests', () => {
                 const returnedFromService = Object.assign(
                     {
                         title: 'BBBBBB',
-                        content: 'BBBBBB'
+                        content: 'BBBBBB',
+                        type: 'BBBBBB',
+                        typeLevel: 1
                     },
                     elemDefault
                 );
@@ -74,7 +76,9 @@ describe('Service Tests', () => {
                 const returnedFromService = Object.assign(
                     {
                         title: 'BBBBBB',
-                        content: 'BBBBBB'
+                        content: 'BBBBBB',
+                        type: 'BBBBBB',
+                        typeLevel: 1
                     },
                     elemDefault
                 );

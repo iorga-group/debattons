@@ -4,7 +4,7 @@ import { ActivatedRoute, Router } from '@angular/router';
 import { JhiLanguageHelper, User, UserService } from 'app/core';
 
 @Component({
-    selector: 'jhi-user-mgmt-update',
+    selector: 'dbt-user-mgmt-update',
     templateUrl: './user-management-update.component.html'
 })
 export class UserMgmtUpdateComponent implements OnInit {

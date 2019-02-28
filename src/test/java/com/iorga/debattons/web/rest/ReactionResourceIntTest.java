@@ -31,6 +31,7 @@ import static org.hamcrest.Matchers.hasItem;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.*;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.*;
 
+import com.iorga.debattons.domain.enumeration.ReactionType;
 /**
  * Test class for the ReactionResource REST controller.
  *
@@ -45,6 +46,12 @@ public class ReactionResourceIntTest {
 
     private static final String DEFAULT_CONTENT = "AAAAAAAAAA";
     private static final String UPDATED_CONTENT = "BBBBBBBBBB";
+
+    private static final ReactionType DEFAULT_TYPE = ReactionType.ROOT;
+    private static final ReactionType UPDATED_TYPE = ReactionType.AGREE;
+
+    private static final Integer DEFAULT_TYPE_LEVEL = 1;
+    private static final Integer UPDATED_TYPE_LEVEL = 2;
 
     @Autowired
     private ReactionRepository reactionRepository;
@@ -89,7 +96,9 @@ public class ReactionResourceIntTest {
     public static Reaction createEntity(EntityManager em) {
         Reaction reaction = new Reaction()
             .title(DEFAULT_TITLE)
-            .content(DEFAULT_CONTENT);
+            .content(DEFAULT_CONTENT)
+            .type(DEFAULT_TYPE)
+            .typeLevel(DEFAULT_TYPE_LEVEL);
         return reaction;
     }
 
@@ -115,6 +124,8 @@ public class ReactionResourceIntTest {
         Reaction testReaction = reactionList.get(reactionList.size() - 1);
         assertThat(testReaction.getTitle()).isEqualTo(DEFAULT_TITLE);
         assertThat(testReaction.getContent()).isEqualTo(DEFAULT_CONTENT);
+        assertThat(testReaction.getType()).isEqualTo(DEFAULT_TYPE);
+        assertThat(testReaction.getTypeLevel()).isEqualTo(DEFAULT_TYPE_LEVEL);
     }
 
     @Test
@@ -174,6 +185,24 @@ public class ReactionResourceIntTest {
 
     @Test
     @Transactional
+    public void checkTypeIsRequired() throws Exception {
+        int databaseSizeBeforeTest = reactionRepository.findAll().size();
+        // set the field null
+        reaction.setType(null);
+
+        // Create the Reaction, which fails.
+
+        restReactionMockMvc.perform(post("/api/reactions")
+            .contentType(TestUtil.APPLICATION_JSON_UTF8)
+            .content(TestUtil.convertObjectToJsonBytes(reaction)))
+            .andExpect(status().isBadRequest());
+
+        List<Reaction> reactionList = reactionRepository.findAll();
+        assertThat(reactionList).hasSize(databaseSizeBeforeTest);
+    }
+
+    @Test
+    @Transactional
     public void getAllReactions() throws Exception {
         // Initialize the database
         reactionRepository.saveAndFlush(reaction);
@@ -184,7 +213,9 @@ public class ReactionResourceIntTest {
             .andExpect(content().contentType(MediaType.APPLICATION_JSON_UTF8_VALUE))
             .andExpect(jsonPath("$.[*].id").value(hasItem(reaction.getId().intValue())))
             .andExpect(jsonPath("$.[*].title").value(hasItem(DEFAULT_TITLE.toString())))
-            .andExpect(jsonPath("$.[*].content").value(hasItem(DEFAULT_CONTENT.toString())));
+            .andExpect(jsonPath("$.[*].content").value(hasItem(DEFAULT_CONTENT.toString())))
+            .andExpect(jsonPath("$.[*].type").value(hasItem(DEFAULT_TYPE.toString())))
+            .andExpect(jsonPath("$.[*].typeLevel").value(hasItem(DEFAULT_TYPE_LEVEL)));
     }
     
     @Test
@@ -199,7 +230,9 @@ public class ReactionResourceIntTest {
             .andExpect(content().contentType(MediaType.APPLICATION_JSON_UTF8_VALUE))
             .andExpect(jsonPath("$.id").value(reaction.getId().intValue()))
             .andExpect(jsonPath("$.title").value(DEFAULT_TITLE.toString()))
-            .andExpect(jsonPath("$.content").value(DEFAULT_CONTENT.toString()));
+            .andExpect(jsonPath("$.content").value(DEFAULT_CONTENT.toString()))
+            .andExpect(jsonPath("$.type").value(DEFAULT_TYPE.toString()))
+            .andExpect(jsonPath("$.typeLevel").value(DEFAULT_TYPE_LEVEL));
     }
 
     @Test
@@ -224,7 +257,9 @@ public class ReactionResourceIntTest {
         em.detach(updatedReaction);
         updatedReaction
             .title(UPDATED_TITLE)
-            .content(UPDATED_CONTENT);
+            .content(UPDATED_CONTENT)
+            .type(UPDATED_TYPE)
+            .typeLevel(UPDATED_TYPE_LEVEL);
 
         restReactionMockMvc.perform(put("/api/reactions")
             .contentType(TestUtil.APPLICATION_JSON_UTF8)
@@ -237,6 +272,8 @@ public class ReactionResourceIntTest {
         Reaction testReaction = reactionList.get(reactionList.size() - 1);
         assertThat(testReaction.getTitle()).isEqualTo(UPDATED_TITLE);
         assertThat(testReaction.getContent()).isEqualTo(UPDATED_CONTENT);
+        assertThat(testReaction.getType()).isEqualTo(UPDATED_TYPE);
+        assertThat(testReaction.getTypeLevel()).isEqualTo(UPDATED_TYPE_LEVEL);
     }
 
     @Test

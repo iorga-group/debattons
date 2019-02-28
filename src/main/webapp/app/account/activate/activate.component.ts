@@ -6,7 +6,7 @@ import { LoginModalService } from 'app/core';
 import { ActivateService } from './activate.service';
 
 @Component({
-    selector: 'jhi-activate',
+    selector: 'dbt-activate',
     templateUrl: './activate.component.html'
 })
 export class ActivateComponent implements OnInit {

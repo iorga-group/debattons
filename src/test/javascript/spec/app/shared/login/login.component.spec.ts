@@ -4,7 +4,7 @@ import { NgbActiveModal } from '@ng-bootstrap/ng-bootstrap';
 import { JhiEventManager } from 'ng-jhipster';
 
 import { LoginService } from 'app/core/login/login.service';
-import { JhiLoginModalComponent } from 'app/shared/login/login.component';
+import { DbtLoginModalComponent } from 'app/shared/login/login.component';
 import { StateStorageService } from 'app/core/auth/state-storage.service';
 import { DebattonsTestModule } from '../../../test.module';
 import { MockLoginService } from '../../../helpers/mock-login.service';
@@ -12,8 +12,8 @@ import { MockStateStorageService } from '../../../helpers/mock-state-storage.ser
 
 describe('Component Tests', () => {
     describe('LoginComponent', () => {
-        let comp: JhiLoginModalComponent;
-        let fixture: ComponentFixture<JhiLoginModalComponent>;
+        let comp: DbtLoginModalComponent;
+        let fixture: ComponentFixture<DbtLoginModalComponent>;
         let mockLoginService: any;
         let mockStateStorageService: any;
         let mockRouter: any;
@@ -23,7 +23,7 @@ describe('Component Tests', () => {
         beforeEach(async(() => {
             TestBed.configureTestingModule({
                 imports: [DebattonsTestModule],
-                declarations: [JhiLoginModalComponent],
+                declarations: [DbtLoginModalComponent],
                 providers: [
                     {
                         provide: LoginService,
@@ -35,12 +35,12 @@ describe('Component Tests', () => {
                     }
                 ]
             })
-                .overrideTemplate(JhiLoginModalComponent, '')
+                .overrideTemplate(DbtLoginModalComponent, '')
                 .compileComponents();
         }));
 
         beforeEach(() => {
-            fixture = TestBed.createComponent(JhiLoginModalComponent);
+            fixture = TestBed.createComponent(DbtLoginModalComponent);
             comp = fixture.componentInstance;
             mockLoginService = fixture.debugElement.injector.get(LoginService);
             mockStateStorageService = fixture.debugElement.injector.get(StateStorageService);

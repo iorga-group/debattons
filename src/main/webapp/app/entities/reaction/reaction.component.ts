@@ -12,7 +12,7 @@ import { ITEMS_PER_PAGE } from 'app/shared';
 import { ReactionService } from './reaction.service';
 
 @Component({
-    selector: 'jhi-reaction',
+    selector: 'dbt-reaction',
     templateUrl: './reaction.component.html'
 })
 export class ReactionComponent implements OnInit, OnDestroy {

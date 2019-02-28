@@ -5,7 +5,7 @@
         "enableHibernateCache": true,
         "enableSwaggerCodegen": false,
         "enableTranslation": true,
-        "jhiPrefix": "jhi",
+        "jhiPrefix": "dbt",
         "languages": ["fr", "en"],
         "messageBroker": false,
         "nativeLanguage": "en",
@@ -29,7 +29,7 @@
         "cacheProvider": "ehcache",
         "clientFramework": "angularX",
         "serverPort": "8080",
-        "jwtSecretKey": "ZGZlYTU2MGE0YTMwM2Q0Y2U1ZTdhMTJkN2FlMGJiMjY2MTRkOTY3ZjUzMjk1ZDFkNWJhMTUxMDU2NzM1NjAxZmEzNTY5MWYzMDJiOGU1NWFlZjZkMzk4YzEzN2IzZmYzYTczNGQ2ZDgwYzkzNTUxNTFhZjQ3NjRlNjRmYzA5ODE=",
+        "jwtSecretKey": "OWNiNGFjYjVlNDAyY2RlMDRkYjI1NmMzNGE2NzQ0NTYyNWEzMjE2NDllYzNlYzQxOTZiNDM1NzQ4NDJlOTgwYTczZWI4MDgxMGI3Mjk0MWNiNTU5Yzg4YWYyNWJjYzllOGQ0MDY0Y2MzZThmMzAzODhhM2VhYjc4ZmUwOGEyYTc=",
         "entitySuffix": "",
         "dtoSuffix": "DTO",
         "otherModules": []

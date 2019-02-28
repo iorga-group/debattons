@@ -8,7 +8,7 @@
             </span>
         </button>
     </h2>
-    <jhi-alert></jhi-alert>
+    <dbt-alert></dbt-alert>
     <br/>
     <div class="table-responsive" *ngIf="reactions">
         <table class="table table-striped">
@@ -17,6 +17,8 @@
             <th jhiSortBy="id"><span jhiTranslate="global.field.id">ID</span> <fa-icon [icon]="'sort'"></fa-icon></th>
             <th jhiSortBy="title"><span jhiTranslate="debattonsApp.reaction.title">Title</span> <fa-icon [icon]="'sort'"></fa-icon></th>
             <th jhiSortBy="content"><span jhiTranslate="debattonsApp.reaction.content">Content</span> <fa-icon [icon]="'sort'"></fa-icon></th>
+            <th jhiSortBy="type"><span jhiTranslate="debattonsApp.reaction.type">Type</span> <fa-icon [icon]="'sort'"></fa-icon></th>
+            <th jhiSortBy="typeLevel"><span jhiTranslate="debattonsApp.reaction.typeLevel">Type Level</span> <fa-icon [icon]="'sort'"></fa-icon></th>
             <th jhiSortBy="creator.login"><span jhiTranslate="debattonsApp.reaction.creator">Creator</span> <fa-icon [icon]="'sort'"></fa-icon></th>
             <th jhiSortBy="parentReaction.title"><span jhiTranslate="debattonsApp.reaction.parentReaction">Parent Reaction</span> <fa-icon [icon]="'sort'"></fa-icon></th>
             <th></th>
@@ -27,6 +29,8 @@
                 <td><a [routerLink]="['/reaction', reaction.id, 'view' ]">{{reaction.id}}</a></td>
                 <td>{{reaction.title}}</td>
                 <td>{{reaction.content}}</td>
+                <td jhiTranslate="{{'debattonsApp.ReactionType.' + reaction.type}}">{{reaction.type}}</td>
+                <td>{{reaction.typeLevel}}</td>
                 <td>
                     {{reaction.creator?.login}}
                 </td>

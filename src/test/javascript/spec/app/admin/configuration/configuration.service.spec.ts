@@ -1,13 +1,13 @@
 import { TestBed } from '@angular/core/testing';
 
-import { JhiConfigurationService } from 'app/admin/configuration/configuration.service';
+import { DbtConfigurationService } from 'app/admin/configuration/configuration.service';
 import { SERVER_API_URL } from 'app/app.constants';
 import { HttpClientTestingModule, HttpTestingController } from '@angular/common/http/testing';
 import { HttpResponse } from '@angular/common/http';
 
 describe('Service Tests', () => {
     describe('Logs Service', () => {
-        let service: JhiConfigurationService;
+        let service: DbtConfigurationService;
         let httpMock;
 
         beforeEach(() => {
@@ -15,7 +15,7 @@ describe('Service Tests', () => {
                 imports: [HttpClientTestingModule]
             });
 
-            service = TestBed.get(JhiConfigurationService);
+            service = TestBed.get(DbtConfigurationService);
             httpMock = TestBed.get(HttpTestingController);
         });
 

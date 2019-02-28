@@ -16,7 +16,7 @@
     <!--
         Added the entity Reaction.
     -->
-    <changeSet id="20190131150430-1" author="jhipster">
+    <changeSet id="20190228105313-1" author="jhipster">
         <createTable tableName="reaction">
             <column name="id" type="bigint" autoIncrement="${autoIncrement}">
                 <constraints primaryKey="true" nullable="false"/>
@@ -27,6 +27,14 @@
 
             <column name="content" type="varchar(255)">
                 <constraints nullable="false" />
+            </column>
+
+            <column name="dbt_type" type="varchar(255)">
+                <constraints nullable="false" />
+            </column>
+
+            <column name="type_level" type="integer">
+                <constraints nullable="true" />
             </column>
 
             <column name="creator_id" type="bigint">
