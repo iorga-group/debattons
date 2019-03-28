@@ -2,12 +2,12 @@
     "debattonsApp": {
         "ReactionType": {
             "null": "",
-            "ROOT": "ROOT",
-            "AGREE": "AGREE",
-            "DISAGREE": "DISAGREE",
-            "COMMENT": "COMMENT",
-            "GOOD_QUALITY": "GOOD_QUALITY",
-            "BAD_QUALITY": "BAD_QUALITY"
+            "ROOT": "Root",
+            "AGREE": "Agree",
+            "DISAGREE": "Disagree",
+            "COMMENT": "Comment",
+            "GOOD_QUALITY": "Good quality",
+            "BAD_QUALITY": "Bad quality"
         }
     }
 }

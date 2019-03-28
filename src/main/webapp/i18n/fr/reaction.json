@@ -2,26 +2,29 @@
     "debattonsApp": {
         "reaction": {
             "home": {
-                "title": "Reactions",
-                "createLabel": "Créer un nouveau Reaction",
-                "createOrEditLabel": "Créer ou éditer un Reaction"
+                "title": "Réactions",
+                "createLabel": "Créer une nouvelle Réaction",
+                "createOrEditLabel": "Créer ou éditer un Réaction"
             },
-            "created": "Un nouveau Reaction a été créé avec l'identifiant {{ param }}",
-            "updated": "Le Reaction avec l'identifiant {{ param }} a été mis à jour",
-            "deleted": "Le Reaction avec l'identifiant {{ param }} a été supprimé",
+            "created": "Une nouvelle réaction a été créée avec l'identifiant {{ param }}",
+            "updated": "La réaction avec l'identifiant {{ param }} a été mise à jour",
+            "deleted": "La réaction avec l'identifiant {{ param }} a été supprimée",
             "delete": {
-                "question": "Etes-vous certain de vouloir supprimer le Reaction {{ id }} ?"
+                "question": "Êtes-vous certain de vouloir supprimer la réaction {{ id }} ?"
             },
             "detail": {
-                "title": "Reaction"
+                "title": "Réaction"
             },
-            "title": "Title",
-            "content": "Content",
+            "title": "Titre",
+            "content": "Contenu",
             "type": "Type",
-            "typeLevel": "Type Level",
-            "childrenReactions": "Children Reactions",
-            "creator": "Creator",
-            "parentReaction": "Parent Reaction"
+            "typeLevel": "Niveau du type",
+            "childrenReactions": "Réactions filles",
+            "creator": "Créateur",
+            "parentReaction": "Réaction parente",
+            "action": {
+                "reactToThis": "Réagir à celà"
+            }
         }
     }
 }

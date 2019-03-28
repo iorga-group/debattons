@@ -21,7 +21,10 @@
             "typeLevel": "Type Level",
             "childrenReactions": "Children Reactions",
             "creator": "Creator",
-            "parentReaction": "Parent Reaction"
+            "parentReaction": "Parent Reaction",
+            "action": {
+                "reactToThis": "React to this"
+            }
         }
     }
 }
