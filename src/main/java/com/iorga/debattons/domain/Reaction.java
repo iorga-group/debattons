@@ -31,13 +31,11 @@ public class Reaction implements Serializable {
     @SequenceGenerator(name = "sequenceGenerator")
     private Long id;
 
-    @NotNull
     @Size(max = 280)
-    @Column(name = "title", length = 280, nullable = false)
+    @Column(name = "title", length = 280)
     private String title;
 
-    @NotNull
-    @Column(name = "content", nullable = false)
+    @Column(name = "content")
     private String content;
 
     @NotNull
@@ -49,6 +47,9 @@ public class Reaction implements Serializable {
     @Max(value = 15)
     @Column(name = "type_level")
     private Integer typeLevel;
+
+    @Column(name = "support_score")
+    private Float supportScore;
 
     @OneToMany(mappedBy = "parentReaction")
     @Cache(usage = CacheConcurrencyStrategy.NONSTRICT_READ_WRITE)
@@ -120,6 +121,19 @@ public class Reaction implements Serializable {
 
     public void setTypeLevel(Integer typeLevel) {
         this.typeLevel = typeLevel;
+    }
+
+    public Float getSupportScore() {
+        return supportScore;
+    }
+
+    public Reaction supportScore(Float supportScore) {
+        this.supportScore = supportScore;
+        return this;
+    }
+
+    public void setSupportScore(Float supportScore) {
+        this.supportScore = supportScore;
     }
 
     public Set<Reaction> getChildrenReactions() {
@@ -202,6 +216,7 @@ public class Reaction implements Serializable {
             ", content='" + getContent() + "'" +
             ", type='" + getType() + "'" +
             ", typeLevel=" + getTypeLevel() +
+            ", supportScore=" + getSupportScore() +
             "}";
     }
 }

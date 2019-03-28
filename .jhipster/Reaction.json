@@ -5,17 +5,13 @@
             "fieldName": "title",
             "fieldType": "String",
             "fieldValidateRules": [
-                "maxlength",
-                "required"
+                "maxlength"
             ],
             "fieldValidateRulesMaxlength": 280
         },
         {
             "fieldName": "content",
-            "fieldType": "String",
-            "fieldValidateRules": [
-                "required"
-            ]
+            "fieldType": "String"
         },
         {
             "fieldName": "type",
@@ -34,6 +30,10 @@
             ],
             "fieldValidateRulesMin": 1,
             "fieldValidateRulesMax": 15
+        },
+        {
+            "fieldName": "supportScore",
+            "fieldType": "Float"
         }
     ],
     "relationships": [

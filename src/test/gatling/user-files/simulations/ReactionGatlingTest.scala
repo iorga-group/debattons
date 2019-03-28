@@ -76,6 +76,7 @@ class ReactionGatlingTest extends Simulation {
                 , "content":"SAMPLE_TEXT"
                 , "type":"ROOT"
                 , "typeLevel":"0"
+                , "supportScore":null
                 }""")).asJSON
             .check(status.is(201))
             .check(headerRegex("Location", "(.*)").saveAs("new_reaction_url"))).exitHereIfFailed

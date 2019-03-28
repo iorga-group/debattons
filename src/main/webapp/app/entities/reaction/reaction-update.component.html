@@ -12,12 +12,8 @@
                 <div class="form-group">
                     <label class="form-control-label" jhiTranslate="debattonsApp.reaction.title" for="field_title">Title</label>
                     <input type="text" class="form-control" name="title" id="field_title"
-                        [(ngModel)]="reaction.title" required maxlength="280"/>
+                        [(ngModel)]="reaction.title" maxlength="280"/>
                     <div [hidden]="!(editForm.controls.title?.dirty && editForm.controls.title?.invalid)">
-                        <small class="form-text text-danger"
-                        [hidden]="!editForm.controls.title?.errors?.required" jhiTranslate="entity.validation.required">
-                        This field is required.
-                        </small>
                         <small class="form-text text-danger"
                         [hidden]="!editForm.controls.title?.errors?.maxlength" jhiTranslate="entity.validation.maxlength" [translateValues]="{ max: 280 }">
                         This field cannot be longer than 280 characters.
@@ -27,13 +23,7 @@
                 <div class="form-group">
                     <label class="form-control-label" jhiTranslate="debattonsApp.reaction.content" for="field_content">Content</label>
                     <input type="text" class="form-control" name="content" id="field_content"
-                        [(ngModel)]="reaction.content" required/>
-                    <div [hidden]="!(editForm.controls.content?.dirty && editForm.controls.content?.invalid)">
-                        <small class="form-text text-danger"
-                        [hidden]="!editForm.controls.content?.errors?.required" jhiTranslate="entity.validation.required">
-                        This field is required.
-                        </small>
-                    </div>
+                        [(ngModel)]="reaction.content" />
                 </div>
                 <div class="form-group">
                     <label class="form-control-label" jhiTranslate="debattonsApp.reaction.type" for="field_type">Type</label>
@@ -70,6 +60,11 @@
                             This field should be a number.
                         </small>
                     </div>
+                </div>
+                <div class="form-group">
+                    <label class="form-control-label" jhiTranslate="debattonsApp.reaction.supportScore" for="field_supportScore">Support Score</label>
+                    <input type="number" class="form-control" name="supportScore" id="field_supportScore"
+                        [(ngModel)]="reaction.supportScore" />
                 </div>
 
                 <div class="form-group">

@@ -22,11 +22,11 @@
                 <constraints primaryKey="true" nullable="false"/>
             </column>
             <column name="title" type="varchar(280)">
-                <constraints nullable="false" />
+                <constraints nullable="true" />
             </column>
 
             <column name="content" type="varchar(255)">
-                <constraints nullable="false" />
+                <constraints nullable="true" />
             </column>
 
             <column name="dbt_type" type="varchar(255)">
@@ -34,6 +34,10 @@
             </column>
 
             <column name="type_level" type="integer">
+                <constraints nullable="true" />
+            </column>
+
+            <column name="support_score" type="${floatType}">
                 <constraints nullable="true" />
             </column>
 

@@ -53,6 +53,9 @@ public class ReactionResourceIntTest {
     private static final Integer DEFAULT_TYPE_LEVEL = 1;
     private static final Integer UPDATED_TYPE_LEVEL = 2;
 
+    private static final Float DEFAULT_SUPPORT_SCORE = 1F;
+    private static final Float UPDATED_SUPPORT_SCORE = 2F;
+
     @Autowired
     private ReactionRepository reactionRepository;
 
@@ -98,7 +101,8 @@ public class ReactionResourceIntTest {
             .title(DEFAULT_TITLE)
             .content(DEFAULT_CONTENT)
             .type(DEFAULT_TYPE)
-            .typeLevel(DEFAULT_TYPE_LEVEL);
+            .typeLevel(DEFAULT_TYPE_LEVEL)
+            .supportScore(DEFAULT_SUPPORT_SCORE);
         return reaction;
     }
 
@@ -126,6 +130,7 @@ public class ReactionResourceIntTest {
         assertThat(testReaction.getContent()).isEqualTo(DEFAULT_CONTENT);
         assertThat(testReaction.getType()).isEqualTo(DEFAULT_TYPE);
         assertThat(testReaction.getTypeLevel()).isEqualTo(DEFAULT_TYPE_LEVEL);
+        assertThat(testReaction.getSupportScore()).isEqualTo(DEFAULT_SUPPORT_SCORE);
     }
 
     @Test
@@ -145,42 +150,6 @@ public class ReactionResourceIntTest {
         // Validate the Reaction in the database
         List<Reaction> reactionList = reactionRepository.findAll();
         assertThat(reactionList).hasSize(databaseSizeBeforeCreate);
-    }
-
-    @Test
-    @Transactional
-    public void checkTitleIsRequired() throws Exception {
-        int databaseSizeBeforeTest = reactionRepository.findAll().size();
-        // set the field null
-        reaction.setTitle(null);
-
-        // Create the Reaction, which fails.
-
-        restReactionMockMvc.perform(post("/api/reactions")
-            .contentType(TestUtil.APPLICATION_JSON_UTF8)
-            .content(TestUtil.convertObjectToJsonBytes(reaction)))
-            .andExpect(status().isBadRequest());
-
-        List<Reaction> reactionList = reactionRepository.findAll();
-        assertThat(reactionList).hasSize(databaseSizeBeforeTest);
-    }
-
-    @Test
-    @Transactional
-    public void checkContentIsRequired() throws Exception {
-        int databaseSizeBeforeTest = reactionRepository.findAll().size();
-        // set the field null
-        reaction.setContent(null);
-
-        // Create the Reaction, which fails.
-
-        restReactionMockMvc.perform(post("/api/reactions")
-            .contentType(TestUtil.APPLICATION_JSON_UTF8)
-            .content(TestUtil.convertObjectToJsonBytes(reaction)))
-            .andExpect(status().isBadRequest());
-
-        List<Reaction> reactionList = reactionRepository.findAll();
-        assertThat(reactionList).hasSize(databaseSizeBeforeTest);
     }
 
     @Test
@@ -215,7 +184,8 @@ public class ReactionResourceIntTest {
             .andExpect(jsonPath("$.[*].title").value(hasItem(DEFAULT_TITLE.toString())))
             .andExpect(jsonPath("$.[*].content").value(hasItem(DEFAULT_CONTENT.toString())))
             .andExpect(jsonPath("$.[*].type").value(hasItem(DEFAULT_TYPE.toString())))
-            .andExpect(jsonPath("$.[*].typeLevel").value(hasItem(DEFAULT_TYPE_LEVEL)));
+            .andExpect(jsonPath("$.[*].typeLevel").value(hasItem(DEFAULT_TYPE_LEVEL)))
+            .andExpect(jsonPath("$.[*].supportScore").value(hasItem(DEFAULT_SUPPORT_SCORE.doubleValue())));
     }
     
     @Test
@@ -232,7 +202,8 @@ public class ReactionResourceIntTest {
             .andExpect(jsonPath("$.title").value(DEFAULT_TITLE.toString()))
             .andExpect(jsonPath("$.content").value(DEFAULT_CONTENT.toString()))
             .andExpect(jsonPath("$.type").value(DEFAULT_TYPE.toString()))
-            .andExpect(jsonPath("$.typeLevel").value(DEFAULT_TYPE_LEVEL));
+            .andExpect(jsonPath("$.typeLevel").value(DEFAULT_TYPE_LEVEL))
+            .andExpect(jsonPath("$.supportScore").value(DEFAULT_SUPPORT_SCORE.doubleValue()));
     }
 
     @Test
@@ -259,7 +230,8 @@ public class ReactionResourceIntTest {
             .title(UPDATED_TITLE)
             .content(UPDATED_CONTENT)
             .type(UPDATED_TYPE)
-            .typeLevel(UPDATED_TYPE_LEVEL);
+            .typeLevel(UPDATED_TYPE_LEVEL)
+            .supportScore(UPDATED_SUPPORT_SCORE);
 
         restReactionMockMvc.perform(put("/api/reactions")
             .contentType(TestUtil.APPLICATION_JSON_UTF8)
@@ -274,6 +246,7 @@ public class ReactionResourceIntTest {
         assertThat(testReaction.getContent()).isEqualTo(UPDATED_CONTENT);
         assertThat(testReaction.getType()).isEqualTo(UPDATED_TYPE);
         assertThat(testReaction.getTypeLevel()).isEqualTo(UPDATED_TYPE_LEVEL);
+        assertThat(testReaction.getSupportScore()).isEqualTo(UPDATED_SUPPORT_SCORE);
     }
 
     @Test
