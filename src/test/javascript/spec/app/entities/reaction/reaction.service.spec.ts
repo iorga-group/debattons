@@ -21,7 +21,7 @@ describe('Service Tests', () => {
             service = injector.get(ReactionService);
             httpMock = injector.get(HttpTestingController);
 
-            elemDefault = new Reaction(0, 'AAAAAAA', 'AAAAAAA', ReactionType.ROOT, 0);
+            elemDefault = new Reaction(0, 'AAAAAAA', 'AAAAAAA', ReactionType.ROOT, 0, 0);
         });
 
         describe('Service methods', async () => {
@@ -58,7 +58,8 @@ describe('Service Tests', () => {
                         title: 'BBBBBB',
                         content: 'BBBBBB',
                         type: 'BBBBBB',
-                        typeLevel: 1
+                        typeLevel: 1,
+                        supportScore: 1
                     },
                     elemDefault
                 );
@@ -78,7 +79,8 @@ describe('Service Tests', () => {
                         title: 'BBBBBB',
                         content: 'BBBBBB',
                         type: 'BBBBBB',
-                        typeLevel: 1
+                        typeLevel: 1,
+                        supportScore: 1
                     },
                     elemDefault
                 );

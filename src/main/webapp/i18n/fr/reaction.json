@@ -19,6 +19,7 @@
             "content": "Contenu",
             "type": "Type",
             "typeLevel": "Niveau du type",
+            "supportScore": "Score d'adhésion",
             "childrenReactions": "Réactions filles",
             "creator": "Créateur",
             "parentReaction": "Réaction parente",

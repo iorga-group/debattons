@@ -19,6 +19,7 @@
             <th jhiSortBy="content"><span jhiTranslate="debattonsApp.reaction.content">Content</span> <fa-icon [icon]="'sort'"></fa-icon></th>
             <th jhiSortBy="type"><span jhiTranslate="debattonsApp.reaction.type">Type</span> <fa-icon [icon]="'sort'"></fa-icon></th>
             <th jhiSortBy="typeLevel"><span jhiTranslate="debattonsApp.reaction.typeLevel">Type Level</span> <fa-icon [icon]="'sort'"></fa-icon></th>
+            <th jhiSortBy="supportScore"><span jhiTranslate="debattonsApp.reaction.supportScore">Support Score</span> <fa-icon [icon]="'sort'"></fa-icon></th>
             <th jhiSortBy="creator.login"><span jhiTranslate="debattonsApp.reaction.creator">Creator</span> <fa-icon [icon]="'sort'"></fa-icon></th>
             <th jhiSortBy="parentReaction.title"><span jhiTranslate="debattonsApp.reaction.parentReaction">Parent Reaction</span> <fa-icon [icon]="'sort'"></fa-icon></th>
             <th></th>
@@ -31,6 +32,7 @@
                 <td>{{reaction.content}}</td>
                 <td jhiTranslate="{{'debattonsApp.ReactionType.' + reaction.type}}">{{reaction.type}}</td>
                 <td>{{reaction.typeLevel}}</td>
+                <td>{{reaction.supportScore}}</td>
                 <td>
                     {{reaction.creator?.login}}
                 </td>

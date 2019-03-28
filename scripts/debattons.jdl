@@ -22,10 +22,11 @@ enum ReactionType {
 }
 
 entity Reaction {
-    title String maxlength(280) required
-    content String required
+    title String maxlength(280)
+    content String
     type ReactionType required
     typeLevel Integer min(1) max(15)
+    supportScore Float
 }
 relationship ManyToOne {
     Reaction{creator(login)} to User

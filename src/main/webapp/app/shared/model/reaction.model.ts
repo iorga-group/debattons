@@ -16,6 +16,7 @@ export interface IReaction {
     content?: string;
     type?: ReactionType;
     typeLevel?: number;
+    supportScore?: number;
     childrenReactions?: IReaction[];
     creator?: IUser;
     parentReaction?: IReaction;
@@ -28,6 +29,7 @@ export class Reaction implements IReaction {
         public content?: string,
         public type?: ReactionType,
         public typeLevel?: number,
+        public supportScore?: number,
         public childrenReactions?: IReaction[],
         public creator?: IUser,
         public parentReaction?: IReaction
