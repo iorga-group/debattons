@@ -6,6 +6,7 @@ import { of } from 'rxjs';
 import { DebattonsTestModule } from '../../../test.module';
 import { ReactionDetailComponent } from 'app/entities/reaction/reaction-detail.component';
 import { Reaction } from 'app/shared/model/reaction.model';
+import { VisNetworkService } from 'ngx-vis';
 
 describe('Component Tests', () => {
     describe('Reaction Management Detail Component', () => {
@@ -17,7 +18,7 @@ describe('Component Tests', () => {
             TestBed.configureTestingModule({
                 imports: [DebattonsTestModule],
                 declarations: [ReactionDetailComponent],
-                providers: [{ provide: ActivatedRoute, useValue: route }]
+                providers: [{ provide: ActivatedRoute, useValue: route }, VisNetworkService]
             })
                 .overrideTemplate(ReactionDetailComponent, '')
                 .compileComponents();
