@@ -37,7 +37,6 @@ export const reactionRoute: Routes = [
             pagingParams: JhiResolvePagingParams
         },
         data: {
-            authorities: ['ROLE_USER'],
             defaultSort: 'id,asc',
             pageTitle: 'debattonsApp.reaction.home.title'
         },
@@ -50,7 +49,6 @@ export const reactionRoute: Routes = [
             reaction: ReactionResolve
         },
         data: {
-            authorities: ['ROLE_USER'],
             pageTitle: 'debattonsApp.reaction.home.title'
         },
         canActivate: [UserRouteAccessService]
