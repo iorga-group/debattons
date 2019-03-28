@@ -39,26 +39,26 @@
     "relationships": [
         {
             "relationshipType": "one-to-many",
-            "relationshipName": "childrenReactions",
             "otherEntityName": "reaction",
-            "otherEntityRelationshipName": "parentReaction"
+            "otherEntityRelationshipName": "parentReaction",
+            "relationshipName": "childrenReactions"
         },
         {
             "relationshipType": "many-to-one",
-            "relationshipName": "creator",
             "otherEntityName": "user",
-            "otherEntityField": "login",
-            "otherEntityRelationshipName": "reaction"
+            "otherEntityRelationshipName": "reaction",
+            "relationshipName": "creator",
+            "otherEntityField": "login"
         },
         {
             "relationshipType": "many-to-one",
-            "relationshipName": "parentReaction",
             "otherEntityName": "reaction",
-            "otherEntityField": "title",
-            "otherEntityRelationshipName": "childrenReactions"
+            "otherEntityRelationshipName": "childrenReactions",
+            "relationshipName": "parentReaction",
+            "otherEntityField": "title"
         }
     ],
-    "changelogDate": "20190228105313",
+    "changelogDate": "20190328120723",
     "entityTableName": "reaction",
     "dto": "no",
     "pagination": "pagination",

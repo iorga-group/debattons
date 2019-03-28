@@ -16,7 +16,7 @@
     <!--
         Added the entity Reaction.
     -->
-    <changeSet id="20190228105313-1" author="jhipster">
+    <changeSet id="20190328120723-1" author="jhipster">
         <createTable tableName="reaction">
             <column name="id" type="bigint" autoIncrement="${autoIncrement}">
                 <constraints primaryKey="true" nullable="false"/>
