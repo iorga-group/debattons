@@ -163,6 +163,42 @@ public class ReactionResourceIntTest {
         assertThat(reactionList).hasSize(databaseSizeBeforeCreate);
     }
 
+//    @Test
+//    @Transactional
+//    public void checkTitleIsRequired() throws Exception {
+//        int databaseSizeBeforeTest = reactionRepository.findAll().size();
+//        // set the field null
+//        reaction.setTitle(null);
+//
+//        // Create the Reaction, which fails.
+//
+//        restReactionMockMvc.perform(post("/api/reactions")
+//            .contentType(TestUtil.APPLICATION_JSON_UTF8)
+//            .content(TestUtil.convertObjectToJsonBytes(reaction)))
+//            .andExpect(status().isBadRequest());
+//
+//        List<Reaction> reactionList = reactionRepository.findAll();
+//        assertThat(reactionList).hasSize(databaseSizeBeforeTest);
+//    }
+//
+//    @Test
+//    @Transactional
+//    public void checkContentIsRequired() throws Exception {
+//        int databaseSizeBeforeTest = reactionRepository.findAll().size();
+//        // set the field null
+//        reaction.setContent(null);
+//
+//        // Create the Reaction, which fails.
+//
+//        restReactionMockMvc.perform(post("/api/reactions")
+//            .contentType(TestUtil.APPLICATION_JSON_UTF8)
+//            .content(TestUtil.convertObjectToJsonBytes(reaction)))
+//            .andExpect(status().isBadRequest());
+//
+//        List<Reaction> reactionList = reactionRepository.findAll();
+//        assertThat(reactionList).hasSize(databaseSizeBeforeTest);
+//    }
+
     @Test
     @Transactional
     public void checkTypeIsRequired() throws Exception {
