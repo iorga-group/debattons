@@ -2,7 +2,6 @@ application {
     config {
         applicationType monolith
         baseName Debattons
-        buildTool maven
         clientPackageManager yarn
         jhiPrefix dbt
         enableTranslation true
@@ -10,7 +9,7 @@ application {
         nativeLanguage en
         packageName com.iorga.debattons
         prodDatabaseType postgresql
-        testFrameworks [cucumber, gatling]
+        testFrameworks [protractor, gatling]
         useSass true
     }
     entities *
@@ -22,11 +21,11 @@ enum ReactionType {
 }
 
 entity Reaction {
-    title String maxlength(280)
-    content String
-    type ReactionType required
-    typeLevel Integer min(1) max(15)
-    supportScore Float
+    title String maxlength(280) required,
+    content String,
+    type ReactionType required,
+    typeLevel Integer min(1) max(120),
+    supportScore Float,
 }
 relationship ManyToOne {
     Reaction{creator(login)} to User
