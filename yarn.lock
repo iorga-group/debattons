@@ -686,10 +686,10 @@
   resolved "https://registry.yarnpkg.com/@types/stack-utils/-/stack-utils-1.0.1.tgz#0a851d3bd96498fa25c33ab7278ed3bd65f06c3e"
   integrity sha512-l42BggppR6zLmpfU6fq9HEa2oGPEI8yrSPL3GITjfRInppYFahObbIQOQK3UGxEnyQpltZLaPe75046NOZQikw==
 
-"@types/vis@4.21.9":
-  version "4.21.9"
-  resolved "https://registry.yarnpkg.com/@types/vis/-/vis-4.21.9.tgz#3f28e5ec4c029306756d9688d9670d502267d407"
-  integrity sha512-/w276L2vSYXmfGu9SD0zR31f76Z9qLU5jBT89SW4v/2Qr1JbtLRtR9jmh2OioqdYBNiSPmGGuFAk5QzFvpBN1A==
+"@types/vis@4.21.16":
+  version "4.21.16"
+  resolved "https://registry.yarnpkg.com/@types/vis/-/vis-4.21.16.tgz#d977a4c0896be883d882fa5f0cce3592b51f96bf"
+  integrity sha512-XhAN43bpAZDOpysDnIZWILUmQRytW198DuzwAPFwq2dW/8+AXlydiJmRSCyG3nKG1j/rsT4xD4H+/78ggv9ftw==
   dependencies:
     moment ">=2.13.0"
 
@@ -7267,12 +7267,12 @@ ngx-infinite-scroll@7.2.0:
   dependencies:
     opencollective-postinstall "^2.0.2"
 
-ngx-vis@2.0.1:
-  version "2.0.1"
-  resolved "https://registry.yarnpkg.com/ngx-vis/-/ngx-vis-2.0.1.tgz#c015b6b036c1cd4ddb93aaf9f371f16b3250909e"
-  integrity sha512-gKe9PnXUMQ6X500fXYRtm+GTFdGUCD/O0AIUOge0cF0mnsq4xi1TQlayENzZdu4Csx05DiM3sZaAJCLOaQDPWA==
+ngx-vis@2.3.1:
+  version "2.3.1"
+  resolved "https://registry.yarnpkg.com/ngx-vis/-/ngx-vis-2.3.1.tgz#7dffbfc6dd75a2423f3a9183063ad95f111f7244"
+  integrity sha512-6gKDkn+VtZBs+lzR67Xsi4xo0rjwio+CQ5JDdH6EDMUngg57oRj2OIFBx4laHbmQOE+FkKlb184i32A0jRI75A==
   dependencies:
-    "@types/vis" "4.21.9"
+    "@types/vis" "4.21.16"
     vis "4.21.0"
 
 ngx-webstorage@4.0.1:

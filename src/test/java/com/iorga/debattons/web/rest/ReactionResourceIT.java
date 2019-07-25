@@ -2,6 +2,7 @@ package com.iorga.debattons.web.rest;
 
 import com.iorga.debattons.DebattonsApp;
 import com.iorga.debattons.domain.Reaction;
+import com.iorga.debattons.domain.User;
 import com.iorga.debattons.repository.ReactionRepository;
 import com.iorga.debattons.service.ReactionService;
 import com.iorga.debattons.service.UserService;
@@ -100,12 +101,17 @@ public class ReactionResourceIT {
      * if they test an entity which requires the current entity.
      */
     public static Reaction createEntity(EntityManager em) {
+        User user = new User();
+        user.setLogin("user");
+        user.setId(4L);
+
         Reaction reaction = new Reaction()
             .title(DEFAULT_TITLE)
             .content(DEFAULT_CONTENT)
             .type(DEFAULT_TYPE)
             .typeLevel(DEFAULT_TYPE_LEVEL)
-            .supportScore(DEFAULT_SUPPORT_SCORE);
+            .supportScore(DEFAULT_SUPPORT_SCORE)
+            .creator(user);
         return reaction;
     }
     /**
@@ -149,11 +155,12 @@ public class ReactionResourceIT {
         assertThat(testReaction.getContent()).isEqualTo(DEFAULT_CONTENT);
         assertThat(testReaction.getType()).isEqualTo(DEFAULT_TYPE);
         assertThat(testReaction.getTypeLevel()).isEqualTo(DEFAULT_TYPE_LEVEL);
-        assertThat(testReaction.getSupportScore()).isEqualTo(DEFAULT_SUPPORT_SCORE);
+        assertThat(testReaction.getSupportScore()).isNull();
     }
 
     @Test
     @Transactional
+    @WithMockUser
     public void createReactionWithExistingId() throws Exception {
         int databaseSizeBeforeCreate = reactionRepository.findAll().size();
 
@@ -254,6 +261,7 @@ public class ReactionResourceIT {
 
     @Test
     @Transactional
+    @WithMockUser
     public void updateReaction() throws Exception {
         // Initialize the database
         reactionRepository.saveAndFlush(reaction);
@@ -284,7 +292,7 @@ public class ReactionResourceIT {
         assertThat(testReaction.getContent()).isEqualTo(UPDATED_CONTENT);
         assertThat(testReaction.getType()).isEqualTo(UPDATED_TYPE);
         assertThat(testReaction.getTypeLevel()).isEqualTo(UPDATED_TYPE_LEVEL);
-        assertThat(testReaction.getSupportScore()).isEqualTo(UPDATED_SUPPORT_SCORE);
+        assertThat(testReaction.getSupportScore()).isNull();
     }
 
     @Test
@@ -307,6 +315,7 @@ public class ReactionResourceIT {
 
     @Test
     @Transactional
+    @WithMockUser
     public void deleteReaction() throws Exception {
         // Initialize the database
         reactionRepository.saveAndFlush(reaction);
@@ -340,6 +349,7 @@ public class ReactionResourceIT {
 
     @Test
     @WithMockUser
+    @Transactional
     public void createARootReactionReplyingToAnotherOneTest() throws Exception {
         // Initialize the database
         Reaction savedReaction = reactionRepository.saveAndFlush(reaction);

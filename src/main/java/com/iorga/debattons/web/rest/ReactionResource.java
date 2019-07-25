@@ -79,15 +79,14 @@ public class ReactionResource {
      * @return the {@link ResponseEntity} with status {@code 200 (OK)} and with body the updated reaction,
      * or with status {@code 400 (Bad Request)} if the reaction is not valid,
      * or with status {@code 500 (Internal Server Error)} if the reaction couldn't be updated.
-     * @throws URISyntaxException if the Location URI syntax is incorrect.
      */
     @PutMapping("/reactions")
-    public ResponseEntity<Reaction> updateReaction(@Valid @RequestBody Reaction reaction) throws URISyntaxException {
+    public ResponseEntity<Reaction> updateReaction(@Valid @RequestBody Reaction reaction) {
         log.debug("REST request to update Reaction : {}", reaction);
         if (reaction.getId() == null) {
             throw new BadRequestAlertException("Invalid id", ENTITY_NAME, "idnull");
         }
-        Reaction result = reactionRepository.save(reaction);
+        Reaction result = reactionService.saveByUser(reaction, userService.getCurrentUser().get()); // TODO throw 401 if the current user is not found or there is no current user
         return ResponseEntity.ok()
             .headers(HeaderUtil.createEntityUpdateAlert(applicationName, true, ENTITY_NAME, reaction.getId().toString()))
             .body(result);
@@ -131,7 +130,7 @@ public class ReactionResource {
     @DeleteMapping("/reactions/{id}")
     public ResponseEntity<Void> deleteReaction(@PathVariable Long id) {
         log.debug("REST request to delete Reaction : {}", id);
-        reactionRepository.deleteById(id);
+        reactionService.deleteByIdAndUser(id, userService.getCurrentUser().get()); // TODO throw 401 if the current user is not found or there is no current user
         return ResponseEntity.noContent().headers(HeaderUtil.createEntityDeletionAlert(applicationName, true, ENTITY_NAME, id.toString())).build();
     }
 
