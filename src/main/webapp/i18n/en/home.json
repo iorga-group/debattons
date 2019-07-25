@@ -1,16 +1,16 @@
 {
-    "home": {
-        "title": "Welcome to Débattons!",
-        "subtitle": "This is your homepage",
-        "logged": {
-            "message": "You are logged in as user \"{{username}}\"."
-        },
-        "question": "If you have any question on Débattons:",
-        "link": {
-            "homepage": "Débattons homepage",
-            "bugtracker": "Débattons bug tracker"
-        },
-        "like": "If you like Débattons, don't forget to give us a star on",
-        "github": "GitHub"
-    }
+  "home": {
+    "title": "Welcome to Débattons!",
+    "subtitle": "This is your homepage",
+    "logged": {
+      "message": "You are logged in as user \"{{username}}\"."
+    },
+    "question": "If you have any question on Débattons:",
+    "link": {
+      "homepage": "Débattons homepage",
+      "bugtracker": "Débattons bug tracker"
+    },
+    "like": "If you like Débattons, don't forget to give us a star on",
+    "github": "GitHub"
+  }
 }

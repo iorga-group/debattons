@@ -1,0 +1,24 @@
+<?xml version="1.0" encoding="utf-8"?>
+<databaseChangeLog
+    xmlns="http://www.liquibase.org/xml/ns/dbchangelog"
+    xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+    xsi:schemaLocation="http://www.liquibase.org/xml/ns/dbchangelog http://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-3.6.xsd">
+    <!--
+        Added the constraints for entity Reaction.
+    -->
+    <changeSet id="20190725083351-2" author="jhipster">
+        
+        <addForeignKeyConstraint baseColumnNames="creator_id"
+                                 baseTableName="reaction"
+                                 constraintName="fk_reaction_creator_id"
+                                 referencedColumnNames="id"
+                                 referencedTableName="dbt_user"/>
+
+        <addForeignKeyConstraint baseColumnNames="parent_reaction_id"
+                                 baseTableName="reaction"
+                                 constraintName="fk_reaction_parent_reaction_id"
+                                 referencedColumnNames="id"
+                                 referencedTableName="reaction"/>
+
+    </changeSet>
+</databaseChangeLog>

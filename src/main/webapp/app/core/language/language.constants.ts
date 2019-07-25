@@ -3,7 +3,7 @@
     They are written in English to avoid character encoding issues (not a perfect solution)
 */
 export const LANGUAGES: string[] = [
-    'fr',
-    'en'
-    // jhipster-needle-i18n-language-constant - JHipster will add/remove languages in this array
+  'fr',
+  'en'
+  // jhipster-needle-i18n-language-constant - JHipster will add/remove languages in this array
 ];

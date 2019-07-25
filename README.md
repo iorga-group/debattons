@@ -16,19 +16,19 @@ The project is led by [iORGA Group](http://www.iorga.com) in the way we hope to 
 
 Here are some resources:
 
--   Current [**development and organization status**](https://trello.com/b/MfS0wzzJ/wikip%C3%A9dia-du-d%C3%A9bat) (currently only in French language)
--   A more general [**presentation of the project and its ideas**](https://docs.google.com/presentation/d/1UIsnLdP2XgO_Ii6g98lWW4FsMuDccD-TigsT5NSFKOU/edit#slide=id.g224b5ac09f_1_0) (currently only in French language)
+- Current [**development and organization status**](https://trello.com/b/MfS0wzzJ/wikip%C3%A9dia-du-d%C3%A9bat) (currently only in French language)
+- A more general [**presentation of the project and its ideas**](https://docs.google.com/presentation/d/1UIsnLdP2XgO_Ii6g98lWW4FsMuDccD-TigsT5NSFKOU/edit#slide=id.g224b5ac09f_1_0) (currently only in French language)
 
-This application was generated using JHipster 5.8.2, you can find documentation and help at [https://www.jhipster.tech/documentation-archive/v5.8.2](https://www.jhipster.tech/documentation-archive/v5.8.2).
+This application was generated using JHipster 6.1.2, you can find documentation and help at [https://www.jhipster.tech/documentation-archive/v6.1.2](https://www.jhipster.tech/documentation-archive/v6.1.2).
 
 ## Development
 
 Before you can build this project, you must install and configure the following dependencies on your machine:
 
-1.  [Node.js][]: We use Node to run a development web server and build the project.
-    Depending on your system, you can install Node either from source or as a pre-packaged bundle.
-2.  [Yarn][]: We use Yarn to manage Node dependencies.
-    Depending on your system, you can install Yarn either from source or as a pre-packaged bundle.
+1. [Node.js][]: We use Node to run a development web server and build the project.
+   Depending on your system, you can install Node either from source or as a pre-packaged bundle.
+2. [Yarn][]: We use Yarn to manage Node dependencies.
+   Depending on your system, you can install Yarn either from source or as a pre-packaged bundle.
 
 After installing Node, you should be able to run the following command to install development tools.
 You will only need to run this command when dependencies change in [package.json](package.json).
@@ -106,24 +106,32 @@ will generate few files:
 
 ## Building for production
 
-To optimize the Debattons application for production, run:
+### Packaging as jar
 
-    ./mvnw -Pprod clean package
+To build the final jar and optimize the Debattons application for production, run:
+
+    ./mvnw -Pprod clean verify
 
 This will concatenate and minify the client CSS and JavaScript files. It will also modify `index.html` so it references these new files.
 To ensure everything worked, run:
 
-    java -jar target/*.war
+    java -jar target/*.jar
 
 Then navigate to [http://localhost:8080](http://localhost:8080) in your browser.
 
 Refer to [Using JHipster in production][] for more details.
 
+### Packaging as war
+
+To package your application as a war in order to deploy it to an application server, run:
+
+    ./mvnw -Pprod,war clean verify
+
 ## Testing
 
 To launch your application's tests, run:
 
-    ./mvnw clean test
+    ./mvnw verify
 
 ### Client tests
 
@@ -141,11 +149,21 @@ Sonar is used to analyse code quality. You can start a local Sonar server (acces
 docker-compose -f src/main/docker/sonar.yml up -d
 ```
 
+You can run a Sonar analysis with using the [sonar-scanner](https://docs.sonarqube.org/display/SCAN/Analyzing+with+SonarQube+Scanner) or by using the maven plugin.
+
 Then, run a Sonar analysis:
 
 ```
-./mvnw -Pprod clean test sonar:sonar
+./mvnw -Pprod clean verify sonar:sonar
 ```
+
+If you need to re-run the Sonar phase, please be sure to specify at least the `initialize` phase since Sonar properties are loaded from the sonar-project.properties file.
+
+```
+./mvnw initialize sonar:sonar
+```
+
+or
 
 For more information, refer to the [Code quality page][].
 
@@ -164,7 +182,7 @@ To stop it and remove the container, run:
 You can also fully dockerize your application and all the services that it depends on.
 To achieve this, first build a docker image of your app by running:
 
-    ./mvnw package -Pprod verify jib:dockerBuild
+    ./mvnw -Pprod verify jib:dockerBuild
 
 Then run:
 
@@ -177,13 +195,13 @@ For more information refer to [Using Docker and Docker-Compose][], this page als
 To configure CI for your project, run the ci-cd sub-generator (`jhipster ci-cd`), this will let you generate configuration files for a number of Continuous Integration systems. Consult the [Setting up Continuous Integration][] page for more information.
 
 [jhipster homepage and latest documentation]: https://www.jhipster.tech
-[jhipster 5.8.2 archive]: https://www.jhipster.tech/documentation-archive/v5.8.2
-[using jhipster in development]: https://www.jhipster.tech/documentation-archive/v5.8.2/development/
-[using docker and docker-compose]: https://www.jhipster.tech/documentation-archive/v5.8.2/docker-compose
-[using jhipster in production]: https://www.jhipster.tech/documentation-archive/v5.8.2/production/
-[running tests page]: https://www.jhipster.tech/documentation-archive/v5.8.2/running-tests/
-[code quality page]: https://www.jhipster.tech/documentation-archive/v5.8.2/code-quality/
-[setting up continuous integration]: https://www.jhipster.tech/documentation-archive/v5.8.2/setting-up-ci/
+[jhipster 6.1.2 archive]: https://www.jhipster.tech/documentation-archive/v6.1.2
+[using jhipster in development]: https://www.jhipster.tech/documentation-archive/v6.1.2/development/
+[using docker and docker-compose]: https://www.jhipster.tech/documentation-archive/v6.1.2/docker-compose
+[using jhipster in production]: https://www.jhipster.tech/documentation-archive/v6.1.2/production/
+[running tests page]: https://www.jhipster.tech/documentation-archive/v6.1.2/running-tests/
+[code quality page]: https://www.jhipster.tech/documentation-archive/v6.1.2/code-quality/
+[setting up continuous integration]: https://www.jhipster.tech/documentation-archive/v6.1.2/setting-up-ci/
 [node.js]: https://nodejs.org/
 [yarn]: https://yarnpkg.org/
 [webpack]: https://webpack.github.io/

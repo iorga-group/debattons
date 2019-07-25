@@ -1,31 +1,32 @@
 {
-    "debattonsApp": {
-        "reaction": {
-            "home": {
-                "title": "Réactions",
-                "createLabel": "Créer une nouvelle Réaction",
-                "createOrEditLabel": "Créer ou éditer un Réaction"
-            },
-            "created": "Une nouvelle réaction a été créée avec l'identifiant {{ param }}",
-            "updated": "La réaction avec l'identifiant {{ param }} a été mise à jour",
-            "deleted": "La réaction avec l'identifiant {{ param }} a été supprimée",
-            "delete": {
-                "question": "Êtes-vous certain de vouloir supprimer la réaction {{ id }} ?"
-            },
-            "detail": {
-                "title": "Réaction"
-            },
-            "title": "Titre",
-            "content": "Contenu",
-            "type": "Type",
-            "typeLevel": "Niveau du type",
-            "supportScore": "Score d'adhésion",
-            "childrenReactions": "Réactions filles",
-            "creator": "Créateur",
-            "parentReaction": "Réaction parente",
-            "action": {
-                "reactToThis": "Réagir à celà"
-            }
-        }
+  "debattonsApp": {
+    "reaction": {
+      "home": {
+        "title": "Réactions",
+        "createLabel": "Créer une nouvelle Réaction",
+        "createOrEditLabel": "Créer ou éditer une Réaction",
+        "notFound": "Aucun Reaction trouvé"
+      },
+      "created": "Une nouvelle réaction a été créée avec l'identifiant {{ param }}",
+      "updated": "La réaction avec l'identifiant {{ param }} a été mise à jour",
+      "deleted": "La réaction avec l'identifiant {{ param }} a été supprimée",
+      "delete": {
+        "question": "Êtes-vous certain de vouloir supprimer la réaction {{ id }} ?"
+      },
+      "detail": {
+        "title": "Réaction"
+      },
+      "title": "Titre",
+      "content": "Contenu",
+      "type": "Type",
+      "typeLevel": "Niveau du type",
+      "supportScore": "Score d'adhésion",
+      "childrenReactions": "Réactions filles",
+      "creator": "Créateur",
+      "parentReaction": "Réaction parente",
+      "action": {
+        "reactToThis": "Réagir à celà"
+      }
     }
+  }
 }

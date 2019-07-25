@@ -1,16 +1,16 @@
 {
-    "home": {
-        "title": "Bienvenue sur Débattons !",
-        "subtitle": "Ceci est votre page d'accueil",
-        "logged": {
-            "message": "Vous êtes connecté en tant que \"{{username}}\"."
-        },
-        "question": "Si vous avez des questions à propos de Débattons :",
-        "link": {
-            "homepage": "Page d'accueil de Débattons",
-            "bugtracker": "Débattons bug tracker"
-        },
-        "like": "Si vous aimez Débattons, donnez nous une étoile sur",
-        "github": "GitHub "
-    }
+  "home": {
+    "title": "Bienvenue sur Débattons !",
+    "subtitle": "Ceci est votre page d'accueil",
+    "logged": {
+      "message": "Vous êtes connecté en tant que \"{{username}}\"."
+    },
+    "question": "Si vous avez des questions à propos de Débattons :",
+    "link": {
+      "homepage": "Page d'accueil de Débattons",
+      "bugtracker": "Débattons bug tracker"
+    },
+    "like": "Si vous aimez Débattons, donnez nous une étoile sur",
+    "github": "GitHub "
+  }
 }

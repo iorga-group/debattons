@@ -1,21 +1,17 @@
 package com.iorga.debattons.domain;
-
-
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
-import com.iorga.debattons.domain.enumeration.ReactionType;
 import com.iorga.debattons.domain.validation.CheckRootTypeReactionWithoutParent;
 import org.hibernate.annotations.Cache;
 import org.hibernate.annotations.CacheConcurrencyStrategy;
 
 import javax.persistence.*;
-import javax.validation.constraints.Max;
-import javax.validation.constraints.Min;
-import javax.validation.constraints.NotNull;
-import javax.validation.constraints.Size;
+import javax.validation.constraints.*;
+
 import java.io.Serializable;
 import java.util.HashSet;
-import java.util.Objects;
 import java.util.Set;
+
+import com.iorga.debattons.domain.enumeration.ReactionType;
 
 /**
  * A Reaction.
@@ -33,8 +29,9 @@ public class Reaction implements Serializable {
     @SequenceGenerator(name = "sequenceGenerator")
     private Long id;
 
+    @NotNull
     @Size(max = 280)
-    @Column(name = "title", length = 280)
+    @Column(name = "title", length = 280, nullable = false)
     private String title;
 
     @Column(name = "content")
@@ -42,11 +39,11 @@ public class Reaction implements Serializable {
 
     @NotNull
     @Enumerated(EnumType.STRING)
-    @Column(name = "dbt_type", nullable = false)
+    @Column(name = "type", nullable = false)
     private ReactionType type;
 
     @Min(value = 1)
-    @Max(value = 15)
+    @Max(value = 120)
     @Column(name = "type_level")
     private Integer typeLevel;
 
@@ -56,6 +53,7 @@ public class Reaction implements Serializable {
     @OneToMany(mappedBy = "parentReaction")
     @Cache(usage = CacheConcurrencyStrategy.NONSTRICT_READ_WRITE)
     private Set<Reaction> childrenReactions = new HashSet<>();
+
     @ManyToOne
     @JsonIgnoreProperties("reactions")
     private User creator;
@@ -195,19 +193,15 @@ public class Reaction implements Serializable {
         if (this == o) {
             return true;
         }
-        if (o == null || getClass() != o.getClass()) {
+        if (!(o instanceof Reaction)) {
             return false;
         }
-        Reaction reaction = (Reaction) o;
-        if (reaction.getId() == null || getId() == null) {
-            return false;
-        }
-        return Objects.equals(getId(), reaction.getId());
+        return id != null && id.equals(((Reaction) o).id);
     }
 
     @Override
     public int hashCode() {
-        return Objects.hashCode(getId());
+        return 31;
     }
 
     @Override

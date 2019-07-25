@@ -5,7 +5,8 @@
             "fieldName": "title",
             "fieldType": "String",
             "fieldValidateRules": [
-                "maxlength"
+                "maxlength",
+                "required"
             ],
             "fieldValidateRulesMaxlength": 280
         },
@@ -29,7 +30,7 @@
                 "max"
             ],
             "fieldValidateRulesMin": 1,
-            "fieldValidateRulesMax": 15
+            "fieldValidateRulesMax": 120
         },
         {
             "fieldName": "supportScore",
@@ -58,7 +59,7 @@
             "otherEntityField": "title"
         }
     ],
-    "changelogDate": "20190328120723",
+    "changelogDate": "20190725083351",
     "entityTableName": "reaction",
     "dto": "no",
     "pagination": "pagination",

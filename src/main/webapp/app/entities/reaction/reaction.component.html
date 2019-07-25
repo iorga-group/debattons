@@ -10,7 +10,10 @@
     </h2>
     <dbt-alert></dbt-alert>
     <br/>
-    <div class="table-responsive" *ngIf="reactions">
+    <div class="alert alert-warning" *ngIf="reactions?.length === 0">
+        <span jhiTranslate="debattonsApp.reaction.home.notFound">No reactions found</span>
+    </div>
+    <div class="table-responsive" *ngIf="reactions?.length > 0">
         <table class="table table-striped">
             <thead>
             <tr jhiSort [(predicate)]="predicate" [(ascending)]="reverse" [callback]="transition.bind(this)">
@@ -42,7 +45,7 @@
                     </div>
                 </td>
                 <td class="text-right">
-                    <div class="btn-group flex-btn-group-container">
+                    <div class="btn-group">
                         <button type="submit"
                                 [routerLink]="['/reaction', reaction.id, 'view' ]"
                                 class="btn btn-info btn-sm">
@@ -69,7 +72,7 @@
             </tbody>
         </table>
     </div>
-    <div *ngIf="reactions && reactions.length">
+    <div [hidden]="reactions?.length === 0">
         <div class="row justify-content-center">
             <jhi-item-count [page]="page" [total]="totalItems" [maxSize]="5" [itemsPerPage]="itemsPerPage"></jhi-item-count>
         </div>

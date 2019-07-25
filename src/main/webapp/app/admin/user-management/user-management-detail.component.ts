@@ -4,17 +4,17 @@ import { ActivatedRoute } from '@angular/router';
 import { User } from 'app/core';
 
 @Component({
-    selector: 'dbt-user-mgmt-detail',
-    templateUrl: './user-management-detail.component.html'
+  selector: 'dbt-user-mgmt-detail',
+  templateUrl: './user-management-detail.component.html'
 })
 export class UserMgmtDetailComponent implements OnInit {
-    user: User;
+  user: User;
 
-    constructor(private route: ActivatedRoute) {}
+  constructor(private route: ActivatedRoute) {}
 
-    ngOnInit() {
-        this.route.data.subscribe(({ user }) => {
-            this.user = user.body ? user.body : user;
-        });
-    }
+  ngOnInit() {
+    this.route.data.subscribe(({ user }) => {
+      this.user = user.body ? user.body : user;
+    });
+  }
 }
