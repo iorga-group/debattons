@@ -1,11 +1,11 @@
-id;title;content;type;type_level;support_score
-1;mobile Fish;Home Loan Account Table Computer;AGREE;41;60111
-2;alarm;Tasty Metal Bacon;DISAGREE;37;61165
-3;Grocery Home;Investment Account Steel;GOOD_QUALITY;28;45606
-4;bluetooth;syndicate;AGREE;8;1326
-5;Usability South Dakota envisioneer;Intelligent;BAD_QUALITY;100;3438
-6;Regional;Tuna;GOOD_QUALITY;23;3131
-7;synthesizing Views e-enable;Credit Card Account National Awesome;COMMENT;116;32533
-8;scale interactive generating;Specialist Home Loan Account;GOOD_QUALITY;97;16526
-9;Industrial;index orange;BAD_QUALITY;24;70685
-10;application quantify Unbranded Plastic Tuna;Internal;BAD_QUALITY;40;66592
+id;title;content;type;type_level;support_score;total_children_count
+1;mobile Fish;../data/blob/hipster.txt;GOOD_QUALITY;7;45924;86617
+2;Savings Account alarm;../data/blob/hipster.txt;BAD_QUALITY;113;21233;77
+3;Officer;../data/blob/hipster.txt;AGREE;52;2306;29122
+4;Investment Account Steel;../data/blob/hipster.txt;GOOD_QUALITY;28;45606;9060
+5;Savings Account syndicate Planner;../data/blob/hipster.txt;BAD_QUALITY;8;1326;94888
+6;Planner cross-platform access;../data/blob/hipster.txt;BAD_QUALITY;29;44015;68326
+7;Investment Account;../data/blob/hipster.txt;BAD_QUALITY;80;75536;31171
+8;Costa Rica Mayotte;../data/blob/hipster.txt;DISAGREE;102;77513;44975
+9;e-enable Communications capacitor;../data/blob/hipster.txt;BAD_QUALITY;24;52083;4522
+10;software scale interactive;../data/blob/hipster.txt;DISAGREE;34;14092;29627

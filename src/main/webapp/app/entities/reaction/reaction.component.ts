@@ -3,7 +3,7 @@ import { HttpErrorResponse, HttpHeaders, HttpResponse } from '@angular/common/ht
 import { ActivatedRoute, Router } from '@angular/router';
 import { Subscription } from 'rxjs';
 import { filter, map } from 'rxjs/operators';
-import { JhiEventManager, JhiParseLinks, JhiAlertService } from 'ng-jhipster';
+import { JhiEventManager, JhiParseLinks, JhiAlertService, JhiDataUtils } from 'ng-jhipster';
 
 import { IReaction } from 'app/shared/model/reaction.model';
 import { AccountService } from 'app/core';
@@ -36,6 +36,7 @@ export class ReactionComponent implements OnInit, OnDestroy {
     protected jhiAlertService: JhiAlertService,
     protected accountService: AccountService,
     protected activatedRoute: ActivatedRoute,
+    protected dataUtils: JhiDataUtils,
     protected router: Router,
     protected eventManager: JhiEventManager
   ) {
@@ -105,6 +106,14 @@ export class ReactionComponent implements OnInit, OnDestroy {
 
   trackId(index: number, item: IReaction) {
     return item.id;
+  }
+
+  byteSize(field) {
+    return this.dataUtils.byteSize(field);
+  }
+
+  openFile(contentType, field) {
+    return this.dataUtils.openFile(contentType, field);
   }
 
   registerChangeInReactions() {

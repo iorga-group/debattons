@@ -4,7 +4,7 @@ import { FormBuilder, Validators } from '@angular/forms';
 import { ActivatedRoute } from '@angular/router';
 import { Observable } from 'rxjs';
 import { filter, map } from 'rxjs/operators';
-import { JhiAlertService } from 'ng-jhipster';
+import { JhiAlertService, JhiDataUtils } from 'ng-jhipster';
 import { IReaction, Reaction } from 'app/shared/model/reaction.model';
 import { ReactionService } from './reaction.service';
 import { IUser, UserService } from 'app/core';
@@ -22,16 +22,18 @@ export class ReactionUpdateComponent implements OnInit {
 
   editForm = this.fb.group({
     id: [],
-    title: [null, [Validators.required, Validators.maxLength(280)]],
+    title: [null, [Validators.maxLength(280)]],
     content: [],
     type: [null, [Validators.required]],
     typeLevel: [null, [Validators.min(1), Validators.max(120)]],
     supportScore: [],
+    totalChildrenCount: [null, [Validators.required]],
     creator: [],
     parentReaction: []
   });
 
   constructor(
+    protected dataUtils: JhiDataUtils,
     protected jhiAlertService: JhiAlertService,
     protected reactionService: ReactionService,
     protected userService: UserService,
@@ -68,9 +70,42 @@ export class ReactionUpdateComponent implements OnInit {
       type: reaction.type,
       typeLevel: reaction.typeLevel,
       supportScore: reaction.supportScore,
+      totalChildrenCount: reaction.totalChildrenCount,
       creator: reaction.creator,
       parentReaction: reaction.parentReaction
     });
+  }
+
+  byteSize(field) {
+    return this.dataUtils.byteSize(field);
+  }
+
+  openFile(contentType, field) {
+    return this.dataUtils.openFile(contentType, field);
+  }
+
+  setFileData(event, field: string, isImage) {
+    return new Promise((resolve, reject) => {
+      if (event && event.target && event.target.files && event.target.files[0]) {
+        const file = event.target.files[0];
+        if (isImage && !/^image\//.test(file.type)) {
+          reject(`File was expected to be an image but was found to be ${file.type}`);
+        } else {
+          const filedContentType: string = field + 'ContentType';
+          this.dataUtils.toBase64(file, base64Data => {
+            this.editForm.patchValue({
+              [field]: base64Data,
+              [filedContentType]: file.type
+            });
+          });
+        }
+      } else {
+        reject(`Base64 data was not set as file could not be extracted from passed parameter: ${event}`);
+      }
+    }).then(
+      () => console.log('blob added'), // sucess
+      this.onError
+    );
   }
 
   previousState() {
@@ -96,6 +131,7 @@ export class ReactionUpdateComponent implements OnInit {
       type: this.editForm.get(['type']).value,
       typeLevel: this.editForm.get(['typeLevel']).value,
       supportScore: this.editForm.get(['supportScore']).value,
+      totalChildrenCount: this.editForm.get(['totalChildrenCount']).value,
       creator: this.editForm.get(['creator']).value,
       parentReaction: this.editForm.get(['parentReaction']).value
     };

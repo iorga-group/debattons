@@ -15,10 +15,6 @@
                            formControlName="title"/>
                     <div *ngIf="editForm.get('title').invalid && (editForm.get('title').dirty || editForm.get('title').touched)">
                         <small class="form-text text-danger"
-                               *ngIf="editForm.get('title').errors.required" jhiTranslate="entity.validation.required">
-                        This field is required.
-                        </small>
-                        <small class="form-text text-danger"
                                *ngIf="editForm.get('title').errors.maxlength" jhiTranslate="entity.validation.maxlength" [translateValues]="{ max: 280 }">
                         This field cannot be longer than 280 characters.
                         </small>
@@ -26,8 +22,8 @@
                 </div>
                 <div class="form-group">
                     <label class="form-control-label" jhiTranslate="debattonsApp.reaction.content" for="field_content">Content</label>
-                    <input type="text" class="form-control" name="content" id="field_content"
-                           formControlName="content"/>
+                    <textarea class="form-control" name="content" id="field_content"
+                              formControlName="content"></textarea>
                 </div>
                 <div class="form-group">
                     <label class="form-control-label" jhiTranslate="debattonsApp.reaction.type" for="field_type">Type</label>
@@ -69,6 +65,21 @@
                     <label class="form-control-label" jhiTranslate="debattonsApp.reaction.supportScore" for="field_supportScore">Support Score</label>
                     <input type="number" class="form-control" name="supportScore" id="field_supportScore"
                            formControlName="supportScore"/>
+                </div>
+                <div class="form-group">
+                    <label class="form-control-label" jhiTranslate="debattonsApp.reaction.totalChildrenCount" for="field_totalChildrenCount">Total Children Count</label>
+                    <input type="number" class="form-control" name="totalChildrenCount" id="field_totalChildrenCount"
+                           formControlName="totalChildrenCount"/>
+                    <div *ngIf="editForm.get('totalChildrenCount').invalid && (editForm.get('totalChildrenCount').dirty || editForm.get('totalChildrenCount').touched)">
+                        <small class="form-text text-danger"
+                               *ngIf="editForm.get('totalChildrenCount').errors.required" jhiTranslate="entity.validation.required">
+                        This field is required.
+                        </small>
+                        <small class="form-text text-danger"
+                            [hidden]="!editForm.get('totalChildrenCount')?.errors?.number" jhiTranslate="entity.validation.number">
+                            This field should be a number.
+                        </small>
+                    </div>
                 </div>
 
                 <div class="form-group">

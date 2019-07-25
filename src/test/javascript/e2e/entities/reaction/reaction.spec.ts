@@ -45,6 +45,7 @@ describe('Reaction e2e test', () => {
       reactionUpdatePage.typeSelectLastOption(),
       reactionUpdatePage.setTypeLevelInput('5'),
       reactionUpdatePage.setSupportScoreInput('5'),
+      reactionUpdatePage.setTotalChildrenCountInput('5'),
       reactionUpdatePage.creatorSelectLastOption(),
       reactionUpdatePage.parentReactionSelectLastOption()
     ]);
@@ -52,6 +53,7 @@ describe('Reaction e2e test', () => {
     expect(await reactionUpdatePage.getContentInput()).to.eq('content', 'Expected Content value to be equals to content');
     expect(await reactionUpdatePage.getTypeLevelInput()).to.eq('5', 'Expected typeLevel value to be equals to 5');
     expect(await reactionUpdatePage.getSupportScoreInput()).to.eq('5', 'Expected supportScore value to be equals to 5');
+    expect(await reactionUpdatePage.getTotalChildrenCountInput()).to.eq('5', 'Expected totalChildrenCount value to be equals to 5');
     await reactionUpdatePage.save();
     expect(await reactionUpdatePage.getSaveButton().isPresent(), 'Expected save button disappear').to.be.false;
 
