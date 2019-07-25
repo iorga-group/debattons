@@ -5,14 +5,14 @@
             "fieldName": "title",
             "fieldType": "String",
             "fieldValidateRules": [
-                "maxlength",
-                "required"
+                "maxlength"
             ],
             "fieldValidateRulesMaxlength": 280
         },
         {
             "fieldName": "content",
-            "fieldType": "String"
+            "fieldType": "byte[]",
+            "fieldTypeBlobContent": "text"
         },
         {
             "fieldName": "type",
@@ -34,7 +34,14 @@
         },
         {
             "fieldName": "supportScore",
-            "fieldType": "Float"
+            "fieldType": "Double"
+        },
+        {
+            "fieldName": "totalChildrenCount",
+            "fieldType": "Integer",
+            "fieldValidateRules": [
+                "required"
+            ]
         }
     ],
     "relationships": [
@@ -59,7 +66,7 @@
             "otherEntityField": "title"
         }
     ],
-    "changelogDate": "20190725083351",
+    "changelogDate": "20190725151849",
     "entityTableName": "reaction",
     "dto": "no",
     "pagination": "pagination",

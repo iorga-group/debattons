@@ -53,8 +53,7 @@ export class ReactionUpdateComponent implements OnInit {
       title: reaction.title,
       content: reaction.content,
       type: reaction.type,
-      typeLevel: reaction.typeLevel,
-      supportScore: reaction.supportScore
+      typeLevel: reaction.typeLevel
     });
   }
 
@@ -81,6 +80,7 @@ export class ReactionUpdateComponent implements OnInit {
       type: this.editForm.get(['type']).value,
       typeLevel: this.editForm.get(['typeLevel']).value,
       supportScore: this.editForm.get(['supportScore']).value,
+      totalChildrenCount: 0,
       parentReaction: this.parentReaction
     };
   }

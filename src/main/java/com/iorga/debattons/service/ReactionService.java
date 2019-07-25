@@ -87,7 +87,7 @@ public class ReactionService {
                 if (ReactionType.DISAGREE.equals(reactionType)) {
                     ponderedSupportLevel.supportLevel *= -1;
                 }
-                Float supportScore = reaction.getSupportScore();
+                Double supportScore = reaction.getSupportScore();
                 if (supportScore != null) {
                     ponderedSupportLevel.ponderation = new BigDecimal(supportScore).add(MAX_TYPE_LEVEL_BD).divide(MAX_TYPE_LEVEL_BD, MathContext.DECIMAL128); // According that the supportScore is between -MAX_TYPE_LEVEL and +MAX_TYPE_LEVEL
                 } else {
@@ -124,14 +124,14 @@ public class ReactionService {
                 selectedPonderedSupportLevel = childrenPonderedSupportLevels.get(selectedIndex);
                 ponderationIterationSum = ponderationIterationSum.add(selectedPonderedSupportLevel.ponderation);
             }
-            float supportScore;
+            double supportScore;
             if (selectedPonderedSupportLevel == null) {
                 // Every children had a ponderation of 0, so we cannot estimate the current score
                 reaction.setSupportScore(null);
             } else {
                 if (ponderationIterationSum.compareTo(medianPonderation) == 0) {
                     // the cursor is between two values, get the value between them
-                    supportScore = new BigDecimal(selectedPonderedSupportLevel.supportLevel + childrenPonderedSupportLevels.get(selectedIndex).supportLevel).divide(BIG_DECIMAL_TWO).floatValue();
+                    supportScore = new BigDecimal(selectedPonderedSupportLevel.supportLevel + childrenPonderedSupportLevels.get(selectedIndex).supportLevel).divide(BIG_DECIMAL_TWO).doubleValue();
                 } else {
                     supportScore = selectedPonderedSupportLevel.supportLevel;
                 }

@@ -21,6 +21,7 @@
       "type": "Type",
       "typeLevel": "Type Level",
       "supportScore": "Support Score",
+      "totalChildrenCount": "Total Children Count",
       "childrenReactions": "Children Reactions",
       "creator": "Creator",
       "parentReaction": "Parent Reaction",

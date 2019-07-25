@@ -3,6 +3,7 @@ import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import com.iorga.debattons.domain.validation.CheckRootTypeReactionWithoutParent;
 import org.hibernate.annotations.Cache;
 import org.hibernate.annotations.CacheConcurrencyStrategy;
+import org.hibernate.annotations.Type;
 
 import javax.persistence.*;
 import javax.validation.constraints.*;
@@ -29,11 +30,12 @@ public class Reaction implements Serializable {
     @SequenceGenerator(name = "sequenceGenerator")
     private Long id;
 
-    @NotNull
     @Size(max = 280)
-    @Column(name = "title", length = 280, nullable = false)
+    @Column(name = "title", length = 280)
     private String title;
 
+    @Lob
+    @Type(type = "org.hibernate.type.TextType")
     @Column(name = "content")
     private String content;
 
@@ -48,7 +50,11 @@ public class Reaction implements Serializable {
     private Integer typeLevel;
 
     @Column(name = "support_score")
-    private Float supportScore;
+    private Double supportScore;
+
+    @NotNull
+    @Column(name = "total_children_count", nullable = false)
+    private Integer totalChildrenCount;
 
     @OneToMany(mappedBy = "parentReaction")
     @Cache(usage = CacheConcurrencyStrategy.NONSTRICT_READ_WRITE)
@@ -123,17 +129,30 @@ public class Reaction implements Serializable {
         this.typeLevel = typeLevel;
     }
 
-    public Float getSupportScore() {
+    public Double getSupportScore() {
         return supportScore;
     }
 
-    public Reaction supportScore(Float supportScore) {
+    public Reaction supportScore(Double supportScore) {
         this.supportScore = supportScore;
         return this;
     }
 
-    public void setSupportScore(Float supportScore) {
+    public void setSupportScore(Double supportScore) {
         this.supportScore = supportScore;
+    }
+
+    public Integer getTotalChildrenCount() {
+        return totalChildrenCount;
+    }
+
+    public Reaction totalChildrenCount(Integer totalChildrenCount) {
+        this.totalChildrenCount = totalChildrenCount;
+        return this;
+    }
+
+    public void setTotalChildrenCount(Integer totalChildrenCount) {
+        this.totalChildrenCount = totalChildrenCount;
     }
 
     public Set<Reaction> getChildrenReactions() {
@@ -213,6 +232,7 @@ public class Reaction implements Serializable {
             ", type='" + getType() + "'" +
             ", typeLevel=" + getTypeLevel() +
             ", supportScore=" + getSupportScore() +
+            ", totalChildrenCount=" + getTotalChildrenCount() +
             "}";
     }
 }

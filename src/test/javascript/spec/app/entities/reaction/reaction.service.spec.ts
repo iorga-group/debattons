@@ -23,7 +23,7 @@ describe('Service Tests', () => {
       service = injector.get(ReactionService);
       httpMock = injector.get(HttpTestingController);
 
-      elemDefault = new Reaction(0, 'AAAAAAA', 'AAAAAAA', ReactionType.ROOT, 0, 0);
+      elemDefault = new Reaction(0, 'AAAAAAA', 'AAAAAAA', ReactionType.ROOT, 0, 0, 0);
     });
 
     describe('Service methods', () => {
@@ -63,7 +63,8 @@ describe('Service Tests', () => {
             content: 'BBBBBB',
             type: 'BBBBBB',
             typeLevel: 1,
-            supportScore: 1
+            supportScore: 1,
+            totalChildrenCount: 1
           },
           elemDefault
         );
@@ -85,7 +86,8 @@ describe('Service Tests', () => {
             content: 'BBBBBB',
             type: 'BBBBBB',
             typeLevel: 1,
-            supportScore: 1
+            supportScore: 1,
+            totalChildrenCount: 1
           },
           elemDefault
         );

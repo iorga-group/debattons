@@ -31,6 +31,7 @@ export class ReactionUpdatePage {
   typeSelect = element(by.id('field_type'));
   typeLevelInput = element(by.id('field_typeLevel'));
   supportScoreInput = element(by.id('field_supportScore'));
+  totalChildrenCountInput = element(by.id('field_totalChildrenCount'));
   creatorSelect = element(by.id('field_creator'));
   parentReactionSelect = element(by.id('field_parentReaction'));
 
@@ -83,6 +84,14 @@ export class ReactionUpdatePage {
 
   async getSupportScoreInput() {
     return await this.supportScoreInput.getAttribute('value');
+  }
+
+  async setTotalChildrenCountInput(totalChildrenCount) {
+    await this.totalChildrenCountInput.sendKeys(totalChildrenCount);
+  }
+
+  async getTotalChildrenCountInput() {
+    return await this.totalChildrenCountInput.getAttribute('value');
   }
 
   async creatorSelectLastOption(timeout?: number) {

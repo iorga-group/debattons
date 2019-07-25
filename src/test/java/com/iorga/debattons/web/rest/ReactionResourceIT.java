@@ -20,6 +20,7 @@ import org.springframework.security.test.context.support.WithMockUser;
 import org.springframework.test.web.servlet.MockMvc;
 import org.springframework.test.web.servlet.setup.MockMvcBuilders;
 import org.springframework.transaction.annotation.Transactional;
+import org.springframework.util.Base64Utils;
 import org.springframework.validation.Validator;
 
 import javax.persistence.EntityManager;
@@ -51,8 +52,11 @@ public class ReactionResourceIT {
     private static final Integer DEFAULT_TYPE_LEVEL = 1;
     private static final Integer UPDATED_TYPE_LEVEL = 2;
 
-    private static final Float DEFAULT_SUPPORT_SCORE = 1F;
-    private static final Float UPDATED_SUPPORT_SCORE = 2F;
+    private static final Double DEFAULT_SUPPORT_SCORE = 1D;
+    private static final Double UPDATED_SUPPORT_SCORE = 2D;
+
+    private static final Integer DEFAULT_TOTAL_CHILDREN_COUNT = 1;
+    private static final Integer UPDATED_TOTAL_CHILDREN_COUNT = 2;
 
     @Autowired
     private ReactionRepository reactionRepository;
@@ -111,6 +115,7 @@ public class ReactionResourceIT {
             .type(DEFAULT_TYPE)
             .typeLevel(DEFAULT_TYPE_LEVEL)
             .supportScore(DEFAULT_SUPPORT_SCORE)
+            .totalChildrenCount(DEFAULT_TOTAL_CHILDREN_COUNT)
             .creator(user);
         return reaction;
     }
@@ -126,7 +131,8 @@ public class ReactionResourceIT {
             .content(UPDATED_CONTENT)
             .type(UPDATED_TYPE)
             .typeLevel(UPDATED_TYPE_LEVEL)
-            .supportScore(UPDATED_SUPPORT_SCORE);
+            .supportScore(UPDATED_SUPPORT_SCORE)
+            .totalChildrenCount(UPDATED_TOTAL_CHILDREN_COUNT);
         return reaction;
     }
 
@@ -156,6 +162,7 @@ public class ReactionResourceIT {
         assertThat(testReaction.getType()).isEqualTo(DEFAULT_TYPE);
         assertThat(testReaction.getTypeLevel()).isEqualTo(DEFAULT_TYPE_LEVEL);
         assertThat(testReaction.getSupportScore()).isNull();
+        assertThat(testReaction.getTotalChildrenCount()).isEqualTo(DEFAULT_TOTAL_CHILDREN_COUNT);
     }
 
     @Test
@@ -181,10 +188,10 @@ public class ReactionResourceIT {
 
     @Test
     @Transactional
-    public void checkTitleIsRequired() throws Exception {
+    public void checkTypeIsRequired() throws Exception {
         int databaseSizeBeforeTest = reactionRepository.findAll().size();
         // set the field null
-        reaction.setTitle(null);
+        reaction.setType(null);
 
         // Create the Reaction, which fails.
 
@@ -199,10 +206,10 @@ public class ReactionResourceIT {
 
     @Test
     @Transactional
-    public void checkTypeIsRequired() throws Exception {
+    public void checkTotalChildrenCountIsRequired() throws Exception {
         int databaseSizeBeforeTest = reactionRepository.findAll().size();
         // set the field null
-        reaction.setType(null);
+        reaction.setTotalChildrenCount(null);
 
         // Create the Reaction, which fails.
 
@@ -230,7 +237,8 @@ public class ReactionResourceIT {
             .andExpect(jsonPath("$.[*].content").value(hasItem(DEFAULT_CONTENT.toString())))
             .andExpect(jsonPath("$.[*].type").value(hasItem(DEFAULT_TYPE.toString())))
             .andExpect(jsonPath("$.[*].typeLevel").value(hasItem(DEFAULT_TYPE_LEVEL)))
-            .andExpect(jsonPath("$.[*].supportScore").value(hasItem(DEFAULT_SUPPORT_SCORE.doubleValue())));
+            .andExpect(jsonPath("$.[*].supportScore").value(hasItem(DEFAULT_SUPPORT_SCORE.doubleValue())))
+            .andExpect(jsonPath("$.[*].totalChildrenCount").value(hasItem(DEFAULT_TOTAL_CHILDREN_COUNT)));
     }
 
     @Test
@@ -248,7 +256,8 @@ public class ReactionResourceIT {
             .andExpect(jsonPath("$.content").value(DEFAULT_CONTENT.toString()))
             .andExpect(jsonPath("$.type").value(DEFAULT_TYPE.toString()))
             .andExpect(jsonPath("$.typeLevel").value(DEFAULT_TYPE_LEVEL))
-            .andExpect(jsonPath("$.supportScore").value(DEFAULT_SUPPORT_SCORE.doubleValue()));
+            .andExpect(jsonPath("$.supportScore").value(DEFAULT_SUPPORT_SCORE.doubleValue()))
+            .andExpect(jsonPath("$.totalChildrenCount").value(DEFAULT_TOTAL_CHILDREN_COUNT));
     }
 
     @Test
@@ -277,7 +286,8 @@ public class ReactionResourceIT {
             .content(UPDATED_CONTENT)
             .type(UPDATED_TYPE)
             .typeLevel(UPDATED_TYPE_LEVEL)
-            .supportScore(UPDATED_SUPPORT_SCORE);
+            .supportScore(UPDATED_SUPPORT_SCORE)
+            .totalChildrenCount(UPDATED_TOTAL_CHILDREN_COUNT);
 
         restReactionMockMvc.perform(put("/api/reactions")
             .contentType(TestUtil.APPLICATION_JSON_UTF8)
@@ -293,6 +303,7 @@ public class ReactionResourceIT {
         assertThat(testReaction.getType()).isEqualTo(UPDATED_TYPE);
         assertThat(testReaction.getTypeLevel()).isEqualTo(UPDATED_TYPE_LEVEL);
         assertThat(testReaction.getSupportScore()).isNull();
+        assertThat(testReaction.getTotalChildrenCount()).isEqualTo(UPDATED_TOTAL_CHILDREN_COUNT);
     }
 
     @Test

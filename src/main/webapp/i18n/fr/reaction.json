@@ -21,6 +21,7 @@
       "type": "Type",
       "typeLevel": "Niveau du type",
       "supportScore": "Score d'adhésion",
+      "totalChildrenCount": "Nombre total de réactions filles",
       "childrenReactions": "Réactions filles",
       "creator": "Créateur",
       "parentReaction": "Réaction parente",
