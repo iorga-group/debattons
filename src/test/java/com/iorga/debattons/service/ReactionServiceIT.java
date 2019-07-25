@@ -46,27 +46,47 @@ public class ReactionServiceIT {
 
         Reaction createdDisagreeChild = reactionService.saveByUser(disagreeChild, user);
         assertThat(createdDisagreeChild.getSupportScore()).isNull();
-        assertThat(reactionRepository.getOne(createdRoot.getId()).getSupportScore()).isEqualTo(-ReactionService.DEFAULT_TYPE_LEVEL);
+        assertThat(createdDisagreeChild.getTotalChildrenCount()).isEqualTo(0);
+        assertThat(createdRoot.getSupportScore()).isEqualTo(-ReactionService.DEFAULT_TYPE_LEVEL);
+        assertThat(createdRoot.getTotalChildrenCount()).isEqualTo(1);
 
+        int agreeLevel = 100;
         Reaction agreeChild = new Reaction()
             .type(ReactionType.AGREE)
-            .typeLevel(100)
+            .typeLevel(agreeLevel)
             .title("Agree 100")
             .parentReaction(createdRoot);
 
         Reaction createdAgreeChild = reactionService.saveByUser(agreeChild, user);
         assertThat(createdAgreeChild.getSupportScore()).isNull();
-        assertThat(reactionRepository.getOne(createdRoot.getId()).getSupportScore()).isEqualTo((-(float)ReactionService.DEFAULT_TYPE_LEVEL + 100F) / 2F);
+        assertThat(createdRoot.getSupportScore()).isEqualTo(-ReactionService.DEFAULT_TYPE_LEVEL + agreeLevel);
+        assertThat(createdRoot.getTotalChildrenCount()).isEqualTo(2);
 
+        int agreeToAgreeLevel = 50;
         Reaction agreeToAgreeChild = new Reaction()
             .type(ReactionType.AGREE)
-            .typeLevel(50)
-            .title("Agree 50")
+            .typeLevel(agreeToAgreeLevel)
+            .title("Agree 50 to agree 100")
             .parentReaction(createdAgreeChild);
 
         Reaction createdAgreeToAgreeChild = reactionService.saveByUser(agreeToAgreeChild, user);
         assertThat(createdAgreeToAgreeChild.getSupportScore()).isNull();
-        assertThat(reactionRepository.getOne(createdRoot.getId()).getSupportScore()).isEqualTo((float)agreeChild.getTypeLevel());
-        assertThat(reactionRepository.getOne(createdAgreeChild.getId()).getSupportScore()).isEqualTo((float)agreeToAgreeChild.getTypeLevel());
+        assertThat(createdRoot.getSupportScore()).isEqualTo(-ReactionService.DEFAULT_TYPE_LEVEL + agreeLevel + agreeToAgreeLevel);
+        assertThat(createdRoot.getTotalChildrenCount()).isEqualTo(3);
+        assertThat(createdAgreeChild.getSupportScore()).isEqualTo(agreeToAgreeLevel);
+        assertThat(createdAgreeChild.getTotalChildrenCount()).isEqualTo(1);
+
+        int agreeToDisagreeLevel = 80;
+        Reaction agreeToDisagreeChild = new Reaction()
+            .type(ReactionType.AGREE)
+            .typeLevel(agreeToDisagreeLevel)
+            .title("Agree 80 to default disagree")
+            .parentReaction(disagreeChild);
+
+        Reaction createdAgreeToDisagree = reactionService.saveByUser(agreeToDisagreeChild, user);
+        assertThat(createdAgreeToDisagree.getSupportScore()).isNull();
+        assertThat(createdDisagreeChild.getSupportScore()).isEqualTo(agreeToDisagreeLevel);
+        assertThat(createdRoot.getSupportScore()).isEqualTo(-ReactionService.DEFAULT_TYPE_LEVEL + agreeLevel + agreeToAgreeLevel - agreeToDisagreeLevel);
+        assertThat(createdRoot.getTotalChildrenCount()).isEqualTo(4);
     }
 }
