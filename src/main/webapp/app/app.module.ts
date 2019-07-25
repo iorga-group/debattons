@@ -4,7 +4,7 @@ import { NgModule } from '@angular/core';
 import { BrowserModule } from '@angular/platform-browser';
 import { HTTP_INTERCEPTORS } from '@angular/common/http';
 import { NgbDatepickerConfig } from '@ng-bootstrap/ng-bootstrap';
-import { Ng2Webstorage } from 'ngx-webstorage';
+import { NgxWebstorageModule } from 'ngx-webstorage';
 import { NgJhipsterModule } from 'ng-jhipster';
 
 import { AuthInterceptor } from './blocks/interceptor/auth.interceptor';
@@ -22,51 +22,51 @@ import * as moment from 'moment';
 import { DbtMainComponent, NavbarComponent, FooterComponent, PageRibbonComponent, ActiveMenuDirective, ErrorComponent } from './layouts';
 
 @NgModule({
-    imports: [
-        BrowserModule,
-        Ng2Webstorage.forRoot({ prefix: 'dbt', separator: '-' }),
-        NgJhipsterModule.forRoot({
-            // set below to true to make alerts look like toast
-            alertAsToast: false,
-            alertTimeout: 5000,
-            i18nEnabled: true,
-            defaultI18nLang: 'en'
-        }),
-        DebattonsSharedModule.forRoot(),
-        DebattonsCoreModule,
-        DebattonsHomeModule,
-        DebattonsAccountModule,
-        // jhipster-needle-angular-add-module JHipster will add new module here
-        DebattonsEntityModule,
-        DebattonsAppRoutingModule
-    ],
-    declarations: [DbtMainComponent, NavbarComponent, ErrorComponent, PageRibbonComponent, ActiveMenuDirective, FooterComponent],
-    providers: [
-        {
-            provide: HTTP_INTERCEPTORS,
-            useClass: AuthInterceptor,
-            multi: true
-        },
-        {
-            provide: HTTP_INTERCEPTORS,
-            useClass: AuthExpiredInterceptor,
-            multi: true
-        },
-        {
-            provide: HTTP_INTERCEPTORS,
-            useClass: ErrorHandlerInterceptor,
-            multi: true
-        },
-        {
-            provide: HTTP_INTERCEPTORS,
-            useClass: NotificationInterceptor,
-            multi: true
-        }
-    ],
-    bootstrap: [DbtMainComponent]
+  imports: [
+    BrowserModule,
+    NgxWebstorageModule.forRoot({ prefix: 'dbt', separator: '-' }),
+    NgJhipsterModule.forRoot({
+      // set below to true to make alerts look like toast
+      alertAsToast: false,
+      alertTimeout: 5000,
+      i18nEnabled: true,
+      defaultI18nLang: 'en'
+    }),
+    DebattonsSharedModule.forRoot(),
+    DebattonsCoreModule,
+    DebattonsHomeModule,
+    DebattonsAccountModule,
+    // jhipster-needle-angular-add-module JHipster will add new module here
+    DebattonsEntityModule,
+    DebattonsAppRoutingModule
+  ],
+  declarations: [DbtMainComponent, NavbarComponent, ErrorComponent, PageRibbonComponent, ActiveMenuDirective, FooterComponent],
+  providers: [
+    {
+      provide: HTTP_INTERCEPTORS,
+      useClass: AuthInterceptor,
+      multi: true
+    },
+    {
+      provide: HTTP_INTERCEPTORS,
+      useClass: AuthExpiredInterceptor,
+      multi: true
+    },
+    {
+      provide: HTTP_INTERCEPTORS,
+      useClass: ErrorHandlerInterceptor,
+      multi: true
+    },
+    {
+      provide: HTTP_INTERCEPTORS,
+      useClass: NotificationInterceptor,
+      multi: true
+    }
+  ],
+  bootstrap: [DbtMainComponent]
 })
 export class DebattonsAppModule {
-    constructor(private dpConfig: NgbDatepickerConfig) {
-        this.dpConfig.minDate = { year: moment().year() - 100, month: 1, day: 1 };
-    }
+  constructor(private dpConfig: NgbDatepickerConfig) {
+    this.dpConfig.minDate = { year: moment().year() - 100, month: 1, day: 1 };
+  }
 }

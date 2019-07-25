@@ -1,39 +1,36 @@
 {
-    "$schema": "./node_modules/@angular/cli/lib/config/schema.json",
-    "version": 1,
-    "newProjectRoot": "projects",
-    "projects": {
-        "debattons": {
-            "root": "",
-            "sourceRoot": "src/main/webapp",
-            "projectType": "application",
-            "architect": {}
-        }
-    },
-    "defaultProject": "debattons",
-    "cli": {
-        "packageManager": "yarn"
-    },
-    "schematics": {
+  "$schema": "./node_modules/@angular/cli/lib/config/schema.json",
+  "version": 1,
+  "newProjectRoot": "projects",
+  "projects": {
+    "debattons": {
+      "root": "",
+      "sourceRoot": "src/main/webapp",
+      "projectType": "application",
+      "schematics": {
         "@schematics/angular:component": {
-            "inlineStyle": true,
-            "inlineTemplate": false,
-            "spec": false,
-            "prefix": "dbt",
-            "styleExt": "scss"
+          "skipTests": true,
+          "style": "scss"
         },
         "@schematics/angular:directive": {
-            "spec": false,
-            "prefix": "dbt"
+          "skipTests": true
         },
         "@schematics/angular:guard": {
-            "spec": false
+          "skipTests": true
         },
         "@schematics/angular:pipe": {
-            "spec": false
+          "skipTests": true
         },
         "@schematics/angular:service": {
-            "spec": false
+          "skipTests": true
         }
+      },
+      "prefix": "dbt",
+      "architect": {}
     }
+  },
+  "defaultProject": "debattons",
+  "cli": {
+    "packageManager": "yarn"
+  }
 }

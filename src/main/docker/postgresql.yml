@@ -1,11 +1,11 @@
 version: '2'
 services:
-    debattons-postgresql:
-        image: postgres:10.4
-        # volumes:
-        #     - ~/volumes/jhipster/Debattons/postgresql/:/var/lib/postgresql/data/
-        environment:
-            - POSTGRES_USER=Debattons
-            - POSTGRES_PASSWORD=
-        ports:
-            - 5432:5432
+  debattons-postgresql:
+    image: postgres:11.3
+    # volumes:
+    #     - ~/volumes/jhipster/Debattons/postgresql/:/var/lib/postgresql/data/
+    environment:
+      - POSTGRES_USER=Debattons
+      - POSTGRES_PASSWORD=
+    ports:
+      - 5432:5432

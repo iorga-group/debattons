@@ -15,84 +15,84 @@ import { IReaction } from 'app/shared/model/reaction.model';
 
 @Injectable({ providedIn: 'root' })
 export class ReactionResolve implements Resolve<IReaction> {
-    constructor(private service: ReactionService) {}
+  constructor(private service: ReactionService) {}
 
-    resolve(route: ActivatedRouteSnapshot, state: RouterStateSnapshot): Observable<IReaction> {
-        const id = route.params['id'] ? route.params['id'] : null;
-        if (id) {
-            return this.service.find(id).pipe(
-                filter((response: HttpResponse<Reaction>) => response.ok),
-                map((reaction: HttpResponse<Reaction>) => reaction.body)
-            );
-        }
-        return of(new Reaction());
+  resolve(route: ActivatedRouteSnapshot, state: RouterStateSnapshot): Observable<IReaction> {
+    const id = route.params['id'] ? route.params['id'] : null;
+    if (id) {
+      return this.service.find(id).pipe(
+        filter((response: HttpResponse<Reaction>) => response.ok),
+        map((reaction: HttpResponse<Reaction>) => reaction.body)
+      );
     }
+    return of(new Reaction());
+  }
 }
 
 export const reactionRoute: Routes = [
-    {
-        path: '',
-        component: ReactionComponent,
-        resolve: {
-            pagingParams: JhiResolvePagingParams
-        },
-        data: {
-            authorities: ['ROLE_USER'],
-            defaultSort: 'id,asc',
-            pageTitle: 'debattonsApp.reaction.home.title'
-        },
-        canActivate: [UserRouteAccessService]
+  {
+    path: '',
+    component: ReactionComponent,
+    resolve: {
+      pagingParams: JhiResolvePagingParams
     },
-    {
-        path: ':id/view',
-        component: ReactionDetailComponent,
-        resolve: {
-            reaction: ReactionResolve
-        },
-        data: {
-            authorities: ['ROLE_USER'],
-            pageTitle: 'debattonsApp.reaction.home.title'
-        },
-        canActivate: [UserRouteAccessService]
+    data: {
+      authorities: ['ROLE_USER'],
+      defaultSort: 'id,asc',
+      pageTitle: 'debattonsApp.reaction.home.title'
     },
-    {
-        path: 'new',
-        component: ReactionUpdateComponent,
-        resolve: {
-            reaction: ReactionResolve
-        },
-        data: {
-            authorities: ['ROLE_USER'],
-            pageTitle: 'debattonsApp.reaction.home.title'
-        },
-        canActivate: [UserRouteAccessService]
+    canActivate: [UserRouteAccessService]
+  },
+  {
+    path: ':id/view',
+    component: ReactionDetailComponent,
+    resolve: {
+      reaction: ReactionResolve
     },
-    {
-        path: ':id/edit',
-        component: ReactionUpdateComponent,
-        resolve: {
-            reaction: ReactionResolve
-        },
-        data: {
-            authorities: ['ROLE_USER'],
-            pageTitle: 'debattonsApp.reaction.home.title'
-        },
-        canActivate: [UserRouteAccessService]
-    }
+    data: {
+      authorities: ['ROLE_USER'],
+      pageTitle: 'debattonsApp.reaction.home.title'
+    },
+    canActivate: [UserRouteAccessService]
+  },
+  {
+    path: 'new',
+    component: ReactionUpdateComponent,
+    resolve: {
+      reaction: ReactionResolve
+    },
+    data: {
+      authorities: ['ROLE_USER'],
+      pageTitle: 'debattonsApp.reaction.home.title'
+    },
+    canActivate: [UserRouteAccessService]
+  },
+  {
+    path: ':id/edit',
+    component: ReactionUpdateComponent,
+    resolve: {
+      reaction: ReactionResolve
+    },
+    data: {
+      authorities: ['ROLE_USER'],
+      pageTitle: 'debattonsApp.reaction.home.title'
+    },
+    canActivate: [UserRouteAccessService]
+  }
 ];
 
 export const reactionPopupRoute: Routes = [
-    {
-        path: ':id/delete',
-        component: ReactionDeletePopupComponent,
-        resolve: {
-            reaction: ReactionResolve
-        },
-        data: {
-            authorities: ['ROLE_USER'],
-            pageTitle: 'debattonsApp.reaction.home.title'
-        },
-        canActivate: [UserRouteAccessService],
-        outlet: 'popup'
-    }
+  {
+    path: ':id/delete',
+    component: ReactionDeletePopupComponent,
+    resolve: {
+      reaction: ReactionResolve
+    },
+    data: {
+      authorities: ['ROLE_USER'],
+      pageTitle: 'debattonsApp.reaction.home.title'
+    },
+    canActivate: [UserRouteAccessService],
+    outlet: 'popup'
+  }
 ];

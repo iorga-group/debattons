@@ -1,21 +1,25 @@
 <div class="row justify-content-center">
     <div class="col-8">
-        <form name="editForm" role="form" novalidate (ngSubmit)="save()" #editForm="ngForm">
+        <form name="editForm" role="form" novalidate (ngSubmit)="save()" [formGroup]="editForm">
             <h2 id="dbt-reaction-heading" jhiTranslate="debattonsApp.reaction.home.createOrEditLabel">Create or edit a Reaction</h2>
             <div>
                 <dbt-alert-error></dbt-alert-error>
-                <div class="form-group" [hidden]="!reaction.id">
+                <div class="form-group" [hidden]="!editForm.get('id').value">
                     <label for="id" jhiTranslate="global.field.id">ID</label>
-                    <input type="text" class="form-control" id="id" name="id"
-                        [(ngModel)]="reaction.id" readonly />
+                    <input type="text" class="form-control" id="id" name="id" formControlName="id"
+                        readonly />
                 </div>
                 <div class="form-group">
                     <label class="form-control-label" jhiTranslate="debattonsApp.reaction.title" for="field_title">Title</label>
                     <input type="text" class="form-control" name="title" id="field_title"
-                        [(ngModel)]="reaction.title" maxlength="280"/>
-                    <div [hidden]="!(editForm.controls.title?.dirty && editForm.controls.title?.invalid)">
+                           formControlName="title"/>
+                    <div *ngIf="editForm.get('title').invalid && (editForm.get('title').dirty || editForm.get('title').touched)">
                         <small class="form-text text-danger"
-                        [hidden]="!editForm.controls.title?.errors?.maxlength" jhiTranslate="entity.validation.maxlength" [translateValues]="{ max: 280 }">
+                               *ngIf="editForm.get('title').errors.required" jhiTranslate="entity.validation.required">
+                        This field is required.
+                        </small>
+                        <small class="form-text text-danger"
+                               *ngIf="editForm.get('title').errors.maxlength" jhiTranslate="entity.validation.maxlength" [translateValues]="{ max: 280 }">
                         This field cannot be longer than 280 characters.
                         </small>
                     </div>
@@ -23,11 +27,11 @@
                 <div class="form-group">
                     <label class="form-control-label" jhiTranslate="debattonsApp.reaction.content" for="field_content">Content</label>
                     <input type="text" class="form-control" name="content" id="field_content"
-                        [(ngModel)]="reaction.content" />
+                           formControlName="content"/>
                 </div>
                 <div class="form-group">
                     <label class="form-control-label" jhiTranslate="debattonsApp.reaction.type" for="field_type">Type</label>
-                    <select class="form-control" name="type" [(ngModel)]="reaction.type" id="field_type"  required>
+                    <select class="form-control" name="type" formControlName="type" id="field_type">
                         <option value="ROOT">{{'debattonsApp.ReactionType.ROOT' | translate}}</option>
                         <option value="AGREE">{{'debattonsApp.ReactionType.AGREE' | translate}}</option>
                         <option value="DISAGREE">{{'debattonsApp.ReactionType.DISAGREE' | translate}}</option>
@@ -35,9 +39,9 @@
                         <option value="GOOD_QUALITY">{{'debattonsApp.ReactionType.GOOD_QUALITY' | translate}}</option>
                         <option value="BAD_QUALITY">{{'debattonsApp.ReactionType.BAD_QUALITY' | translate}}</option>
                     </select>
-                    <div [hidden]="!(editForm.controls.type?.dirty && editForm.controls.type?.invalid)">
+                    <div *ngIf="editForm.get('type').invalid && (editForm.get('type').dirty || editForm.get('type').touched)">
                         <small class="form-text text-danger"
-                        [hidden]="!editForm.controls.type?.errors?.required" jhiTranslate="entity.validation.required">
+                               *ngIf="editForm.get('type').errors.required" jhiTranslate="entity.validation.required">
                         This field is required.
                         </small>
                     </div>
@@ -45,18 +49,18 @@
                 <div class="form-group">
                     <label class="form-control-label" jhiTranslate="debattonsApp.reaction.typeLevel" for="field_typeLevel">Type Level</label>
                     <input type="number" class="form-control" name="typeLevel" id="field_typeLevel"
-                        [(ngModel)]="reaction.typeLevel" min="1" jhiMin="1" max="15" jhiMax="15"/>
-                    <div [hidden]="!(editForm.controls.typeLevel?.dirty && editForm.controls.typeLevel?.invalid)">
+                           formControlName="typeLevel"/>
+                    <div *ngIf="editForm.get('typeLevel').invalid && (editForm.get('typeLevel').dirty || editForm.get('typeLevel').touched)">
                         <small class="form-text text-danger"
-                            [hidden]="!editForm.controls.typeLevel?.errors?.min" jhiTranslate="entity.validation.min" [translateValues]="{ min: 1 }">
+                               *ngIf="editForm.get('typeLevel').errors.min" jhiTranslate="entity.validation.min" [translateValues]="{ min: 1 }">
                             This field should be at least 1.
                         </small>
                         <small class="form-text text-danger"
-                            [hidden]="!editForm.controls.typeLevel?.errors?.max" jhiTranslate="entity.validation.max" [translateValues]="{ max: 15 }">
-                            This field cannot be more than 15.
+                               *ngIf="editForm.get('typeLevel').errors.max" jhiTranslate="entity.validation.max" [translateValues]="{ max: 120 }">
+                            This field cannot be more than 120.
                         </small>
                         <small class="form-text text-danger"
-                            [hidden]="!editForm.controls.typeLevel?.errors?.number" jhiTranslate="entity.validation.number">
+                            [hidden]="!editForm.get('typeLevel')?.errors?.number" jhiTranslate="entity.validation.number">
                             This field should be a number.
                         </small>
                     </div>
@@ -64,21 +68,21 @@
                 <div class="form-group">
                     <label class="form-control-label" jhiTranslate="debattonsApp.reaction.supportScore" for="field_supportScore">Support Score</label>
                     <input type="number" class="form-control" name="supportScore" id="field_supportScore"
-                        [(ngModel)]="reaction.supportScore" />
+                           formControlName="supportScore"/>
                 </div>
 
                 <div class="form-group">
                     <label class="form-control-label" jhiTranslate="debattonsApp.reaction.creator" for="field_creator">Creator</label>
-                    <select class="form-control" id="field_creator" name="creator" [(ngModel)]="reaction.creator" >
+                    <select class="form-control" id="field_creator" name="creator" formControlName="creator">
                         <option [ngValue]="null"></option>
-                        <option [ngValue]="userOption.id === reaction.creator?.id ? reaction.creator : userOption" *ngFor="let userOption of users; trackBy: trackUserById">{{userOption.login}}</option>
+                        <option [ngValue]="userOption.id === editForm.get('creator').value?.id ? editForm.get('creator').value : userOption" *ngFor="let userOption of users; trackBy: trackUserById">{{userOption.login}}</option>
                     </select>
                 </div>
                 <div class="form-group">
                     <label class="form-control-label" jhiTranslate="debattonsApp.reaction.parentReaction" for="field_parentReaction">Parent Reaction</label>
-                    <select class="form-control" id="field_parentReaction" name="parentReaction" [(ngModel)]="reaction.parentReaction" >
+                    <select class="form-control" id="field_parentReaction" name="parentReaction" formControlName="parentReaction">
                         <option [ngValue]="null"></option>
-                        <option [ngValue]="reactionOption.id === reaction.parentReaction?.id ? reaction.parentReaction : reactionOption" *ngFor="let reactionOption of reactions; trackBy: trackReactionById">{{reactionOption.title}}</option>
+                        <option [ngValue]="reactionOption.id === editForm.get('parentReaction').value?.id ? editForm.get('parentReaction').value : reactionOption" *ngFor="let reactionOption of reactions; trackBy: trackReactionById">{{reactionOption.title}}</option>
                     </select>
                 </div>
             </div>
@@ -86,7 +90,7 @@
                 <button type="button" id="cancel-save" class="btn btn-secondary"  (click)="previousState()">
                     <fa-icon [icon]="'ban'"></fa-icon>&nbsp;<span jhiTranslate="entity.action.cancel">Cancel</span>
                 </button>
-                <button type="submit" id="save-entity" [disabled]="editForm.form.invalid || isSaving" class="btn btn-primary">
+                <button type="submit" id="save-entity" [disabled]="editForm.invalid || isSaving" class="btn btn-primary">
                     <fa-icon [icon]="'save'"></fa-icon>&nbsp;<span jhiTranslate="entity.action.save">Save</span>
                 </button>
             </div>

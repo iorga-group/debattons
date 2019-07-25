@@ -5,62 +5,62 @@ import { DbtHealthService } from './health.service';
 import { DbtHealthModalComponent } from './health-modal.component';
 
 @Component({
-    selector: 'dbt-health',
-    templateUrl: './health.component.html'
+  selector: 'dbt-health',
+  templateUrl: './health.component.html'
 })
 export class DbtHealthCheckComponent implements OnInit {
-    healthData: any;
-    updatingHealth: boolean;
+  healthData: any;
+  updatingHealth: boolean;
 
-    constructor(private modalService: NgbModal, private healthService: DbtHealthService) {}
+  constructor(private modalService: NgbModal, private healthService: DbtHealthService) {}
 
-    ngOnInit() {
-        this.refresh();
+  ngOnInit() {
+    this.refresh();
+  }
+
+  baseName(name: string) {
+    return this.healthService.getBaseName(name);
+  }
+
+  getBadgeClass(statusState) {
+    if (statusState === 'UP') {
+      return 'badge-success';
+    } else {
+      return 'badge-danger';
     }
+  }
 
-    baseName(name: string) {
-        return this.healthService.getBaseName(name);
-    }
+  refresh() {
+    this.updatingHealth = true;
 
-    getBadgeClass(statusState) {
-        if (statusState === 'UP') {
-            return 'badge-success';
-        } else {
-            return 'badge-danger';
+    this.healthService.checkHealth().subscribe(
+      health => {
+        this.healthData = this.healthService.transformHealthData(health);
+        this.updatingHealth = false;
+      },
+      error => {
+        if (error.status === 503) {
+          this.healthData = this.healthService.transformHealthData(error.error);
+          this.updatingHealth = false;
         }
-    }
+      }
+    );
+  }
 
-    refresh() {
-        this.updatingHealth = true;
+  showHealth(health: any) {
+    const modalRef = this.modalService.open(DbtHealthModalComponent);
+    modalRef.componentInstance.currentHealth = health;
+    modalRef.result.then(
+      result => {
+        // Left blank intentionally, nothing to do here
+      },
+      reason => {
+        // Left blank intentionally, nothing to do here
+      }
+    );
+  }
 
-        this.healthService.checkHealth().subscribe(
-            health => {
-                this.healthData = this.healthService.transformHealthData(health);
-                this.updatingHealth = false;
-            },
-            error => {
-                if (error.status === 503) {
-                    this.healthData = this.healthService.transformHealthData(error.error);
-                    this.updatingHealth = false;
-                }
-            }
-        );
-    }
-
-    showHealth(health: any) {
-        const modalRef = this.modalService.open(DbtHealthModalComponent);
-        modalRef.componentInstance.currentHealth = health;
-        modalRef.result.then(
-            result => {
-                // Left blank intentionally, nothing to do here
-            },
-            reason => {
-                // Left blank intentionally, nothing to do here
-            }
-        );
-    }
-
-    subSystemName(name: string) {
-        return this.healthService.getSubSystemName(name);
-    }
+  subSystemName(name: string) {
+    return this.healthService.getSubSystemName(name);
+  }
 }
